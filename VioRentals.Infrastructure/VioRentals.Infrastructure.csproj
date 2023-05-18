@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\VioRentals.Core\VioRentals.Core.csproj" />
+  </ItemGroup>
+
 </Project>
