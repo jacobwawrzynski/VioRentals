@@ -1,128 +1,128 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using VioRentals.Data;
-using VioRentals.Dtos;
-using VioRentals.Models;
+﻿//using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.EntityFrameworkCore;
+//using VioRentals.Data;
+//using VioRentals.Dtos;
+//using VioRentals.Models;
 
-namespace VioRentals.Controllers.Api;
+//namespace VioRentals.Controllers.Api;
 
-[Route("api/[controller]")]
-[ApiController]
-[Authorize(Roles = "Admin, Employee")]
-public class NewRentalsController : ControllerBase
-{
-    private readonly ApplicationDbContext _context;
+//[Route("api/[controller]")]
+//[ApiController]
+//[Authorize(Roles = "Admin, Employee")]
+//public class NewRentalsController : ControllerBase
+//{
+//    private readonly ApplicationDbContext _context;
 
-    public NewRentalsController()
-    {
-        _context = new ApplicationDbContext();
-    }
-
-
-    [HttpPost]
-    public IActionResult CreateNewRental(NewRentalDto newRental)
-    {
-        if (newRental.MovieIds.Count == 0)
-            return BadRequest("Movie unavailable.");
-        var customer = _context.Customers.SingleOrDefault(
-            c => c.Id == newRental.CustomerId);
-
-        if (newRental.CustomerId == null)
-            return BadRequest("Customer Id is not valid.");
-
-        var movies = _context.Movies.Where(
-            m => newRental.MovieIds.Contains(m.Id)).ToList();
-
-        if (movies.Count() != newRental.MovieIds.Count)
-            return BadRequest("One or more MovieIds are invalid.");
+//    public NewRentalsController()
+//    {
+//        _context = new ApplicationDbContext();
+//    }
 
 
-        foreach (var movie in movies)
-        {
-            if (movie.NumberAvailable == 0)
-                return BadRequest("Movie is not available.");
+//    [HttpPost]
+//    public IActionResult CreateNewRental(NewRentalDto newRental)
+//    {
+//        if (newRental.MovieIds.Count == 0)
+//            return BadRequest("Movie unavailable.");
+//        var customer = _context.Customers.SingleOrDefault(
+//            c => c.Id == newRental.CustomerId);
 
-            movie.NumberAvailable--;
+//        if (newRental.CustomerId == null)
+//            return BadRequest("Customer Id is not valid.");
 
-            var rental = new Rental
-            {
-                Customer = customer,
-                Movie = movie,
-                DateRented = DateTime.Now
-            };
+//        var movies = _context.Movies.Where(
+//            m => newRental.MovieIds.Contains(m.Id)).ToList();
 
-            _context.Rentals.Add(rental);
-        }
-
-        _context.SaveChanges();
-
-        return Ok();
-    }
+//        if (movies.Count() != newRental.MovieIds.Count)
+//            return BadRequest("One or more MovieIds are invalid.");
 
 
-    //get all rentals
-    // /api/NewRentals
-    [HttpGet]
-    public IActionResult GetRentals()
-    {
-        var rentals = _context.Rentals
-            .Include(r => r.Customer)
-            .Include(r => r.Movie)
-            .ToList();
+//        foreach (var movie in movies)
+//        {
+//            if (movie.NumberAvailable == 0)
+//                return BadRequest("Movie is not available.");
 
-        return Ok(rentals);
-    }
+//            movie.NumberAvailable--;
 
-    //get rental by id
-    // /api/NewRentals/1
-    [HttpGet("{id}")]
-    public IActionResult GetRental(int id)
-    {
-        var rental = _context.Rentals
-            .Include(r => r.Customer)
-            .Include(r => r.Movie)
-            .SingleOrDefault(r => r.Id == id);
+//            var rental = new Rental
+//            {
+//                Customer = customer,
+//                Movie = movie,
+//                DateRented = DateTime.Now
+//            };
 
-        if (rental == null)
-            return NotFound();
+//            _context.Rentals.Add(rental);
+//        }
 
-        return Ok(rental);
-    }
+//        _context.SaveChanges();
 
-    //delete rental by id
-    // /api/NewRentals/1
-    [HttpDelete("{id}")]
-    public IActionResult DeleteRental(int id)
-    {
-        var rentalInDb = _context.Rentals.SingleOrDefault(r => r.Id == id);
+//        return Ok();
+//    }
 
-        if (rentalInDb == null)
-            return NotFound();
 
-        _context.Rentals.Remove(rentalInDb);
-        _context.SaveChanges();
+//    //get all rentals
+//    // /api/NewRentals
+//    [HttpGet]
+//    public IActionResult GetRentals()
+//    {
+//        var rentals = _context.Rentals
+//            .Include(r => r.Customer)
+//            .Include(r => r.Movie)
+//            .ToList();
 
-        return Ok();
-    }
+//        return Ok(rentals);
+//    }
 
-    //update rental by id
-    // /api/NewRentals/1
-    [HttpPut("{id}")]
-    public IActionResult UpdateRental(int id, Rental rental)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest();
+//    //get rental by id
+//    // /api/NewRentals/1
+//    [HttpGet("{id}")]
+//    public IActionResult GetRental(int id)
+//    {
+//        var rental = _context.Rentals
+//            .Include(r => r.Customer)
+//            .Include(r => r.Movie)
+//            .SingleOrDefault(r => r.Id == id);
 
-        var rentalInDb = _context.Rentals.SingleOrDefault(r => r.Id == id);
+//        if (rental == null)
+//            return NotFound();
 
-        if (rentalInDb == null)
-            return NotFound();
+//        return Ok(rental);
+//    }
 
-        rentalInDb.DateReturned = rental.DateReturned;
+//    //delete rental by id
+//    // /api/NewRentals/1
+//    [HttpDelete("{id}")]
+//    public IActionResult DeleteRental(int id)
+//    {
+//        var rentalInDb = _context.Rentals.SingleOrDefault(r => r.Id == id);
 
-        _context.SaveChanges();
+//        if (rentalInDb == null)
+//            return NotFound();
 
-        return Ok();
-    }
-}
+//        _context.Rentals.Remove(rentalInDb);
+//        _context.SaveChanges();
+
+//        return Ok();
+//    }
+
+//    //update rental by id
+//    // /api/NewRentals/1
+//    [HttpPut("{id}")]
+//    public IActionResult UpdateRental(int id, Rental rental)
+//    {
+//        if (!ModelState.IsValid)
+//            return BadRequest();
+
+//        var rentalInDb = _context.Rentals.SingleOrDefault(r => r.Id == id);
+
+//        if (rentalInDb == null)
+//            return NotFound();
+
+//        rentalInDb.DateReturned = rental.DateReturned;
+
+//        _context.SaveChanges();
+
+//        return Ok();
+//    }
+//}

@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using VioRentals.Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+	options.UseSqlite("Data Source=../VioRentals.db")
+);
+
 
 var app = builder.Build();
 
