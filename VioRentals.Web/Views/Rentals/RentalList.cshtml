@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Rental>
+
+
+@if (!Model.Any())
+{
+    <p>There are no rented movies.</p>
+}
+else
+{
+    <table id="rentals" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Rental ID</th>
+            <th>Customer</th>
+            <th>Movie</th>
+            <th>Date Rented</th>
+            <th>Date Returned</th>
+            <th>Returned</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var rental in Model)
+        {
+            <tr class="table-dark">
+                <td>@rental.Id</td>
+                <td>@rental.Customer.Name @rental.Customer.Surname</td>
+                <td>@rental.Movie.Name</td>
+                <td>@rental.DateRented</td>
+                <td>@rental.DateReturned</td>
+                <td>
+                    @if (rental.DateReturned == null)
+                    {
+                        <button class="btn btn-warning" onclick="returnRental(@rental.Id)">Return</button>
+                    }
+                    else
+                    {
+                        <p>
+                            <span class="badge bg-primary">Movie Returned</span>
+                        </p>
+                    }
+
+                </td>
+
+            </tr>
+        }
+        </tbody>
+
+    </table>
+    <div class="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>You are about to return rented movie. Are you sure?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="confirm" class="btn btn-primary">Continue</button>
+                    <button type="button" class="btn btn-info" id="close" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    var isReturnButtonPressed = false;
+    function returnRental(rentalId) {
+        $(this).prop("disabled", true);
+        setTimeout(function () {
+            $('.modal').fadeIn(1500);
+        });
+        document.querySelector('#confirm').onclick = function () {
+            $.post("/Rentals/ReturnRental", { rentalId: rentalId }, function (data) {
+                $('.modal').fadeOut(1500);
+                location.reload();
+            });
+        }
+    }
+
+
+    document.querySelector('.btn-close').addEventListener('click', () => {
+        setTimeout(function () {
+            $('.modal').fadeOut(1500);
+        });
+    });
+    document.querySelector('.btn-info').addEventListener('click', () => {
+        setTimeout(function () {
+            $('.modal').fadeOut(1500);
+        });
+    });
+
+</script>
