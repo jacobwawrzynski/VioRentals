@@ -3,46 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VioRentals.Core", "VioRentals.Core", "{1E3CDDAE-A5DC-4672-9681-AE22F1250E5A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VioRentals.Infrastructure", "VioRentals.Infrastructure", "{98B222F4-F9B9-4D60-A533-269BEE223D30}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VioRentals.Web", "VioRentals.Web", "{AAD32392-58C8-4B91-A1F1-3243F655861A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VioRentals.Core", "VioRentals.Core\VioRentals.Core.csproj", "{776863A4-3F8F-428B-A124-66CC4CE45569}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VioRentals.Infrastructure", "VioRentals.Infrastructure\VioRentals.Infrastructure.csproj", "{8FF84FE8-89DF-4088-ADB0-845F09ED6FD4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VioRentals.Web", "VioRentals.Web\VioRentals.Web.csproj", "{39D09536-9062-4113-80C1-955F50C7D58B}"
-EndProject
 Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{776863A4-3F8F-428B-A124-66CC4CE45569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{776863A4-3F8F-428B-A124-66CC4CE45569}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{776863A4-3F8F-428B-A124-66CC4CE45569}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{776863A4-3F8F-428B-A124-66CC4CE45569}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8FF84FE8-89DF-4088-ADB0-845F09ED6FD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8FF84FE8-89DF-4088-ADB0-845F09ED6FD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8FF84FE8-89DF-4088-ADB0-845F09ED6FD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8FF84FE8-89DF-4088-ADB0-845F09ED6FD4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{39D09536-9062-4113-80C1-955F50C7D58B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{39D09536-9062-4113-80C1-955F50C7D58B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39D09536-9062-4113-80C1-955F50C7D58B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39D09536-9062-4113-80C1-955F50C7D58B}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{776863A4-3F8F-428B-A124-66CC4CE45569} = {1E3CDDAE-A5DC-4672-9681-AE22F1250E5A}
-		{8FF84FE8-89DF-4088-ADB0-845F09ED6FD4} = {98B222F4-F9B9-4D60-A533-269BEE223D30}
-		{39D09536-9062-4113-80C1-955F50C7D58B} = {AAD32392-58C8-4B91-A1F1-3243F655861A}
-	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9124BAB5-081F-4616-B7E0-6B571E245733}
+		SolutionGuid = {123CA270-C868-466C-8583-0463A074200E}
 	EndGlobalSection
 EndGlobal
