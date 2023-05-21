@@ -4,25 +4,21 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VioRentals.Core.Models.ModelsValidation;
 
-namespace VioRentals.Core.Models
+namespace VioRentals.Core.DTOs
 {
-	public class Customer
+	public class CustomerDto
 	{
 		public int Id { get; set; }
-		
-		[Required]
-		[StringLength(100)]
+
 		public string Name { get; set; }
 
-		[Required]
-		[StringLength(100)]
 		public string Surname { get; set; }
 
-		[AgeValidation]
 		public DateTime? DateOfBirth { get; set; }
+
 		public bool IsSubscribedToNewsletter { get; set; }
+
 		public byte MembershipTypeId { get; set; }
 	}
 }
