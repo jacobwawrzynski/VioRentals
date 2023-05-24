@@ -23,8 +23,4 @@
     <ProjectReference Include="..\VioRentals.Core\VioRentals.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mappers\" />
-  </ItemGroup>
-
 </Project>

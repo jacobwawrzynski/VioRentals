@@ -4,7 +4,6 @@ namespace VioRentals.Web.DTOs
 {
 	public class RegisterDto
 	{
-		// TODO REST OF VALIDATION
 		//[EmailAddress]
 		public string? Email { get; set; }
 		public string Password { get; set; }
@@ -14,7 +13,5 @@ namespace VioRentals.Web.DTOs
 
 		//[RegularExpression("^[A-Za-z]{2,50}$")]
 		public string Lastname { get; set; }
-
-
 	}
 }

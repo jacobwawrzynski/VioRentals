@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using System.Text;
+using VioRentals.Infrastructure.Data.Entities;
+using VioRentals.Infrastructure.Repositories;
 using VioRentals.Web.DTOs;
 
 namespace VioRentals.Web.Controllers.API
@@ -11,6 +14,14 @@ namespace VioRentals.Web.Controllers.API
 	public class AuthController : ControllerBase
 	{
 		public static UserDto _user = new UserDto();
+		private readonly IMapper _mapper;
+		private readonly IUserRepository _userRepository;
+
+		public AuthController(IMapper mapper, IUserRepository userRepository)
+		{
+			_mapper = mapper;
+			_userRepository = userRepository;
+		}
 
 		[HttpPost("login")]
 		public async Task<ActionResult<string>> Login(LoginDto user)
@@ -31,15 +42,23 @@ namespace VioRentals.Web.Controllers.API
 		[HttpPost("register")]
 		public async Task<ActionResult<UserDto>> Register(RegisterDto register)
 		{
-			CreatePasswordHash(register.Password, out byte[] passwordHash, out byte[] passwordSalt);
+			if (ModelState.IsValid)
+			{
+				CreatePasswordHash(register.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-			_user.Email = register.Email;
-			_user.PasswordHash = passwordHash;
-			_user.PasswordSalt = passwordSalt;
-			_user.Forename = register.Forename;
-			_user.Lastname = register.Lastname;
+				_user.Email = register.Email;
+				_user.PasswordHash = passwordHash;
+				_user.PasswordSalt = passwordSalt;
+				_user.Forename = register.Forename;
+				_user.Lastname = register.Lastname;
 
-			return Ok(_user);
+				var createdUser = _mapper.Map<UserEntity>(_user);
+				await _userRepository.AddUserAsync(createdUser);
+
+				return Ok("User created successfully");
+			}
+
+			return BadRequest(ModelState);
 		}
 
 		private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
