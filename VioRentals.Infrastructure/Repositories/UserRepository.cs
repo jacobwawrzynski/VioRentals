@@ -19,7 +19,7 @@ namespace VioRentals.Infrastructure.Repositories
 			{
 				if (user is not null)
 				{
-					await _context.AddAsync(user);
+					await _context.Users.AddAsync(user);
 					await _context.SaveChangesAsync();
 					return true;
 				}
@@ -30,7 +30,17 @@ namespace VioRentals.Infrastructure.Repositories
 			{
 				throw;
 			}
+		}
+
+		public async Task<UserEntity?> FindBy(int id)
+		{
+			var user = await _context.Users.FindAsync(id);
 			
+			if (user is not null) 
+			{
+				return user;
+			}
+			return null;
 		}
 	}
 }

@@ -31,12 +31,14 @@ namespace VioRentals.Web.Controllers.API
 				return BadRequest("User not found.");
 			}
 
-			if (!VerifyPasswordHash(user.Password, _user.PasswordHash, _user.PasswordSalt))
+			if (VerifyPasswordHash(user.Password, _user.PasswordHash, _user.PasswordSalt))
 			{
-				return BadRequest("Wrong password");
+				var logInUser = _mapper.Map<UserEntity>(user);
+				await _userRepository.FindBy(logInUser.Id);
+				return Ok(logInUser);
 			}
-
-			return Ok(user.Email);
+			
+			return BadRequest();
 		}
 
 		[HttpPost("register")]
