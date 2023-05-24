@@ -4,18 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VioRentals.Core.Models;
 
-namespace VioRentals.Core.Models
+namespace VioRentals.Infrastructure.Data.Entities
 {
-	public class Rental
+	public class RentalEntity
 	{
 		public int Id { get; set; }
-		
-		[Required]
 		public Customer Customer { get; set; }
 		public Movie Movie { get; set; }
-		
-		[Required] 
 		public int MovieId { get; set; }
 		public DateTime DateRented { get; set; }
 		public DateTime? DateReturned { get; set; }

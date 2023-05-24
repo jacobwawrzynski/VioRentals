@@ -18,7 +18,11 @@ namespace VioRentals.Infrastructure.Data
 		{ 
 		}
 
-		public DbSet<CustomerEntity> CustomerEntity { get; set; }
+		public DbSet<CustomerEntity> Customers { get; set; }
+		public DbSet<GenreEntity> Genres { get; set; }
+		public DbSet<MembershipTypeEntity> MembershipTypes { get; set; }
+		public DbSet<MovieEntity> Movies { get; set; }
+		public DbSet<RentalEntity> Rentals { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
