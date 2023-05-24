@@ -21,7 +21,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VioRentals.Core\VioRentals.Core.csproj" />
-    <ProjectReference Include="..\VioRentals.WebAPI\VioRentals.WebAPI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Mappers\" />
   </ItemGroup>
 
 </Project>

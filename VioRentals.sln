@@ -7,13 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VioRentals.Core", "VioRenta
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VioRentals.Infrastructure", "VioRentals.Infrastructure", "{9A887131-64EF-4022-BD79-52B932E8E895}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VioRentals.WebAPI", "VioRentals.WebAPI", "{1510896D-0F37-4B2B-B634-229259859DBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VioRentals.Core", "VioRentals.Core\VioRentals.Core.csproj", "{BB8055A9-98DF-415A-8479-D070A5EA34D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VioRentals.Core", "VioRentals.Core\VioRentals.Core.csproj", "{BB8055A9-98DF-415A-8479-D070A5EA34D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VioRentals.Infrastructure", "VioRentals.Infrastructure\VioRentals.Infrastructure.csproj", "{C3B353D2-26DD-4A67-BBBF-295EA5D2744D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VioRentals.Infrastructure", "VioRentals.Infrastructure\VioRentals.Infrastructure.csproj", "{C3B353D2-26DD-4A67-BBBF-295EA5D2744D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VioRentals.Web", "VioRentals.Web", "{C32D47C1-33E8-4F9F-9540-88ED0C6931A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VioRentals.WebAPI", "VioRentals.WebAPI\VioRentals.WebAPI.csproj", "{80B3BD13-2545-48F3-910C-64146358D163}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VioRentals.Web", "VioRentals.Web\VioRentals.Web.csproj", "{F4A915B8-2874-49E5-B341-9B19C5761EA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{C3B353D2-26DD-4A67-BBBF-295EA5D2744D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3B353D2-26DD-4A67-BBBF-295EA5D2744D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3B353D2-26DD-4A67-BBBF-295EA5D2744D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80B3BD13-2545-48F3-910C-64146358D163}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80B3BD13-2545-48F3-910C-64146358D163}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80B3BD13-2545-48F3-910C-64146358D163}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80B3BD13-2545-48F3-910C-64146358D163}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4A915B8-2874-49E5-B341-9B19C5761EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4A915B8-2874-49E5-B341-9B19C5761EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4A915B8-2874-49E5-B341-9B19C5761EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4A915B8-2874-49E5-B341-9B19C5761EA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,7 +40,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{BB8055A9-98DF-415A-8479-D070A5EA34D4} = {8AED2390-41ED-40A5-9606-31A979C66514}
 		{C3B353D2-26DD-4A67-BBBF-295EA5D2744D} = {9A887131-64EF-4022-BD79-52B932E8E895}
-		{80B3BD13-2545-48F3-910C-64146358D163} = {1510896D-0F37-4B2B-B634-229259859DBE}
+		{F4A915B8-2874-49E5-B341-9B19C5761EA7} = {C32D47C1-33E8-4F9F-9540-88ED0C6931A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {123CA270-C868-466C-8583-0463A074200E}

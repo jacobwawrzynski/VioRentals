@@ -10,12 +10,12 @@ namespace VioRentals.Infrastructure.Data
 {
 	public class AppDbContext : DbContext
 	{
-		public AppDbContext() 
+		public AppDbContext()
 		{
 		}
 
 		public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-		{ 
+		{
 		}
 
 		public DbSet<CustomerEntity> Customers { get; set; }
