@@ -13,7 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VioRentals.Infrastructure",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VioRentals.Web", "VioRentals.Web", "{C32D47C1-33E8-4F9F-9540-88ED0C6931A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VioRentals.Web", "VioRentals.Web\VioRentals.Web.csproj", "{F4A915B8-2874-49E5-B341-9B19C5761EA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VioRentals.Web", "VioRentals.Web\VioRentals.Web.csproj", "{F4A915B8-2874-49E5-B341-9B19C5761EA7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BB8055A9-98DF-415A-8479-D070A5EA34D4} = {BB8055A9-98DF-415A-8479-D070A5EA34D4}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
