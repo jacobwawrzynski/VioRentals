@@ -7,7 +7,8 @@ namespace VioRentals.Web.DTOs.Mappers
 	{
 		public MappingProfile()
 		{
-			CreateMap<UserDto, UserEntity>();
+			CreateMap<UserDto, UserEntity>()
+				.ForMember(user => user.Id, opt => opt.Ignore());
 		}
 	}
 }

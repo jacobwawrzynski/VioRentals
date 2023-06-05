@@ -13,6 +13,11 @@ namespace VioRentals.Infrastructure.Repositories
 	{
 		private readonly AppDbContext _context;
 
+		public UserRepository(AppDbContext context)
+		{
+			_context = context;
+		}
+
 		public async Task<bool> AddUserAsync(UserEntity user)
 		{
 			try
@@ -32,7 +37,7 @@ namespace VioRentals.Infrastructure.Repositories
 			}
 		}
 
-		public async Task<UserEntity?> FindBy(int id)
+		public async Task<UserEntity?> FindByAsync(int id)
 		{
 			var user = await _context.Users.FindAsync(id);
 			

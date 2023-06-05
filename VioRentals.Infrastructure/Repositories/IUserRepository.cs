@@ -10,6 +10,6 @@ namespace VioRentals.Infrastructure.Repositories
 	public interface IUserRepository
 	{
 		public Task<bool> AddUserAsync(UserEntity user);
-		public Task<UserEntity?> FindBy(int id);
+		public Task<UserEntity?> FindByAsync(int id);
 	}
 }

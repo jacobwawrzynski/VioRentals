@@ -17,10 +17,10 @@ namespace VioRentals.Web.Controllers.API
 		private readonly IMapper _mapper;
 		private readonly IUserRepository _userRepository;
 
-		public AuthController(IMapper mapper, IUserRepository userRepository)
+		public AuthController(IUserRepository userRepository, IMapper mapper)
 		{
-			_mapper = mapper;
-			_userRepository = userRepository;
+            _userRepository = userRepository;
+            _mapper = mapper;
 		}
 
 		[HttpPost("login")]
@@ -34,7 +34,7 @@ namespace VioRentals.Web.Controllers.API
 			if (VerifyPasswordHash(user.Password, _user.PasswordHash, _user.PasswordSalt))
 			{
 				var logInUser = _mapper.Map<UserEntity>(user);
-				await _userRepository.FindBy(logInUser.Id);
+				await _userRepository.FindByAsync(logInUser.Id);
 				return Ok(logInUser);
 			}
 			
@@ -42,7 +42,7 @@ namespace VioRentals.Web.Controllers.API
 		}
 
 		[HttpPost("register")]
-		public async Task<ActionResult<UserDto>> Register(RegisterDto register)
+		public async Task<ActionResult<UserDto>> Register([FromForm] RegisterDto register)
 		{
 			if (ModelState.IsValid)
 			{

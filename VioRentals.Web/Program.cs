@@ -1,7 +1,13 @@
+using AutoMapper;
+using VioRentals.Infrastructure.Repositories;
+using VioRentals.Web.DTOs.Mappers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
 
@@ -18,7 +24,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAuthorization();
-app.UseEndpoints(endpoints => 
+app.UseEndpoints(endpoints =>
 {
 	endpoints.MapControllers();
 });

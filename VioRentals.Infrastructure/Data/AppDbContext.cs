@@ -30,5 +30,10 @@ namespace VioRentals.Infrastructure.Data
 			base.OnConfiguring(optionsBuilder);
 			optionsBuilder.UseSqlite("Data Source=VioRentalsData.db");
 		}
-	}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+    }
 }

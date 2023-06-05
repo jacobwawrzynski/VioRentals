@@ -1,0 +1,22 @@
+﻿@model VioRentals.Web.DTOs.RegisterDto
+
+@using (Html.BeginForm("Register", "Auth", FormMethod.Post))
+{
+    @Html.LabelFor(model => model.Email)
+    @Html.TextBoxFor(model => model.Email)
+    @Html.ValidationMessageFor(model => model.Email)
+
+    @Html.LabelFor(model => model.Password)
+    @Html.TextBoxFor(model => model.Password)
+    @Html.ValidationMessageFor(model => model.Password)
+
+    @Html.LabelFor(model => model.Forename)
+    @Html.TextBoxFor(model => model.Forename)
+    @Html.ValidationMessageFor(model => model.Forename)
+
+    @Html.LabelFor(model => model.Lastname)
+    @Html.TextBoxFor(model => model.Lastname)
+    @Html.ValidationMessageFor(model => model.Lastname)
+
+    <input type="submit" value="Register" />
+}
