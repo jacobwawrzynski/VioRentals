@@ -34,6 +34,24 @@ namespace VioRentals.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+			modelBuilder.Entity<CustomerEntity>()
+				.HasMany(c => c.Rentals)
+				.WithOne(r => r._Customer)
+				.HasForeignKey(r => r.CustomerFK)
+				.OnDelete(DeleteBehavior.Restrict);
+
+			modelBuilder.Entity<GenreEntity>()
+				.HasMany(g => g.Movies)
+				.WithOne(m => m._Genre)
+				.HasForeignKey(m => m.GenreFK)
+				.OnDelete(DeleteBehavior.ClientSetNull);
+
+			modelBuilder.Entity<MembershipTypeEntity>()
+				.HasMany(m => m.Customers)
+				.WithOne(c => c._MembershipType)
+				.HasForeignKey(c => c.MembershipTypeFK)
+				.OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

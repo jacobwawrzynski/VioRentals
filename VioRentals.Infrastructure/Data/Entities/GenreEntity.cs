@@ -10,5 +10,8 @@ namespace VioRentals.Infrastructure.Data.Entities
 	{
 		public byte Id { get; set; }
 		public string Name { get; set; }
+
+		// Relationships
+		public IEnumerable<MovieEntity> Movies { get; set; }
 	}
 }

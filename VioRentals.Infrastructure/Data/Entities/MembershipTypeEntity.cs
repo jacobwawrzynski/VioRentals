@@ -15,5 +15,8 @@ namespace VioRentals.Infrastructure.Data.Entities
 		public short SignUpFee { get; set; }
 		public byte DurationInMonths { get; set; }
 		public byte DiscountRate { get; set; }
+
+		// Relationships
+		public IEnumerable<CustomerEntity> Customers { get; set; }
 	}
 }
