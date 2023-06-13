@@ -36,25 +36,25 @@ namespace VioRentals.Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
 			modelBuilder.Entity<CustomerEntity>()
-				.HasMany(c => c.Rentals)
+				.HasMany(c => c._Rentals)
 				.WithOne(r => r._Customer)
 				.HasForeignKey(r => r.CustomerFK)
 				.OnDelete(DeleteBehavior.Restrict);
 
 			modelBuilder.Entity<GenreEntity>()
-				.HasMany(g => g.Movies)
+				.HasMany(g => g._Movies)
 				.WithOne(m => m._Genre)
 				.HasForeignKey(m => m.GenreFK)
 				.OnDelete(DeleteBehavior.ClientSetNull);
 
 			modelBuilder.Entity<MembershipTypeEntity>()
-				.HasMany(m => m.Customers)
+				.HasMany(m => m._Customers)
 				.WithOne(c => c._MembershipType)
 				.HasForeignKey(c => c.MembershipTypeFK)
 				.OnDelete(DeleteBehavior.ClientSetNull);
 
 			modelBuilder.Entity<MovieEntity>()
-				.HasMany(m => m.Rentals)
+				.HasMany(m => m._Rentals)
 				.WithOne(r => r._Movie)
 				.HasForeignKey(r => r.MovieFK)
 				.OnDelete(DeleteBehavior.ClientSetNull);

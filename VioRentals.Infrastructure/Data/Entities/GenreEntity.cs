@@ -12,6 +12,6 @@ namespace VioRentals.Infrastructure.Data.Entities
 		public string Name { get; set; }
 
 		// Relationships
-		public IEnumerable<MovieEntity> Movies { get; set; }
+		public IEnumerable<MovieEntity> _Movies { get; set; }
 	}
 }

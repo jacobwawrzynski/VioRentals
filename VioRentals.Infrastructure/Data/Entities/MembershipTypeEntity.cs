@@ -17,6 +17,6 @@ namespace VioRentals.Infrastructure.Data.Entities
 		public byte DiscountRate { get; set; }
 
 		// Relationships
-		public IEnumerable<CustomerEntity> Customers { get; set; }
+		public IEnumerable<CustomerEntity> _Customers { get; set; }
 	}
 }

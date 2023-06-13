@@ -182,7 +182,7 @@ namespace VioRentals.Infrastructure.Migrations
             modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.CustomerEntity", b =>
                 {
                     b.HasOne("VioRentals.Infrastructure.Data.Entities.MembershipTypeEntity", "_MembershipType")
-                        .WithMany("Customers")
+                        .WithMany("_Customers")
                         .HasForeignKey("MembershipTypeFK")
                         .IsRequired();
 
@@ -192,7 +192,7 @@ namespace VioRentals.Infrastructure.Migrations
             modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.MovieEntity", b =>
                 {
                     b.HasOne("VioRentals.Infrastructure.Data.Entities.GenreEntity", "_Genre")
-                        .WithMany("Movies")
+                        .WithMany("_Movies")
                         .HasForeignKey("GenreFK")
                         .IsRequired();
 
@@ -202,13 +202,13 @@ namespace VioRentals.Infrastructure.Migrations
             modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.RentalEntity", b =>
                 {
                     b.HasOne("VioRentals.Infrastructure.Data.Entities.CustomerEntity", "_Customer")
-                        .WithMany("Rentals")
+                        .WithMany("_Rentals")
                         .HasForeignKey("CustomerFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("VioRentals.Infrastructure.Data.Entities.MovieEntity", "_Movie")
-                        .WithMany("Rentals")
+                        .WithMany("_Rentals")
                         .HasForeignKey("MovieFK")
                         .IsRequired();
 
@@ -219,22 +219,22 @@ namespace VioRentals.Infrastructure.Migrations
 
             modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.CustomerEntity", b =>
                 {
-                    b.Navigation("Rentals");
+                    b.Navigation("_Rentals");
                 });
 
             modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.GenreEntity", b =>
                 {
-                    b.Navigation("Movies");
+                    b.Navigation("_Movies");
                 });
 
             modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.MembershipTypeEntity", b =>
                 {
-                    b.Navigation("Customers");
+                    b.Navigation("_Customers");
                 });
 
             modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.MovieEntity", b =>
                 {
-                    b.Navigation("Rentals");
+                    b.Navigation("_Rentals");
                 });
 #pragma warning restore 612, 618
         }

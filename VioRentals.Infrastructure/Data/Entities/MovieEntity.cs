@@ -20,7 +20,7 @@ namespace VioRentals.Infrastructure.Data.Entities
 		public byte NumberAvailable { get; set; }
 
 		// Relationships
-		public IEnumerable<RentalEntity> Rentals { get; set; }
+		public IEnumerable<RentalEntity> _Rentals { get; set; }
 
 		public int GenreFK { get; set; }
 		public GenreEntity _Genre { get; set; }

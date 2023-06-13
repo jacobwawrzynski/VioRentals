@@ -11,91 +11,14 @@ using VioRentals.Infrastructure.Data;
 namespace VioRentals.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230605140410_userEntity")]
-    partial class userEntity
+    [Migration("20230613233336_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
-
-            modelBuilder.Entity("VioRentals.Core.Models.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime?>("DateOfBirth")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsSubscribedToNewsletter")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<byte>("MembershipTypeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Customer");
-                });
-
-            modelBuilder.Entity("VioRentals.Core.Models.Genre", b =>
-                {
-                    b.Property<byte>("Id")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Genre");
-                });
-
-            modelBuilder.Entity("VioRentals.Core.Models.Movie", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("TEXT");
-
-                    b.Property<byte?>("GenreId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT");
-
-                    b.Property<byte>("NumberAvailable")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<byte?>("NumberInStock")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime?>("ReleaseDate")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GenreId");
-
-                    b.ToTable("Movie");
-                });
 
             modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.CustomerEntity", b =>
                 {
@@ -113,7 +36,7 @@ namespace VioRentals.Infrastructure.Migrations
                     b.Property<bool>("IsSubscribingToNewsletter")
                         .HasColumnType("INTEGER");
 
-                    b.Property<byte>("MembershipTypeId")
+                    b.Property<int>("MembershipTypeFK")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Surname")
@@ -122,12 +45,15 @@ namespace VioRentals.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MembershipTypeFK");
+
                     b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.GenreEntity", b =>
                 {
-                    b.Property<byte>("Id")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -141,7 +67,8 @@ namespace VioRentals.Infrastructure.Migrations
 
             modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.MembershipTypeEntity", b =>
                 {
-                    b.Property<byte>("Id")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<byte>("DiscountRate")
@@ -171,7 +98,7 @@ namespace VioRentals.Infrastructure.Migrations
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("TEXT");
 
-                    b.Property<byte?>("GenreId")
+                    b.Property<int>("GenreFK")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -189,7 +116,7 @@ namespace VioRentals.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GenreId");
+                    b.HasIndex("GenreFK");
 
                     b.ToTable("Movies");
                 });
@@ -200,7 +127,7 @@ namespace VioRentals.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int>("CustomerFK")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("DateRented")
@@ -209,7 +136,7 @@ namespace VioRentals.Infrastructure.Migrations
                     b.Property<DateTime?>("DateReturned")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("MovieId")
+                    b.Property<int>("MovieFK")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("Returned")
@@ -217,9 +144,9 @@ namespace VioRentals.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerFK");
 
-                    b.HasIndex("MovieId");
+                    b.HasIndex("MovieFK");
 
                     b.ToTable("Rentals");
                 });
@@ -255,41 +182,62 @@ namespace VioRentals.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("VioRentals.Core.Models.Movie", b =>
+            modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.CustomerEntity", b =>
                 {
-                    b.HasOne("VioRentals.Core.Models.Genre", "Genre")
-                        .WithMany()
-                        .HasForeignKey("GenreId");
+                    b.HasOne("VioRentals.Infrastructure.Data.Entities.MembershipTypeEntity", "_MembershipType")
+                        .WithMany("_Customers")
+                        .HasForeignKey("MembershipTypeFK")
+                        .IsRequired();
 
-                    b.Navigation("Genre");
+                    b.Navigation("_MembershipType");
                 });
 
             modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.MovieEntity", b =>
                 {
-                    b.HasOne("VioRentals.Core.Models.Genre", "Genre")
-                        .WithMany()
-                        .HasForeignKey("GenreId");
+                    b.HasOne("VioRentals.Infrastructure.Data.Entities.GenreEntity", "_Genre")
+                        .WithMany("_Movies")
+                        .HasForeignKey("GenreFK")
+                        .IsRequired();
 
-                    b.Navigation("Genre");
+                    b.Navigation("_Genre");
                 });
 
             modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.RentalEntity", b =>
                 {
-                    b.HasOne("VioRentals.Core.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("VioRentals.Infrastructure.Data.Entities.CustomerEntity", "_Customer")
+                        .WithMany("_Rentals")
+                        .HasForeignKey("CustomerFK")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("VioRentals.Core.Models.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("VioRentals.Infrastructure.Data.Entities.MovieEntity", "_Movie")
+                        .WithMany("_Rentals")
+                        .HasForeignKey("MovieFK")
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.Navigation("_Customer");
 
-                    b.Navigation("Movie");
+                    b.Navigation("_Movie");
+                });
+
+            modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.CustomerEntity", b =>
+                {
+                    b.Navigation("_Rentals");
+                });
+
+            modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.GenreEntity", b =>
+                {
+                    b.Navigation("_Movies");
+                });
+
+            modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.MembershipTypeEntity", b =>
+                {
+                    b.Navigation("_Customers");
+                });
+
+            modelBuilder.Entity("VioRentals.Infrastructure.Data.Entities.MovieEntity", b =>
+                {
+                    b.Navigation("_Rentals");
                 });
 #pragma warning restore 612, 618
         }
