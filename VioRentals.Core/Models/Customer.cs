@@ -23,6 +23,8 @@ namespace VioRentals.Core.Models
 		[AgeValidation]
 		public DateTime? DateOfBirth { get; set; }
 		public bool IsSubscribedToNewsletter { get; set; }
+		
+		// Map to MemebershipTypeFK in Entity
 		public byte MembershipTypeId { get; set; }
 	}
 }

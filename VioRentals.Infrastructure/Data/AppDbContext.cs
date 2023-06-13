@@ -52,6 +52,12 @@ namespace VioRentals.Infrastructure.Data
 				.WithOne(c => c._MembershipType)
 				.HasForeignKey(c => c.MembershipTypeFK)
 				.OnDelete(DeleteBehavior.ClientSetNull);
+
+			modelBuilder.Entity<MovieEntity>()
+				.HasMany(m => m.Rentals)
+				.WithOne(r => r._Movie)
+				.HasForeignKey(r => r.MovieFK)
+				.OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

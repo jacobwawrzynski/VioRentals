@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VioRentals.Core.Models;
 
 namespace VioRentals.Infrastructure.Data.Entities
 {
@@ -21,6 +20,9 @@ namespace VioRentals.Infrastructure.Data.Entities
 		// Relationshpis
 		public int CustomerFK { get; set; }
 		public CustomerEntity _Customer { get; set; }
+
+		public int MovieFK { get; set; }
+		public MovieEntity _Movie { get; set; }
 
 	}
 }
