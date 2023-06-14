@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -37,15 +38,18 @@ namespace VioRentals.Infrastructure.Repositories
 			}
 		}
 
-		public async Task<UserEntity?> FindByAsync(int id)
+		public async Task<UserEntity?> FindByIdAsync(int id)
 		{
 			var user = await _context.Users.FindAsync(id);
-			
-			if (user is not null) 
-			{
-				return user;
-			}
-			return null;
+			return user;
+		}
+
+		public async Task<UserEntity?> FindByEmailAsync(string email)
+		{
+			var user = await _context.Users
+				.Where(u => u.Email == email)
+				.FirstOrDefaultAsync();
+			return user;
 		}
 	}
 }

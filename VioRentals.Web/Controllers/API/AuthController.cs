@@ -13,7 +13,7 @@ namespace VioRentals.Web.Controllers.API
 	[ApiController]
 	public class AuthController : ControllerBase
 	{
-		public static UserDto _user = new UserDto();
+		public static UserDto _userDto = new UserDto();
 		private readonly IMapper _mapper;
 		private readonly IUserRepository _userRepository;
 
@@ -24,18 +24,19 @@ namespace VioRentals.Web.Controllers.API
 		}
 
 		[HttpPost("login")]
-		public async Task<ActionResult<string>> Login(LoginDto user)
+		public async Task<ActionResult<string>> Login([FromForm] LoginDto login)
 		{
-			if (!_user.Email.Equals(user.Email))
+			if (ModelState.IsValid)
 			{
-				return BadRequest("User not found.");
-			}
-
-			if (VerifyPasswordHash(user.Password, _user.PasswordHash, _user.PasswordSalt))
-			{
-				var logInUser = _mapper.Map<UserEntity>(user);
-				await _userRepository.FindByAsync(logInUser.Id);
-				return Ok(logInUser);
+                var user = await _userRepository.FindByEmailAsync(login.Email);
+				
+				if (user is not null)
+				{
+					if (VerifyPasswordHash(login.Password, user.PasswordHash, user.PasswordSalt))
+					{
+						return Ok(user);
+					}
+				}
 			}
 			
 			return BadRequest();
@@ -48,14 +49,14 @@ namespace VioRentals.Web.Controllers.API
 			{
 				CreatePasswordHash(register.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-				_user.Email = register.Email;
-				_user.PasswordHash = passwordHash;
-				_user.PasswordSalt = passwordSalt;
-				_user.Forename = register.Forename;
-				_user.Lastname = register.Lastname;
+				_userDto.Email = register.Email;
+				_userDto.PasswordHash = passwordHash;
+				_userDto.PasswordSalt = passwordSalt;
+				_userDto.Forename = register.Forename;
+				_userDto.Lastname = register.Lastname;
 
-				var createdUser = _mapper.Map<UserEntity>(_user);
-				var isWorking = await _userRepository.AddUserAsync(createdUser);
+				var mappedUser = _mapper.Map<UserEntity>(_userDto);
+				await _userRepository.AddUserAsync(mappedUser);
 
 				return Ok("User created successfully");
 			}

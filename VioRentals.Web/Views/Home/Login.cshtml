@@ -1,0 +1,14 @@
+﻿@model VioRentals.Web.DTOs.LoginDto
+
+@using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+{
+    @Html.LabelFor(model => model.Email)
+    @Html.TextBoxFor(model => model.Email)
+    @Html.ValidationMessageFor(model => model.Email)
+
+    @Html.LabelFor(model => model.Password)
+    @Html.TextBoxFor(model => model.Password)
+    @Html.ValidationMessageFor(model => model.Password)
+
+    <input type="submit" value="Login" />
+}
