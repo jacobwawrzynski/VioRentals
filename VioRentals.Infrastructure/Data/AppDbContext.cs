@@ -58,6 +58,12 @@ namespace VioRentals.Infrastructure.Data
 				.WithOne(r => r._Movie)
 				.HasForeignKey(r => r.MovieFK)
 				.OnDelete(DeleteBehavior.ClientSetNull);
+
+			// TODO
+			//modelBuilder.Entity<UserEntity>()
+			//	.HasData(
+			//		new UserEntity { Id = 0, PasswordHash =  }
+			//	);
         }
     }
 }

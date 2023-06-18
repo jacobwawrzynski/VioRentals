@@ -14,5 +14,8 @@ namespace VioRentals.Core.Models
 		public byte[] PasswordSalt { get; set; }
 		public string Forename { get; set; }
 		public string Lastname { get; set; }
+		
+		// TO CONSIDER
+		public Role Role { get; set; }
 	}
 }

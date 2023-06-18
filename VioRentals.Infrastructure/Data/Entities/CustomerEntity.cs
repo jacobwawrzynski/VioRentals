@@ -9,7 +9,7 @@ namespace VioRentals.Infrastructure.Data.Entities
 	public class CustomerEntity
 	{
 		public int Id { get; set; }
-		public string ForeName { get; set; }
+		public string Forename { get; set; }
 		public string Surname { get; set; }
 		public DateTime? DateOfBirth { get; set; }
 		public bool IsSubscribingToNewsletter { get; set; }

@@ -15,8 +15,8 @@ namespace VioRentals.Core.Models
 		[Required]
 		[StringLength(255)]
 		public string Name { get; set; }
-		public int GenreFK { get; set; }
-		public DateTime DateAdded { get; set; }
+		public int? GenreId { get; set; }
+		public DateTime DateAdded { get; set; } = DateTime.Now;
 		public DateTime? ReleaseDate { get; set; }
 
 		[Range(1, 20)]
