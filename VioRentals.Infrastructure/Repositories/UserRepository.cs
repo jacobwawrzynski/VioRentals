@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using VioRentals.Core.Models;
 using VioRentals.Infrastructure.Data;
 using VioRentals.Infrastructure.Data.Entities;
 
@@ -19,7 +20,7 @@ namespace VioRentals.Infrastructure.Repositories
 			_context = context;
 		}
 
-		public async Task<bool> AddUserAsync(UserEntity user)
+		public async Task<bool> SaveUserAsync(UserEntity user)
 		{
 			try
 			{
@@ -40,16 +41,15 @@ namespace VioRentals.Infrastructure.Repositories
 
 		public async Task<UserEntity?> FindByIdAsync(int id)
 		{
-			var user = await _context.Users.FindAsync(id);
-			return user;
+			return await _context.Users.FindAsync(id);
 		}
 
 		public async Task<UserEntity?> FindByEmailAsync(string email)
 		{
-			var user = await _context.Users
+            return await _context.Users
 				.Where(u => u.Email == email)
 				.FirstOrDefaultAsync();
-			return user;
+			
 		}
 	}
 }

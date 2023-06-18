@@ -56,7 +56,7 @@ namespace VioRentals.Web.Controllers.API
 				_userDto.Lastname = register.Lastname;
 
 				var mappedUser = _mapper.Map<UserEntity>(_userDto);
-				await _userRepository.AddUserAsync(mappedUser);
+				await _userRepository.SaveUserAsync(mappedUser);
 
 				return Ok("User created successfully");
 			}
