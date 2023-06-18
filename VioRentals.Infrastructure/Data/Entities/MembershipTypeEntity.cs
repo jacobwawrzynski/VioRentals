@@ -8,8 +8,6 @@ namespace VioRentals.Infrastructure.Data.Entities
 {
 	public class MembershipTypeEntity
 	{
-		//public static readonly byte Unknown = 0;
-		//public static readonly byte PayAsYouGo = 1;
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public short SignUpFee { get; set; }

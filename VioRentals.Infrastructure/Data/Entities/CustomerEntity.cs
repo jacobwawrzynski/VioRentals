@@ -13,7 +13,6 @@ namespace VioRentals.Infrastructure.Data.Entities
 		public string Surname { get; set; }
 		public DateTime? DateOfBirth { get; set; }
 		public bool IsSubscribingToNewsletter { get; set; }
-		//public byte MembershipTypeId { get; set; }
 
 		// Relationships
 		public IEnumerable<RentalEntity> _Rentals { get; set; }

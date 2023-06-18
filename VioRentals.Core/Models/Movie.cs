@@ -15,11 +15,7 @@ namespace VioRentals.Core.Models
 		[Required]
 		[StringLength(255)]
 		public string Name { get; set; }
-		
-		// Map to GenreFK and Genre in Entity or delete
-		//public Genre? Genre { get; set; }
-		//public byte? GenreId { get; set; }
-		
+		public int GenreFK { get; set; }
 		public DateTime DateAdded { get; set; }
 		public DateTime? ReleaseDate { get; set; }
 

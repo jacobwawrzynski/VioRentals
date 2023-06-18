@@ -14,7 +14,7 @@ namespace VioRentals.Core.Models
 		
 		[Required]
 		[StringLength(100)]
-		public string Name { get; set; }
+		public string ForeName { get; set; }
 
 		[Required]
 		[StringLength(100)]
@@ -23,8 +23,6 @@ namespace VioRentals.Core.Models
 		[AgeValidation]
 		public DateTime? DateOfBirth { get; set; }
 		public bool IsSubscribedToNewsletter { get; set; }
-		
-		// Map to MemebershipTypeFK in Entity
-		public byte MembershipTypeId { get; set; }
+		public int MembershipTypeFK { get; set; }
 	}
 }
