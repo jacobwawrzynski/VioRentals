@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VioRentals.Infrastructure.Data.Entities;
 
-namespace VioRentals.Infrastructure.Repositories
+namespace VioRentals.Infrastructure.Repositories.Interfaces
 {
     public interface IMovieRepository
     {
@@ -13,6 +13,6 @@ namespace VioRentals.Infrastructure.Repositories
         public Task<List<MovieEntity>> FindByTerm(string searchTerm);
         public Task<bool> SaveMovieAsync(MovieEntity movie);
         public Task<IEnumerable<MovieEntity>> FindAllAsync();
-        public Task<bool> UpdateAsync(int id);
+        public Task<bool> UpdateMovieAsync(int id, MovieEntity movie);
     }
 }

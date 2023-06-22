@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 using VioRentals.Core.Models;
 using VioRentals.Infrastructure.Data;
 using VioRentals.Infrastructure.Data.Entities;
+using VioRentals.Infrastructure.Repositories.Interfaces;
 
 namespace VioRentals.Infrastructure.Repositories
 {
-	public class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository
 	{
 		private readonly AppDbContext _context;
-
 		public UserRepository(AppDbContext context)
 		{
 			_context = context;

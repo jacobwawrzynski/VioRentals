@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using VioRentals.Infrastructure.Data;
 using VioRentals.Infrastructure.Repositories;
+using VioRentals.Infrastructure.Repositories.Interfaces;
 using VioRentals.Web.DTOs.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);

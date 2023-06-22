@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using System.Text;
 using VioRentals.Infrastructure.Data.Entities;
-using VioRentals.Infrastructure.Repositories;
+using VioRentals.Infrastructure.Repositories.Interfaces;
 using VioRentals.Web.DTOs;
 
 namespace VioRentals.Web.Controllers.API
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class AuthController : ControllerBase
 	{
