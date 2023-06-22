@@ -88,5 +88,10 @@ namespace VioRentals.Infrastructure.Repositories
                 .Where(c => c.Forename.Contains(searchTerm) || c.Surname.Contains(searchTerm))
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<MembershipTypeEntity>> GetAllMembershipTypesAsync()
+        {
+            return await _context.MembershipTypes.ToListAsync();
+        }
     }
 }

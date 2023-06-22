@@ -14,5 +14,6 @@ namespace VioRentals.Infrastructure.Repositories.Interfaces
         public Task<List<CustomerEntity>> FindByTermAsync(string searchTerm);
         public Task<bool> SaveCustomerAsync(CustomerEntity customer);
         public Task<bool> UpdateCusotmerAsync(int id, CustomerEntity customer);
+        public Task<IEnumerable<MembershipTypeEntity>> GetAllMembershipTypesAsync();
     }
 }
