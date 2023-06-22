@@ -18,6 +18,14 @@ namespace VioRentals.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<IEnumerable<CustomerEntity>> FindAllAsync()
+        {
+            return await _context.Customers
+                .Include(c => c._MembershipType)
+                .OrderBy(c => c.Surname)
+                .ToListAsync();
+        }
+
         public async Task<CustomerEntity?> FindByIdAsync(int id)
         {
             return await _context.Customers.FindAsync(id);
@@ -72,6 +80,13 @@ namespace VioRentals.Infrastructure.Repositories
             {
                 return false;
             }
+        }
+
+        public async Task<List<CustomerEntity>> FindByTermAsync(string searchTerm)
+        {
+            return await _context.Customers
+                .Where(c => c.Forename.Contains(searchTerm) || c.Surname.Contains(searchTerm))
+                .ToListAsync();
         }
     }
 }

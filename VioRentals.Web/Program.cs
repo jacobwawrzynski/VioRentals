@@ -12,8 +12,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options => 
 	options.UseSqlite("Data Source=../VioRentalsData.db"));
 
+// EF repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IMovieRepository, MovieRepository>();
+builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

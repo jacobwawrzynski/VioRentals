@@ -32,7 +32,7 @@ namespace VioRentals.Infrastructure.Repositories
             return await _context.Movies.FindAsync(id);
         } 
 
-        public async Task<List<MovieEntity>> FindByTerm(string searchTerm)
+        public async Task<List<MovieEntity>> FindByTermAsync(string searchTerm)
         {
             return await _context.Movies
                 .Where(m => m.Name.Contains(searchTerm) || m._Genre.Name.Contains(searchTerm))
