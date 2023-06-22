@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,18 +35,42 @@ namespace VioRentals.Infrastructure.Repositories
                 }
                 return false;
             }
-            catch (Exception)
+            catch (DbUpdateException)
             {
-                throw;
+                return false;
             }
         }
 
         public async Task<bool> UpdateCusotmerAsync(int id, CustomerEntity customer)
         {
             var updateCustomer = await FindByIdAsync(id);
-            if (updateCustomer is not null)
+            try
             {
-                
+                if (updateCustomer is not null
+                && customer is not null)
+                {
+                    updateCustomer.Forename = customer.Forename;
+                    updateCustomer.Surname = customer.Surname;
+                    updateCustomer.DateOfBirth = customer.DateOfBirth;
+                    updateCustomer.IsSubscribingToNewsletter = customer.IsSubscribingToNewsletter;
+                    updateCustomer.MembershipTypeFK = customer.MembershipTypeFK;
+
+                    // Do not include relations
+                    //updateCustomer._Rentals = customer._Rentals;
+
+                    // Do not include relations
+                    // Update automatically after changing FK
+                    //updateCustomer._MembershipType = customer._MembershipType;
+                    
+                    _context.Customers.Update(updateCustomer);
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return false;
             }
         }
     }

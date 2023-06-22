@@ -59,31 +59,32 @@ namespace VioRentals.Infrastructure.Repositories
 
         public async Task<bool> UpdateMovieAsync(int id, MovieEntity movie)
         {
-
             var updateMovie = await FindByIdAsync(id);
-            if (updateMovie is not null 
-                && movie is not null)
+            try
             {
-                updateMovie.DateAdded = movie.DateAdded;
-                updateMovie.ReleaseDate = movie.ReleaseDate;
-                updateMovie.NumberInStock = movie.NumberInStock;
-                updateMovie.NumberAvailable = movie.NumberAvailable;
-                updateMovie.GenreFK = movie.GenreFK;
-                updateMovie._Genre = movie._Genre;
-
-                try
+                if (updateMovie is not null
+                && movie is not null)
                 {
+                    updateMovie.DateAdded = movie.DateAdded;
+                    updateMovie.ReleaseDate = movie.ReleaseDate;
+                    updateMovie.NumberInStock = movie.NumberInStock;
+                    updateMovie.NumberAvailable = movie.NumberAvailable;
+                    updateMovie.GenreFK = movie.GenreFK;
+
+                    // Do not include relations
+                    // Update automatically after changing FK
+                    //updateMovie._Genre = movie._Genre;
+
                     _context.Movies.Update(updateMovie);
                     await _context.SaveChangesAsync();
                     return true;
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    return false;
-                }
-                    
+                return false;
             }
-            return false;
+            catch (DbUpdateConcurrencyException)
+            {
+                return false;
+            }
         }
     }
 }
