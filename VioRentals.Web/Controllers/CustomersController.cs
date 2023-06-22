@@ -13,5 +13,9 @@ namespace VioRentals.Web.Controllers
             _customerRepository = customerRepository;
         }
 
+        public async Task<ActionResult> CreateAsync()
+        {
+            return View();
+        }
     }
 }
