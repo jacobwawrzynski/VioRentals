@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using VioRentals.Infrastructure.Data.Entities;
+using VioRentals.Core.Entities;
 
 namespace VioRentals.Web.DTOs.Mappers
 {

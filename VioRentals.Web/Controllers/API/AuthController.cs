@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using System.Text;
-using VioRentals.Infrastructure.Data.Entities;
+using VioRentals.Core.Entities;
 using VioRentals.Infrastructure.Repositories.Interfaces;
 using VioRentals.Web.DTOs;
 
@@ -15,11 +15,11 @@ namespace VioRentals.Web.Controllers.API
 	{
 		public static UserDto _userDto = new UserDto();
 		private readonly IMapper _mapper;
-		private readonly IUserService _userRepository;
+		private readonly IUserService _userService;
 
-		public AuthController(IUserService userRepository, IMapper mapper)
+		public AuthController(IUserService userService, IMapper mapper)
 		{
-            _userRepository = userRepository;
+            _userService = userService;
             _mapper = mapper;
 		}
 
@@ -28,7 +28,7 @@ namespace VioRentals.Web.Controllers.API
 		{
 			if (ModelState.IsValid)
 			{
-                var user = await _userRepository.FindByEmailAsync(login.Email);
+                var user = await _userService.FindByEmailAsync(login.Email);
 				
 				if (user is not null)
 				{
@@ -56,7 +56,7 @@ namespace VioRentals.Web.Controllers.API
 				_userDto.Lastname = register.Lastname;
 
 				var mappedUser = _mapper.Map<UserEntity>(_userDto);
-				await _userRepository.SaveUserAsync(mappedUser);
+				await _userService.SaveUserAsync(mappedUser);
 
 				return Ok("User created successfully");
 			}

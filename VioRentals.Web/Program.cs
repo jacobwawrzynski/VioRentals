@@ -13,6 +13,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 	options.UseSqlite("Data Source=../VioRentalsData.db"));
 
 // EF repositories
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddTransient<IMovieService, MovieService>();
 builder.Services.AddTransient<ICustomerService, CustomerService>();
