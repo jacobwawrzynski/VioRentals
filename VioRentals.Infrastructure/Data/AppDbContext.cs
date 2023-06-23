@@ -21,7 +21,7 @@ namespace VioRentals.Infrastructure.Data
 		public DbSet<UserEntity> Users { get; set; }
 		public DbSet<CustomerEntity> Customers { get; set; }
 		public DbSet<GenreEntity> Genres { get; set; }
-		public DbSet<MembershipTypeEntity> MembershipTypes { get; set; }
+		public DbSet<MembershipDetailsEntity> MembershipTypes { get; set; }
 		public DbSet<MovieEntity> Movies { get; set; }
 		public DbSet<RentalEntity> Rentals { get; set; }
 
@@ -47,10 +47,10 @@ namespace VioRentals.Infrastructure.Data
 				.HasForeignKey(m => m.GenreFK)
 				.OnDelete(DeleteBehavior.ClientSetNull);
 
-			modelBuilder.Entity<MembershipTypeEntity>()
+			modelBuilder.Entity<MembershipDetailsEntity>()
 				.HasMany(m => m._Customers)
-				.WithOne(c => c._MembershipType)
-				.HasForeignKey(c => c.MembershipTypeFK)
+				.WithOne(c => c._MembershipDetails)
+				.HasForeignKey(c => c.MembershipDetailsFK)
 				.OnDelete(DeleteBehavior.ClientSetNull);
 
 			modelBuilder.Entity<MovieEntity>()

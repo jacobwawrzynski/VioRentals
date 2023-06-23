@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VioRentals.Core.Entities;
 
-namespace VioRentals.Infrastructure.Data.Entities
+namespace VioRentals.Core.Entities
 {
-    public class MembershipTypeEntity
+    public class MembershipDetailsEntity
 	{
 		public int Id { get; set; }
-		public string Name { get; set; }
 		public short SignUpFee { get; set; }
 		public byte DurationInMonths { get; set; }
 		public byte DiscountRate { get; set; }

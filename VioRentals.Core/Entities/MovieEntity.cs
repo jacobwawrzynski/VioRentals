@@ -4,23 +4,26 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VioRentals.Core.Models;
 
 namespace VioRentals.Infrastructure.Data.Entities
 {
 	public class MovieEntity
 	{
 		public int Id { get; set; }
+
+		[StringLength(255)]
 		public string Name { get; set; }
-		public DateTime DateAdded { get; set; }
+		public DateTime DateAdded { get; set; } = DateTime.Now;
 		public DateTime? ReleaseDate { get; set; }
-		public byte? NumberInStock { get; set; }
+
+		[Range(1, 20)]
+		public byte NumberInStock { get; set; }
 		public byte NumberAvailable { get; set; }
 
 		// Relationships
 		public IEnumerable<RentalEntity> _Rentals { get; set; }
 
-		public int GenreFK { get; set; }
+		public int? GenreFK { get; set; }
 		public GenreEntity _Genre { get; set; }
 	}
 }

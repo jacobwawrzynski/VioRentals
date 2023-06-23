@@ -21,7 +21,7 @@ namespace VioRentals.Infrastructure.Repositories
         public async Task<IEnumerable<CustomerEntity>> FindAllAsync()
         {
             return await _context.Customers
-                .Include(c => c._MembershipType)
+                .Include(c => c._MembershipDetails)
                 .OrderBy(c => c.Surname)
                 .ToListAsync();
         }
@@ -61,14 +61,14 @@ namespace VioRentals.Infrastructure.Repositories
                     updateCustomer.Surname = customer.Surname;
                     updateCustomer.DateOfBirth = customer.DateOfBirth;
                     updateCustomer.IsSubscribingToNewsletter = customer.IsSubscribingToNewsletter;
-                    updateCustomer.MembershipTypeFK = customer.MembershipTypeFK;
+                    updateCustomer.MembershipDetailsFK = customer.MembershipDetailsFK;
 
                     // Do not include relations
                     //updateCustomer._Rentals = customer._Rentals;
 
                     // Do not include relations
                     // Update automatically after changing FK
-                    //updateCustomer._MembershipType = customer._MembershipType;
+                    //updateCustomer._MembershipDetails = customer._MembershipDetails;
                     
                     _context.Customers.Update(updateCustomer);
                     await _context.SaveChangesAsync();
@@ -89,9 +89,9 @@ namespace VioRentals.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<MembershipTypeEntity>> GetAllMembershipTypesAsync()
-        {
-            return await _context.MembershipTypes.ToListAsync();
-        }
+        //public async Task<IEnumerable<MembershipTypeEntity>> GetAllMembershipTypesAsync()
+        //{
+        //    return await _context.MembershipTypes.ToListAsync();
+        //}
     }
 }

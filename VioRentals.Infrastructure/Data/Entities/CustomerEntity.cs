@@ -17,7 +17,7 @@ namespace VioRentals.Infrastructure.Data.Entities
 		// Relationships
 		public IEnumerable<RentalEntity> _Rentals { get; set; }
 
-		public int MembershipTypeFK { get; set; }
-		public MembershipTypeEntity _MembershipType { get; set; }
+		public int MembershipDetailsFK { get; set; }
+		public MembershipDetailsEntity _MembershipDetails { get; set; }
 	}
 }
