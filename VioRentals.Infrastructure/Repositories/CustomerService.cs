@@ -10,10 +10,10 @@ using VioRentals.Infrastructure.Repositories.Interfaces;
 
 namespace VioRentals.Infrastructure.Repositories
 {
-    public class CustomerRepository : ICustomerRepository
+    public class CustomerService : ICustomerService
     {
         private readonly AppDbContext _context;
-        public CustomerRepository(AppDbContext context)
+        public CustomerService(AppDbContext context)
         {
             _context = context;
         }

@@ -7,7 +7,7 @@ using VioRentals.Core.Entities;
 
 namespace VioRentals.Core.Entities
 {
-    public class MembershipDetailsEntity
+    public class MembershipDetailsEntity : BaseEntity
 	{
 		public int Id { get; set; }
 		public short SignUpFee { get; set; }

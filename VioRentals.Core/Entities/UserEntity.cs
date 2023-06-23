@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VioRentals.Core.Entities
 {
-	public class UserEntity
+	public class UserEntity : BaseEntity
 	{
 		public int Id { get; set; }
 		public string Email { get; set; }

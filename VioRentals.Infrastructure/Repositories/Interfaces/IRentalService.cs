@@ -7,7 +7,7 @@ using VioRentals.Infrastructure.Data.Entities;
 
 namespace VioRentals.Infrastructure.Repositories.Interfaces
 {
-    public interface IRentalRepository
+    public interface IRentalService
     {
         public Task<IEnumerable<RentalEntity>> FindAllAsync();
         public Task<RentalEntity?> FindByIdAsync(int id);

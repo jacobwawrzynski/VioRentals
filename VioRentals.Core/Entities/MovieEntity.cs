@@ -8,7 +8,7 @@ using VioRentals.Core.Entities.Validation;
 
 namespace VioRentals.Core.Entities
 {
-	public class MovieEntity
+	public class MovieEntity : BaseEntity
 	{
 		public int Id { get; set; }
 

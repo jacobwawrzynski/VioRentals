@@ -7,8 +7,8 @@ namespace VioRentals.Web.Controllers
 {
     public class CustomersController : Controller
     {
-        private readonly ICustomerRepository _customerRepository;
-        public CustomersController(ICustomerRepository customerRepository)
+        private readonly ICustomerService _customerRepository;
+        public CustomersController(ICustomerService customerRepository)
         {
             _customerRepository = customerRepository;
         }

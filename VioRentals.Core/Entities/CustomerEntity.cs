@@ -8,7 +8,7 @@ using VioRentals.Core.Entities.Validation;
 
 namespace VioRentals.Core.Entities
 {
-	public class CustomerEntity
+	public class CustomerEntity : BaseEntity
 	{
 		public int Id { get; set; }
 

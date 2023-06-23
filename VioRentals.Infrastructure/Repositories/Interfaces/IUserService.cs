@@ -7,7 +7,7 @@ using VioRentals.Infrastructure.Data.Entities;
 
 namespace VioRentals.Infrastructure.Repositories.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserService
     {
         public Task<bool> SaveUserAsync(UserEntity user);
         public Task<UserEntity?> FindByIdAsync(int id);

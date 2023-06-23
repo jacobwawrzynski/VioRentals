@@ -41,6 +41,10 @@ namespace VioRentals.Infrastructure.Data
 				.HasForeignKey(r => r.CustomerFK)
 				.OnDelete(DeleteBehavior.Restrict);
 
+			modelBuilder.Entity<CustomerEntity>()
+				.Property(c => c.MembershipType)
+				.HasConversion<string>();
+
 			modelBuilder.Entity<GenreEntity>()
 				.HasMany(g => g._Movies)
 				.WithOne(m => m._Genre)
@@ -58,12 +62,6 @@ namespace VioRentals.Infrastructure.Data
 				.WithOne(r => r._Movie)
 				.HasForeignKey(r => r.MovieFK)
 				.OnDelete(DeleteBehavior.ClientSetNull);
-
-			// TODO
-			//modelBuilder.Entity<UserEntity>()
-			//	.HasData(
-			//		new UserEntity { Id = 0, PasswordHash =  }
-			//	);
         }
     }
 }

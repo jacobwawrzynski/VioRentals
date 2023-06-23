@@ -15,9 +15,9 @@ namespace VioRentals.Web.Controllers.API
 	{
 		public static UserDto _userDto = new UserDto();
 		private readonly IMapper _mapper;
-		private readonly IUserRepository _userRepository;
+		private readonly IUserService _userRepository;
 
-		public AuthController(IUserRepository userRepository, IMapper mapper)
+		public AuthController(IUserService userRepository, IMapper mapper)
 		{
             _userRepository = userRepository;
             _mapper = mapper;

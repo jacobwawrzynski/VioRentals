@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VioRentals.Infrastructure.Data.Entities;
 
 namespace VioRentals.Infrastructure.Repositories.Interfaces
 {
-    public interface IMovieRepository
+    public interface IMovieService
     {
         public Task<MovieEntity?> FindByIdAsync(int id);
         public Task<List<MovieEntity>> FindByTermAsync(string searchTerm);

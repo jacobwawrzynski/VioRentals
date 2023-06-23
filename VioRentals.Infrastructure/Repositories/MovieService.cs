@@ -11,10 +11,10 @@ using VioRentals.Infrastructure.Repositories.Interfaces;
 
 namespace VioRentals.Infrastructure.Repositories
 {
-    public class MovieRepository : IMovieRepository
+    public class MovieService : IMovieService
     {
         private readonly AppDbContext _context;
-        public MovieRepository(AppDbContext context)
+        public MovieService(AppDbContext context)
         {
             _context = context;
         }

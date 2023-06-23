@@ -5,17 +5,15 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using VioRentals.Core.Models;
 using VioRentals.Infrastructure.Data;
-using VioRentals.Infrastructure.Data.Entities;
 using VioRentals.Infrastructure.Repositories.Interfaces;
 
 namespace VioRentals.Infrastructure.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserService : IUserService
 	{
 		private readonly AppDbContext _context;
-		public UserRepository(AppDbContext context)
+		public UserService(AppDbContext context)
 		{
 			_context = context;
 		}

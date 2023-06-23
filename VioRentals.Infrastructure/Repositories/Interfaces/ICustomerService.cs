@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VioRentals.Infrastructure.Data.Entities;
 
 namespace VioRentals.Infrastructure.Repositories.Interfaces
 {
-    public interface ICustomerRepository
+    public interface ICustomerService
     {
         public Task<IEnumerable<CustomerEntity>> FindAllAsync();
         public Task<CustomerEntity?> FindByIdAsync(int id);
