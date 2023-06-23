@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VioRentals.Infrastructure.Data.Entities
+namespace VioRentals.Core.Entities
 {
 	public class RentalEntity
 	{
 		public int Id { get; set; }
 		public DateTime DateRented { get; set; }
 		public DateTime? DateReturned { get; set; }
-		public bool Returned { get; set; }
+		public bool IsReturned { get; set; }
 
 		// Relationshpis
 		public int CustomerFK { get; set; }

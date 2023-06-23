@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VioRentals.Core.Entities.Validation;
 
-namespace VioRentals.Infrastructure.Data.Entities
+namespace VioRentals.Core.Entities
 {
 	public class MovieEntity
 	{
@@ -14,6 +15,8 @@ namespace VioRentals.Infrastructure.Data.Entities
 		[StringLength(255)]
 		public string Name { get; set; }
 		public DateTime DateAdded { get; set; } = DateTime.Now;
+
+		[ReleaseDate]
 		public DateTime? ReleaseDate { get; set; }
 
 		[Range(1, 20)]

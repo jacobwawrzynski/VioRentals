@@ -9,14 +9,15 @@ namespace VioRentals.Core.Entities.Validation
 {
     public class ReleaseDateAttribute : ValidationAttribute
     {
-        //protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        //{
-        //    var movie = (Movie)validationContext.ObjectInstance;
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var movie = (MovieEntity)validationContext.ObjectInstance;
 
-        //    if (movie.ReleaseDate.HasValue && movie.ReleaseDate.Value > DateTime.Today)
-        //        return new ValidationResult("Release Date cannot be in the future.");
-
-        //    return ValidationResult.Success;
-        //}
+            if (movie.ReleaseDate.HasValue && movie.ReleaseDate.Value > DateTime.Today) 
+            {
+                return new ValidationResult("Release Date cannot be in the future.");
+            }
+            return ValidationResult.Success;
+        }
     }
 }

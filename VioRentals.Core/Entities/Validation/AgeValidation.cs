@@ -24,5 +24,26 @@ namespace VioRentals.Core.Entities.Validation
         //        ? ValidationResult.Success
         //        : new ValidationResult("Customer should be at least 18 years old to go on a membership.");
         //}
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var customer = (CustomerEntity)validationContext.ObjectInstance;
+            
+            if (customer.MembershipType == MembershipTypeEnum.Unknown ||
+                customer.MembershipType == MembershipTypeEnum.PayAsYouGo)
+            {
+                return ValidationResult.Success;
+            }
+
+            if (customer.DateOfBirth > DateTime.Today)
+            {
+                return new ValidationResult("Date of Birth cannot be in the future.");
+            }
+
+            var age = DateTime.Today.Year - customer.DateOfBirth.Year;
+            return age >= 18
+                ? ValidationResult.Success
+                : new ValidationResult("Customer should be at least 18 years old to go on a membership.");
+        }
     }
 }

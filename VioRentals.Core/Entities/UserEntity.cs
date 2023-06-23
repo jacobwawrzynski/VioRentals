@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VioRentals.Infrastructure.Data.Entities
+namespace VioRentals.Core.Entities
 {
 	public class UserEntity
 	{
