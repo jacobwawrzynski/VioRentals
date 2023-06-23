@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VioRentals.Core.Entities;
 
 namespace VioRentals.Infrastructure.Repositories.Interfaces
 {
@@ -12,7 +13,7 @@ namespace VioRentals.Infrastructure.Repositories.Interfaces
         public Task<CustomerEntity?> FindByIdAsync(int id);
         public Task<List<CustomerEntity>> FindByTermAsync(string searchTerm);
         public Task<bool> SaveCustomerAsync(CustomerEntity customer);
-        public Task<bool> UpdateCusotmerAsync(int id, CustomerEntity customer);
+        public Task<bool> UpdateCustomerAsync(CustomerEntity customer);
         //public Task<IEnumerable<MembershipTypeEntity>> GetAllMembershipTypesAsync();
     }
 }

@@ -4,79 +4,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VioRentals.Core.Entities;
 using VioRentals.Infrastructure.Data;
-using VioRentals.Infrastructure.Data.Entities;
 using VioRentals.Infrastructure.Repositories.Interfaces;
 
 namespace VioRentals.Infrastructure.Repositories
 {
     public class CustomerService : ICustomerService
     {
-        private readonly AppDbContext _context;
-        public CustomerService(AppDbContext context)
+        private IRepository<CustomerEntity> _customerRepository;
+
+        public CustomerService(IRepository<CustomerEntity> customerRepository)
         {
-            _context = context;
+            _customerRepository = customerRepository;
         }
 
         public async Task<IEnumerable<CustomerEntity>> FindAllAsync()
         {
-            return await _context.Customers
-                .Include(c => c._MembershipDetails)
-                .OrderBy(c => c.Surname)
-                .ToListAsync();
+            return await _customerRepository.GetAllAsync();
         }
 
         public async Task<CustomerEntity?> FindByIdAsync(int id)
         {
-            return await _context.Customers.FindAsync(id);
+            return await _customerRepository.GetAsync(id);
         }
 
         public async Task<bool> SaveCustomerAsync(CustomerEntity customer)
         {
             try
             {
-                if (customer is not null)
-                {
-                    await _context.Customers.AddAsync(customer);
-                    await _context.SaveChangesAsync();
-                    return true;
-                }
-                return false;
+                await _customerRepository.CreateAsync(customer);
+                return true;
             }
-            catch (DbUpdateException)
+            catch (Exception)
             {
                 return false;
             }
         }
 
-        public async Task<bool> UpdateCusotmerAsync(int id, CustomerEntity customer)
+        public async Task<bool> UpdateCustomerAsync(CustomerEntity customer)
         {
-            var updateCustomer = await FindByIdAsync(id);
             try
             {
-                if (updateCustomer is not null
-                && customer is not null)
-                {
-                    updateCustomer.Forename = customer.Forename;
-                    updateCustomer.Surname = customer.Surname;
-                    updateCustomer.DateOfBirth = customer.DateOfBirth;
-                    updateCustomer.IsSubscribingToNewsletter = customer.IsSubscribingToNewsletter;
-                    updateCustomer.MembershipDetailsFK = customer.MembershipDetailsFK;
-
-                    // Do not include relations
-                    //updateCustomer._Rentals = customer._Rentals;
-
-                    // Do not include relations
-                    // Update automatically after changing FK
-                    //updateCustomer._MembershipDetails = customer._MembershipDetails;
-                    
-                    _context.Customers.Update(updateCustomer);
-                    await _context.SaveChangesAsync();
-                    return true;
-                }
-                return false;
+                await _customerRepository.UpdateAsync(customer);
+                return true;
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
                 return false;
             }
@@ -84,9 +57,10 @@ namespace VioRentals.Infrastructure.Repositories
 
         public async Task<List<CustomerEntity>> FindByTermAsync(string searchTerm)
         {
-            return await _context.Customers
+            var customers = await _customerRepository.GetAllAsync();
+            return customers
                 .Where(c => c.Forename.Contains(searchTerm) || c.Surname.Contains(searchTerm))
-                .ToListAsync();
+                .ToList();
         }
 
         //public async Task<IEnumerable<MembershipTypeEntity>> GetAllMembershipTypesAsync()

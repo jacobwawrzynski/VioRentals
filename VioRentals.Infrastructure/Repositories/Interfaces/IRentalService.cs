@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VioRentals.Infrastructure.Data.Entities;
+using VioRentals.Core.Entities;
 
 namespace VioRentals.Infrastructure.Repositories.Interfaces
 {

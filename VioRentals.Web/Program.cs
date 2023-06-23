@@ -16,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddTransient<IMovieService, MovieService>();
 builder.Services.AddTransient<ICustomerService, CustomerService>();
+builder.Services.AddTransient<IRentalService, RentalService>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

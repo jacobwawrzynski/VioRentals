@@ -9,11 +9,11 @@ namespace VioRentals.Infrastructure.Repositories.Interfaces
 {
     public interface IRepository<T> where T : BaseEntity
     {
-        IEnumerable<T> GetAll();
-        T Get(int id);
-        void Create(T entity);
-        void Update(T entity);
-        void Delete(T entity);
-        void SaveChanges();
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T> GetAsync(int id);
+        Task CreateAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(T entity);
+        Task SaveChangesAsync();
     }
 }

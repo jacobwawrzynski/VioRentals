@@ -5,83 +5,60 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VioRentals.Core.Entities;
 using VioRentals.Infrastructure.Data;
-using VioRentals.Infrastructure.Data.Entities;
 using VioRentals.Infrastructure.Repositories.Interfaces;
 
 namespace VioRentals.Infrastructure.Repositories
 {
     public class MovieService : IMovieService
     {
-        private readonly AppDbContext _context;
-        public MovieService(AppDbContext context)
+        private IRepository<MovieEntity> _movieRepository;
+
+        public MovieService(IRepository<MovieEntity> movieRepository)
         {
-            _context = context;
+            _movieRepository = movieRepository;
         }
 
         public async Task<IEnumerable<MovieEntity>> FindAllAsync()
         {
-            return await _context.Movies
-                .Include(m => m._Genre)
-                .OrderBy(m => m.Name)
-                .ToListAsync();
+            return await _movieRepository.GetAllAsync();    
         }
 
         public async Task<MovieEntity?> FindByIdAsync(int id)
         {
-            return await _context.Movies.FindAsync(id);
+            return await _movieRepository.GetAsync(id);
         } 
 
         public async Task<List<MovieEntity>> FindByTermAsync(string searchTerm)
         {
-            return await _context.Movies
+            var movies = await _movieRepository.GetAllAsync();
+            return movies
                 .Where(m => m.Name.Contains(searchTerm) || m._Genre.Name.Contains(searchTerm))
-                .ToListAsync();
+                .ToList();
         }
 
         public async Task<bool> SaveMovieAsync(MovieEntity movie)
         {
             try
             {
-                if (movie is not null)
-                {
-                    await _context.AddAsync(movie);
-                    await _context.SaveChangesAsync();
-                    return true;
-                }
-                return false;
+                await _movieRepository.CreateAsync(movie);
+                return true;
             }
-            catch (DbUpdateException)
+            catch (Exception)
             {
                 return false;
             }
         }
 
-        public async Task<bool> UpdateMovieAsync(int id, MovieEntity movie)
+        public async Task<bool> UpdateMovieAsync(MovieEntity movie)
         {
-            var updateMovie = await FindByIdAsync(id);
             try
             {
-                if (updateMovie is not null
-                && movie is not null)
-                {
-                    updateMovie.DateAdded = movie.DateAdded;
-                    updateMovie.ReleaseDate = movie.ReleaseDate;
-                    updateMovie.NumberInStock = movie.NumberInStock;
-                    updateMovie.NumberAvailable = movie.NumberAvailable;
-                    updateMovie.GenreFK = movie.GenreFK;
-
-                    // Do not include relations
-                    // Update automatically after changing FK
-                    //updateMovie._Genre = movie._Genre;
-
-                    _context.Movies.Update(updateMovie);
-                    await _context.SaveChangesAsync();
-                    return true;
-                }
-                return false;
+                await _movieRepository.UpdateAsync(movie);
+                return true;
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
                 return false;
             }

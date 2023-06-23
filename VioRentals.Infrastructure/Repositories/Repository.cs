@@ -20,49 +20,49 @@ namespace VioRentals.Infrastructure.Repositories
             _entities = context.Set<T>();
         }
 
-        public T Get(int id)
+        public async Task<T> GetAsync(int id)
         {
-            return _entities.SingleOrDefault(e => e.Id == id);
+            return await _entities.SingleOrDefaultAsync(e => e.Id == id);
         }
 
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return _entities.AsEnumerable();
+            return await _entities.ToListAsync();
         }
 
-        public void Create(T entity)
+        public async Task CreateAsync(T entity)
         {
             if (entity is null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            _entities.Add(entity);
-            _context.SaveChanges();
+            await _entities.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(T entity)
+        public async Task DeleteAsync(T entity)
         {
             if (entity is null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
             _entities.Remove(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(T entity)
+        public async Task UpdateAsync(T entity)
         {
             if (entity is null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
             _entities.Update(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void SaveChanges()
+        public async Task SaveChangesAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

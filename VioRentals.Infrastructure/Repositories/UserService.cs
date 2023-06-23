@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using VioRentals.Core.Entities;
 using VioRentals.Infrastructure.Data;
 using VioRentals.Infrastructure.Repositories.Interfaces;
 
@@ -12,42 +13,37 @@ namespace VioRentals.Infrastructure.Repositories
 {
     public class UserService : IUserService
 	{
-		private readonly AppDbContext _context;
-		public UserService(AppDbContext context)
+		private IRepository<UserEntity> _userRepository;
+
+		public UserService(IRepository<UserEntity> userRepository)
 		{
-			_context = context;
+			_userRepository = userRepository;
 		}
 
 		public async Task<bool> SaveUserAsync(UserEntity user)
 		{
 			try
 			{
-				if (user is not null)
-				{
-					await _context.Users.AddAsync(user);
-					await _context.SaveChangesAsync();
-					return true;
-				}
-
-				return false;
-			}
-			catch (Exception)
+                await _userRepository.CreateAsync(user);
+				return true;
+            }
+            catch (Exception)
 			{
-				throw;
+				return false;
 			}
 		}
 
 		public async Task<UserEntity?> FindByIdAsync(int id)
 		{
-			return await _context.Users.FindAsync(id);
+			return await _userRepository.GetAsync(id);
 		}
 
 		public async Task<UserEntity?> FindByEmailAsync(string email)
 		{
-            return await _context.Users
+            var users = await _userRepository.GetAllAsync();
+			return users
 				.Where(u => u.Email == email)
-				.FirstOrDefaultAsync();
-			
+				.FirstOrDefault();
 		}
 	}
 }
