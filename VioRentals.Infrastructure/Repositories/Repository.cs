@@ -59,10 +59,5 @@ namespace VioRentals.Infrastructure.Repositories
             _entities.Update(entity);
             await _context.SaveChangesAsync();
         }
-
-        public async Task SaveChangesAsync()
-        {
-            await _context.SaveChangesAsync();
-        }
     }
 }

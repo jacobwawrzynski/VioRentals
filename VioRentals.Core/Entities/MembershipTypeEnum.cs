@@ -8,10 +8,9 @@ namespace VioRentals.Core.Entities
 {
     public enum MembershipTypeEnum
     {
-        Unknown,
-        PayAsYouGo,
-        Monthly,
-        Quarterly,
-        Annually
+        PayAsYouGo = 1,
+        Monthly = 2,
+        Quarterly = 3,
+        Annually = 4
     }
 }
