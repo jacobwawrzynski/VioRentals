@@ -20,7 +20,7 @@ namespace VioRentals.Web.Controllers
         [HttpGet]
         public ViewResult GetCreate()
         {
-            return View("CustomerForm");
+            return View("Create");
         }
 
         [HttpGet]
@@ -30,7 +30,7 @@ namespace VioRentals.Web.Controllers
             
             if (customer is not null)
             {
-                return View("CustomerForm", customer);
+                return View("Edit", customer);
             }
             return NotFound();
         }

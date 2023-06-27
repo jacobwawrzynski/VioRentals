@@ -1,0 +1,25 @@
+﻿@model VioRentals.Web.DTOs.CustomerDto
+
+<form asp-action="Create" method="post">
+    <label asp-for="Forename">Forename:</label>
+    <input asp-for="Forename" type="text" id="forename" name="Forename" required>
+
+    <label asp-for="Surname">Surname:</label>
+    <input asp-for="Surname" type="text" id="surname" name="Surname" required>
+
+    <label asp-for="MembershipType">Membership Type:</label>
+    <select asp-for="MembershipType" id="membershipType" name="MembershipType">
+        <option value="1">PayAsYouGo</option>
+        <option value="2">Monthly</option>
+        <option value="3">Quarterly</option>
+        <option value="4">Annualy</option>
+    </select>
+
+    <label asp-for="DateOfBirdth">Date of Birth:</label>
+    <input asp-for="DateOfBirdth" type="date" id="dateOfBirth" name="DateOfBirth" required>
+
+    <label asp-for="IsSubscibingToNewsletter">Subscribing:</label>
+    <input asp-for="IsSubscibingToNewsletter" type="checkbox" id="isSubscribing" name="IsSubscribing">
+
+    <input type="submit" value="Create Customer">
+</form>

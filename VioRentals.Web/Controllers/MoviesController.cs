@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using VioRentals.Core.DTOs;
 using VioRentals.Core.Entities;
 using VioRentals.Infrastructure.Repositories.Interfaces;
+using VioRentals.Web.DTOs;
 
 namespace VioRentals.Web.Controllers
 {
@@ -20,7 +20,7 @@ namespace VioRentals.Web.Controllers
         [HttpGet]
         public ViewResult GetCreate() 
         {
-            return View("MovieForm");
+            return View("Create");
         }
 
         [HttpGet]
@@ -30,7 +30,7 @@ namespace VioRentals.Web.Controllers
 
             if (movie is not null)
             {
-                return View("MovieForm", movie);
+                return View("Edit", movie);
             }
             return NotFound();
         }
