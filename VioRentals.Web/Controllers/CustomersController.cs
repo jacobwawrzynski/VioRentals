@@ -8,17 +8,17 @@ namespace VioRentals.Web.Controllers
 {
     public class CustomersController : Controller
     {
-        private readonly ICustomerService _customerRepository;
+        private readonly ICustomerService _customerService;
         private readonly IMapper _mapper;
 
-        public CustomersController(ICustomerService customerRepository, IMapper mapper)
+        public CustomersController(ICustomerService customerService, IMapper mapper)
         {
-            _customerRepository = customerRepository;
+            _customerService = customerService;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ViewResult> GetCreateAsync()
+        public ViewResult GetCreate()
         {
             return View("CustomerForm");
         }
@@ -26,7 +26,7 @@ namespace VioRentals.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> GetEditAsync(int id)
         {
-            var customer = await _customerRepository.FindByIdAsync(id);
+            var customer = await _customerService.FindByIdAsync(id);
             
             if (customer is not null)
             {
@@ -42,7 +42,7 @@ namespace VioRentals.Web.Controllers
             if (ModelState.IsValid)
             {
                 var customer = _mapper.Map<CustomerEntity>(customerDto);
-                await _customerRepository.SaveCustomerAsync(customer);
+                await _customerService.SaveCustomerAsync(customer);
                 return RedirectToAction("Index");
             }
 
@@ -56,7 +56,7 @@ namespace VioRentals.Web.Controllers
             if (ModelState.IsValid)
             {
                 var customer = _mapper.Map<CustomerEntity>(customerDto);
-                await _customerRepository.UpdateCustomerAsync(customer);
+                await _customerService.UpdateCustomerAsync(customer);
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +66,7 @@ namespace VioRentals.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> GetDetailsAsync(int id)
         {
-            var customer = await _customerRepository.FindByIdAsync(id);
+            var customer = await _customerService.FindByIdAsync(id);
 
             if (customer is not null)
             {
@@ -77,9 +77,10 @@ namespace VioRentals.Web.Controllers
 
         }
 
+        [HttpGet]
         public async Task<JsonResult> SearchAsync(string searchTerm)
         {
-            var customers = await _customerRepository.FindByTermAsync(searchTerm);
+            var customers = await _customerService.FindByTermAsync(searchTerm);
             var result = customers.Select(c => new
             {
                 c.Id,
@@ -95,7 +96,7 @@ namespace VioRentals.Web.Controllers
         [HttpGet]
         public async Task<ViewResult> Index(int page = 1, int pageSize = 10)
         {
-            var totalPages = (int)Math.Ceiling((double) await _customerRepository.CountCustomersAsync() / pageSize);
+            var totalPages = (int)Math.Ceiling((double) await _customerService.CountCustomersAsync() / pageSize);
             //check if user enters value higher than totalpages and set the value to the hightes pagenumber availabe
             if (page > totalPages)
             {
@@ -121,7 +122,7 @@ namespace VioRentals.Web.Controllers
                 Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
             }
 
-            var getCustomers = await _customerRepository.FindAllAsync();
+            var getCustomers = await _customerService.FindAllAsync();
             var customers = getCustomers
                 .OrderBy(c => c.Forename)
                 .Skip((page - 1) * pageSize)

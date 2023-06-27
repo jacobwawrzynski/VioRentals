@@ -13,6 +13,9 @@ namespace VioRentals.Web.DTOs.Mappers
 
 			CreateMap<CustomerDto, CustomerEntity>()
 				.ForMember(c => c.Id, opt => opt.Ignore());
+
+			CreateMap<MovieDto, MovieEntity>()
+				.ForMember(c => c.Id, opt => opt.Ignore());
 		}
 	}
 }
