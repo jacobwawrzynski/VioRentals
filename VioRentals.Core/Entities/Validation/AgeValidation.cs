@@ -29,8 +29,7 @@ namespace VioRentals.Core.Entities.Validation
         {
             var customer = (CustomerEntity)validationContext.ObjectInstance;
             
-            if (customer.MembershipType == MembershipTypeEnum.Unknown ||
-                customer.MembershipType == MembershipTypeEnum.PayAsYouGo)
+            if (customer.MembershipType == MembershipTypeEnum.PayAsYouGo)
             {
                 return ValidationResult.Success;
             }

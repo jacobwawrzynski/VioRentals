@@ -63,9 +63,9 @@ namespace VioRentals.Infrastructure.Repositories
                 .ToList();
         }
 
-        //public async Task<IEnumerable<MembershipTypeEntity>> GetAllMembershipTypesAsync()
-        //{
-        //    return await _context.MembershipTypes.ToListAsync();
-        //}
+        public async Task<int> CountCustomersAsync()
+        {
+            return await _customerRepository.CountAsync();
+        }
     }
 }

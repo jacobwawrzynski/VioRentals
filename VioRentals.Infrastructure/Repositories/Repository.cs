@@ -59,5 +59,11 @@ namespace VioRentals.Infrastructure.Repositories
             _entities.Update(entity);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<int> CountAsync()
+        {
+            return await _entities.CountAsync();
+        }
+
     }
 }
