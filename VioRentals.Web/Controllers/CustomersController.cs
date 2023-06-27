@@ -1,60 +1,66 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VioRentals.Infrastructure.Repositories.Interfaces;
 using VioRentals.Core.Entities;
-using VioRentals.Web.Models;
+using AutoMapper;
+using VioRentals.Web.DTOs;
 
 namespace VioRentals.Web.Controllers
 {
     public class CustomersController : Controller
     {
         private readonly ICustomerService _customerRepository;
-        public CustomersController(ICustomerService customerRepository)
+        private readonly IMapper _mapper;
+
+        public CustomersController(ICustomerService customerRepository, IMapper mapper)
         {
             _customerRepository = customerRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAsync()
+        public async Task<ViewResult> GetCreateAsync()
         {
             return View("CustomerForm");
         }
 
+        [HttpGet]
+        public async Task<ActionResult> GetEditAsync(int id)
+        {
+            var customer = await _customerRepository.FindByIdAsync(id);
+            
+            if (customer is not null)
+            {
+                return View("CustomerForm", customer);
+            }
+            return NotFound();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateAsync([FromForm] CustomerEntity customer)
+        public async Task<ActionResult> CreateAsync([FromForm] CustomerDto customerDto)
         {
-            bool isSaved = false;
             if (ModelState.IsValid)
             {
-                customer.MembershipDetailsFK = (int)customer.MembershipType;
-                isSaved = await _customerRepository.SaveCustomerAsync(customer);
+                var customer = _mapper.Map<CustomerEntity>(customerDto);
+                await _customerRepository.SaveCustomerAsync(customer);
+                return RedirectToAction("Index");
             }
 
-            return isSaved
-                    ? View("CustomerForm", customer)
-                    : BadRequest(ModelState);
+            return RedirectToAction("GetCreateAsync", customerDto);
         }
 
         [HttpPatch]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAsync(int id, [FromForm] CustomerEntity customerForm)
+        public async Task<ActionResult> EditAsync([FromForm] CustomerDto customerDto)
         {
-            var customer = await _customerRepository.FindByIdAsync(id);
-            bool isUpdated = false;
-            if (customer is null) 
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                customer = customerForm;
-                isUpdated = await _customerRepository.UpdateCustomerAsync(customer);
+                var customer = _mapper.Map<CustomerEntity>(customerDto);
+                await _customerRepository.UpdateCustomerAsync(customer);
+                return RedirectToAction("Index");
             }
 
-            return isUpdated
-                ? View("CustomerForm", customer)
-                : BadRequest(ModelState);
+            return RedirectToAction("GetEditAsync", customerDto);
         }
 
         [HttpGet]
@@ -62,9 +68,13 @@ namespace VioRentals.Web.Controllers
         {
             var customer = await _customerRepository.FindByIdAsync(id);
 
-            return customer is null 
-                ? NotFound() 
-                : View(customer);
+            if (customer is not null)
+            {
+                return View(customer);
+            }
+
+            return NotFound();
+
         }
 
         public async Task<JsonResult> SearchAsync(string searchTerm)
@@ -82,6 +92,7 @@ namespace VioRentals.Web.Controllers
             return Json(result);
         }
 
+        [HttpGet]
         public async Task<ViewResult> Index(int page = 1, int pageSize = 10)
         {
             var totalPages = (int)Math.Ceiling((double) await _customerRepository.CountCustomersAsync() / pageSize);
