@@ -12,6 +12,6 @@ namespace VioRentals.Core.Entities
 		public string Name { get; set; }
 
 		// Relationships
-		public IEnumerable<MovieEntity> _Movies { get; set; }
+		public ICollection<MovieEntity> _Movies { get; set; }
 	}
 }

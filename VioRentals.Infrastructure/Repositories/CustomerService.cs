@@ -65,13 +65,10 @@ namespace VioRentals.Infrastructure.Repositories
                 .ToList();
         }
 
-        //public async Task<bool> AssignMembershipAsync(int membershipId, CustomerEntity customerEntity)
-        //{
-        //    var membership = await _membershipRepository.GetAsync(membershipId);
-        //    membership._Customers.
-        //    customerEntity._MembershipDetails = membership;
-
-        //}
+        public async Task<MembershipDetailsEntity> FindMembershipAsync(int id)
+        {
+            return await _membershipRepository.GetAsync(id);
+        }
 
         public async Task<int> CountCustomersAsync()
         {

@@ -16,6 +16,6 @@ namespace VioRentals.Core.Entities
 		public byte DiscountRate { get; set; }
 
 		// Relationships
-		public IEnumerable<CustomerEntity> _Customers { get; set; }
+		public ICollection<CustomerEntity> _Customers { get; set; }
 	}
 }

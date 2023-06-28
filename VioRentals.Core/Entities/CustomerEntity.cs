@@ -24,7 +24,7 @@ namespace VioRentals.Core.Entities
 		public bool IsSubscribingToNewsletter { get; set; }
 
 		// Relationships
-		public IEnumerable<RentalEntity> _Rentals { get; set; }
+		public ICollection<RentalEntity> _Rentals { get; set; }
 
 		public int MembershipDetailsFK { get; set; }
 		public MembershipDetailsEntity _MembershipDetails { get; set; }
