@@ -42,6 +42,7 @@ namespace VioRentals.Web.Controllers
             if (ModelState.IsValid)
             {
                 var customer = _mapper.Map<CustomerEntity>(customerDto);
+
                 await _customerService.SaveCustomerAsync(customer);
                 return RedirectToAction("Index");
             }

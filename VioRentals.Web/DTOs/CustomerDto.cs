@@ -10,6 +10,5 @@ namespace VioRentals.Web.DTOs
         public DateTime DateOfBirth { get; set; }
         public bool IsSubscibingToNewsletter { get; set; }
         public int MembershipDetailsFK { get => (int)MembershipType; }
-
     }
 }
