@@ -1,0 +1,50 @@
+﻿@using VioRentals.Core.Entities;
+@model IEnumerable<CustomerEntity>
+
+<h2>Customers</h2>
+@*<p id="new">
+    @Html.ActionLink("New Customer", "New", "Customers", null, new { @class = "btn btn-primary" })
+</p>*@
+
+@if (!Model.Any())
+{
+    <p>We don't have any customers yet.</p>
+}
+else
+{
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Enter customers data to search..." id="search-input" aria-describedby="button-addon2">
+        <button class="btn btn-primary" type="button" id="search-btn">Search</button>
+    </div>
+
+    <table id="customers" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Discount Rate</th>
+                <th>Membership Type</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr class="table-dark">
+                    <td>
+                        @Html.ActionLink(customer.Forename + " " + customer.Surname, "GetEdit", "Customers", new { id = customer.Id }, null)
+                    </td>
+                    <td>
+                        @customer._MembershipDetails.ToString()
+                    </td>
+                    <td>
+                        @customer.MembershipType.ToString()
+                    </td>
+                    <td>
+                        <button class="btn btn-warning" onclick="deleteCustomer(@customer.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
