@@ -42,8 +42,6 @@ namespace VioRentals.Web.Controllers
             if (ModelState.IsValid)
             {
                 var customer = _mapper.Map<CustomerEntity>(customerDto);
-                //customer._MembershipDetails =
-                //    await _customerService.FindMembershipAsync(customer.MembershipDetailsFK);
                 await _customerService.SaveCustomerAsync(customer);
                 return RedirectToAction("Index");
             }
@@ -98,43 +96,40 @@ namespace VioRentals.Web.Controllers
         [HttpGet]
         public async Task<ViewResult> Index(int page = 1, int pageSize = 10)
         {
-            var totalPages = (int)Math.Ceiling((double) await _customerService.CountCustomersAsync() / pageSize);
-            //check if user enters value higher than totalpages and set the value to the hightes pagenumber availabe
-            if (page > totalPages)
-            {
-                page = totalPages;
-                //optional
-                Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
-            }
-            else if (page < 1)
-            {
-                page = 1;
-                Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
-            }
+            //var totalPages = (int)Math.Ceiling((double) await _customerService.CountCustomersAsync() / pageSize);
+            ////check if user enters value higher than totalpages and set the value to the hightes pagenumber availabe
+            //if (page > totalPages)
+            //{
+            //    page = totalPages;
+            //    //optional
+            //    Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
+            //}
+            //else if (page < 1)
+            //{
+            //    page = 1;
+            //    Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
+            //}
 
-            if (pageSize < 1)
-            {
-                pageSize = 10;
-                page = 1;
-                Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
-            }
-            else if (pageSize > 100)
-            {
-                pageSize = 100;
-                Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
-            }
+            //if (pageSize < 1)
+            //{
+            //    pageSize = 10;
+            //    page = 1;
+            //    Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
+            //}
+            //else if (pageSize > 100)
+            //{
+            //    pageSize = 100;
+            //    Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
+            //}
 
             var getCustomers = await _customerService.FindAllAsync();
             var customers = getCustomers
-                .OrderBy(c => c.Forename)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
                 .ToList();
 
             //pass to view
-            ViewBag.TotalPages = totalPages;
-            ViewBag.CurrentPage = page;
-            ViewBag.PageSize = pageSize;
+            //ViewBag.TotalPages = totalPages;
+            //ViewBag.CurrentPage = page;
+            //ViewBag.PageSize = pageSize;
 
             return View(customers);
         }

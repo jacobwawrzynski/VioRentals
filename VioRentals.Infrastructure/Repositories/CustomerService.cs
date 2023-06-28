@@ -35,6 +35,7 @@ namespace VioRentals.Infrastructure.Repositories
         {
             try
             {   
+                customer._MembershipDetails = await FindMembershipAsync(customer.MembershipDetailsFK);
                 await _customerRepository.CreateAsync(customer);
                 return true;
             }
@@ -48,6 +49,7 @@ namespace VioRentals.Infrastructure.Repositories
         {
             try
             {
+                customer._MembershipDetails = await FindMembershipAsync(customer.MembershipDetailsFK);
                 await _customerRepository.UpdateAsync(customer);
                 return true;
             }
