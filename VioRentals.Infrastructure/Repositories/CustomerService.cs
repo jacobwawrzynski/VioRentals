@@ -35,7 +35,7 @@ namespace VioRentals.Infrastructure.Repositories
         {
             try
             {   
-                customer._MembershipDetails = await FindMembershipAsync(customer.MembershipDetailsFK);
+                customer._MembershipDetails = await _membershipRepository.GetAsync(customer.MembershipDetailsFK);
                 await _customerRepository.CreateAsync(customer);
                 return true;
             }
@@ -49,7 +49,7 @@ namespace VioRentals.Infrastructure.Repositories
         {
             try
             {
-                customer._MembershipDetails = await FindMembershipAsync(customer.MembershipDetailsFK);
+                customer._MembershipDetails = await _membershipRepository.GetAsync(customer.MembershipDetailsFK);
                 await _customerRepository.UpdateAsync(customer);
                 return true;
             }
@@ -67,10 +67,10 @@ namespace VioRentals.Infrastructure.Repositories
                 .ToList();
         }
 
-        public async Task<MembershipDetailsEntity> FindMembershipAsync(int id)
-        {
-            return await _membershipRepository.GetAsync(id);
-        }
+        //public async Task<MembershipDetailsEntity> FindMembershipAsync(int id)
+        //{
+        //    return await _membershipRepository.GetAsync(id);
+        //}
 
         public async Task<int> CountCustomersAsync()
         {

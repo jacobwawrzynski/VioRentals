@@ -9,11 +9,15 @@ namespace VioRentals.Web.Controllers
     public class CustomersController : Controller
     {
         private readonly ICustomerService _customerService;
+        private readonly IMembershipService _membershipService;
         private readonly IMapper _mapper;
 
-        public CustomersController(ICustomerService customerService, IMapper mapper)
+        public CustomersController(ICustomerService customerService,
+            IMembershipService membershipService, 
+            IMapper mapper)
         {
             _customerService = customerService;
+            _membershipService = membershipService;
             _mapper = mapper;
         }
 
@@ -96,40 +100,46 @@ namespace VioRentals.Web.Controllers
         [HttpGet]
         public async Task<ViewResult> Index(int page = 1, int pageSize = 10)
         {
-            //var totalPages = (int)Math.Ceiling((double) await _customerService.CountCustomersAsync() / pageSize);
-            ////check if user enters value higher than totalpages and set the value to the hightes pagenumber availabe
-            //if (page > totalPages)
-            //{
-            //    page = totalPages;
-            //    //optional
-            //    Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
-            //}
-            //else if (page < 1)
-            //{
-            //    page = 1;
-            //    Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
-            //}
+            var totalPages = (int)Math.Ceiling((double)await _customerService.CountCustomersAsync() / pageSize);
+            //check if user enters value higher than totalpages and set the value to the hightes pagenumber availabe
+            if (page > totalPages)
+            {
+                page = totalPages;
+                //optional
+                Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
+            }
+            else if (page < 1)
+            {
+                page = 1;
+                Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
+            }
 
-            //if (pageSize < 1)
-            //{
-            //    pageSize = 10;
-            //    page = 1;
-            //    Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
-            //}
-            //else if (pageSize > 100)
-            //{
-            //    pageSize = 100;
-            //    Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
-            //}
+            if (pageSize < 1)
+            {
+                pageSize = 10;
+                page = 1;
+                Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
+            }
+            else if (pageSize > 100)
+            {
+                pageSize = 100;
+                Response.Redirect("/Customers/Index?page=" + page + "&pageSize=" + pageSize);
+            }
 
-            var getCustomers = await _customerService.FindAllAsync();
-            var customers = getCustomers
-                .ToList();
+            // FIND BETTER SOLUTION (THIS WORKS BUT UGLY)
+            var customers = await _customerService.FindAllAsync();
+            var memberships = await _membershipService.FindAllAsync();
 
+            foreach (var cus in customers)
+            {
+                cus._MembershipDetails = memberships
+                    .Where(m => m.Id == cus.MembershipDetailsFK)
+                    .First();
+            }
             //pass to view
-            //ViewBag.TotalPages = totalPages;
-            //ViewBag.CurrentPage = page;
-            //ViewBag.PageSize = pageSize;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+            ViewBag.PageSize = pageSize;
 
             return View(customers);
         }
