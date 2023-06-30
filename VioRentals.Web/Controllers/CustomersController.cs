@@ -13,7 +13,7 @@ namespace VioRentals.Web.Controllers
         private readonly IMapper _mapper;
 
         public CustomersController(ICustomerService customerService,
-            IMembershipService membershipService, 
+            IMembershipService membershipService,
             IMapper mapper)
         {
             _customerService = customerService;
@@ -27,11 +27,11 @@ namespace VioRentals.Web.Controllers
             return View("Create");
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<ActionResult> GetEditAsync(int id)
         {
             var customer = await _customerService.FindByIdAsync(id);
-            
+
             if (customer is not null)
             {
                 return View("Edit", customer);
@@ -53,18 +53,16 @@ namespace VioRentals.Web.Controllers
             return RedirectToAction("GetCreateAsync", customerDto);
         }
 
-        [HttpPatch]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAsync([FromForm] CustomerDto customerDto)
+        public async Task<ActionResult> EditAsync([FromForm] CustomerEntity customer)
         {
             if (ModelState.IsValid)
             {
-                var customer = _mapper.Map<CustomerEntity>(customerDto);
+                customer.MembershipDetailsFK = (int)customer.MembershipType;
                 await _customerService.UpdateCustomerAsync(customer);
                 return RedirectToAction("Index");
             }
 
-            return RedirectToAction("GetEditAsync", customerDto);
+            return RedirectToAction("GetEditAsync", customer.Id);
         }
 
         [HttpGet]

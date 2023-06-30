@@ -1,3 +1,38 @@
 ﻿@using VioRentals.Core.Entities
 @model CustomerEntity
 
+@using (Html.BeginForm("Edit", "Customers"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Forename)
+        @Html.TextBoxFor(m => m.Forename, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Forename)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Surname)
+        @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Surname)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.MembershipType)
+        <select class="form-control" asp-for="MembershipType" id="membershipType" name="MembershipType">
+            <option value="1">PayAsYouGo</option>
+            <option value="2">Monthly</option>
+            <option value="3">Quarterly</option>
+            <option value="4">Annualy</option>
+        </select>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DateOfBirth)
+        @Html.TextBoxFor(m => m.DateOfBirth, "{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.DateOfBirth)
+    </div>
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.IsSubscribingToNewsletter) Subscribed to Newsletter?
+        </label>
+    </div>
+
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save edition</button>
+}

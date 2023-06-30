@@ -8,7 +8,7 @@ namespace VioRentals.Web.DTOs
         public string Surname { get; set; }
         public MembershipTypeEnum MembershipType { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public bool IsSubscibingToNewsletter { get; set; }
+        public bool IsSubscribingToNewsletter { get; set; }
         public int MembershipDetailsFK { get => (int)MembershipType; }
     }
 }

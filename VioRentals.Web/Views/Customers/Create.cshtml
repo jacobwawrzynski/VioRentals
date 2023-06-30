@@ -1,4 +1,5 @@
-﻿@model VioRentals.Web.DTOs.CustomerDto
+﻿@using VioRentals.Web.DTOs
+@model CustomerDto
 
 @using (Html.BeginForm("Create", "Customers"))
 {
@@ -28,7 +29,7 @@
     </div>
     <div class="checkbox">
         <label>
-            @Html.CheckBoxFor(m => m.IsSubscibingToNewsletter) Subscribed to Newsletter?
+            @Html.CheckBoxFor(m => m.IsSubscribingToNewsletter) Subscribed to Newsletter?
         </label>
     </div>
 
