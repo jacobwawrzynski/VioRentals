@@ -56,14 +56,8 @@ namespace VioRentals.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAsync(
-            int id, 
-            CustomerDto customerDto)
+        public async Task<ActionResult> EditAsync(int id, CustomerDto customerDto)
         {
-            //if (id != customerDto.Id)
-            //{
-            //    return NotFound();
-            //}
             if (ModelState.IsValid)
             {
                 var customer = _mapper.Map<CustomerEntity>(customerDto);
@@ -71,9 +65,7 @@ namespace VioRentals.Web.Controllers
                 return RedirectToAction("Index");
             }
                 
-            
-            return BadRequest();
-            //return RedirectToAction("GetEditAsync", customer.Id);
+            return RedirectToAction("GetEditAsync", id);
         }
 
         //[HttpGet]

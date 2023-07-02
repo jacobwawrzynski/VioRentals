@@ -16,8 +16,4 @@
     <ProjectReference Include="..\VioRentals.Infrastructure\VioRentals.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Movies\" />
-  </ItemGroup>
-
 </Project>

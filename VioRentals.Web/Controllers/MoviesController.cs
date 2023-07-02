@@ -95,5 +95,11 @@ namespace VioRentals.Web.Controllers
         // TO CONSIDER
         // Random
         // ValidationReleaseDate
+
+        [HttpGet]
+        public async Task<ActionResult> Index()
+        {
+            return View(nameof(Index));
+        }
     }
 }

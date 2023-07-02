@@ -49,15 +49,6 @@ namespace VioRentals.Infrastructure.Repositories
         {
             try
             {
-                //var customerToUpdate = await _customerRepository.GetAsync(customer.Id);
-                //customerToUpdate.Forename = customer.Forename;
-                //customerToUpdate.Surname = customer.Surname;
-                //customerToUpdate.DateOfBirth = customer.DateOfBirth;
-                //customerToUpdate.IsSubscribingToNewsletter = customer.IsSubscribingToNewsletter;
-                //customerToUpdate.MembershipType = customer.MembershipType;
-                // Realationship
-                //customerToUpdate.MembershipDetailsFK = (int)customer.MembershipType;
-                //customerToUpdate._MembershipDetails = await _membershipRepository.GetAsync(customer.MembershipDetailsFK);
                 customer.MembershipDetailsFK = (int)customer.MembershipType;
                 customer._MembershipDetails = await _membershipRepository.GetAsync(customer.MembershipDetailsFK);
 
@@ -77,11 +68,6 @@ namespace VioRentals.Infrastructure.Repositories
                 .Where(c => c.Forename.Contains(searchTerm) || c.Surname.Contains(searchTerm))
                 .ToList();
         }
-
-        //public async Task<MembershipDetailsEntity> FindMembershipAsync(int id)
-        //{
-        //    return await _membershipRepository.GetAsync(id);
-        //}
 
         public async Task<int> CountCustomersAsync()
         {
