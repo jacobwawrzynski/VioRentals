@@ -34,7 +34,8 @@ namespace VioRentals.Web.Controllers
 
             if (customer is not null)
             {
-                return View("Edit", customer);
+                var customerDto = _mapper.Map<CustomerDto>(customer);
+                return View("Edit", customerDto);
             }
             return NotFound();
         }
@@ -57,19 +58,21 @@ namespace VioRentals.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditAsync(
             int id, 
-            [Bind("Id,Forename,Surname,MembershipType,DateOfBirth,IsSubscribingToNewsletter")] CustomerEntity customer)
+            CustomerDto customerDto)
         {
-            if (id != customer.Id)
+            //if (id != customerDto.Id)
+            //{
+            //    return NotFound();
+            //}
+            if (ModelState.IsValid)
             {
-                return NotFound();
-            }
-
-                //var customer = _mapper.Map<CustomerEntity>(customerDto);
-                //customer.MembershipDetailsFK = (int)customer.MembershipType;
+                var customer = _mapper.Map<CustomerEntity>(customerDto);
                 await _customerService.UpdateCustomerAsync(customer);
                 return RedirectToAction("Index");
+            }
+                
             
-            //return BadRequest();
+            return BadRequest();
             //return RedirectToAction("GetEditAsync", customer.Id);
         }
 
