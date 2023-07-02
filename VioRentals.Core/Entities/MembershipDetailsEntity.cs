@@ -10,8 +10,8 @@ namespace VioRentals.Core.Entities
 {
     public class MembershipDetailsEntity : BaseEntity
 	{
-		[Key]
-		public new int Id { get; set; }
+		//[Key]
+		//public override int Id { get; set; }
 		public string Name { get; set; }
 		public short SignUpFee { get; set; }
 		public byte DurationInMonths { get; set; }

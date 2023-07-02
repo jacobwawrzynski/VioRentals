@@ -10,8 +10,8 @@ namespace VioRentals.Core.Entities
 {
 	public class CustomerEntity : BaseEntity
 	{
-		[Key]
-		public new int Id { get; set; }
+		//[Key]
+		//public override int Id { get; set; }
 
 		[StringLength(100)]
 		public string Forename { get; set; }

@@ -3,6 +3,7 @@
 
 @using (Html.BeginForm("Edit", "Customers"))
 {
+    <input type="hidden" asp-for="Id" />
     <div class="form-group">
         @Html.LabelFor(m => m.Forename)
         @Html.TextBoxFor(m => m.Forename, new { @class = "form-control" })

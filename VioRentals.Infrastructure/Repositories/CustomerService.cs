@@ -49,17 +49,19 @@ namespace VioRentals.Infrastructure.Repositories
         {
             try
             {
-                var customerToUpdate = await _customerRepository.GetAsync(customer.Id);
-                customerToUpdate.Forename = customer.Forename;
-                customerToUpdate.Surname = customer.Surname;
-                customerToUpdate.DateOfBirth = customer.DateOfBirth;
-                customerToUpdate.IsSubscribingToNewsletter = customer.IsSubscribingToNewsletter;
-                customerToUpdate.MembershipType = customer.MembershipType;
+                //var customerToUpdate = await _customerRepository.GetAsync(customer.Id);
+                //customerToUpdate.Forename = customer.Forename;
+                //customerToUpdate.Surname = customer.Surname;
+                //customerToUpdate.DateOfBirth = customer.DateOfBirth;
+                //customerToUpdate.IsSubscribingToNewsletter = customer.IsSubscribingToNewsletter;
+                //customerToUpdate.MembershipType = customer.MembershipType;
                 // Realationship
-                customerToUpdate.MembershipDetailsFK = (int)customer.MembershipType;
-                customerToUpdate._MembershipDetails = await _membershipRepository.GetAsync(customer.MembershipDetailsFK);
+                //customerToUpdate.MembershipDetailsFK = (int)customer.MembershipType;
+                //customerToUpdate._MembershipDetails = await _membershipRepository.GetAsync(customer.MembershipDetailsFK);
+                customer.MembershipDetailsFK = (int)customer.MembershipType;
+                customer._MembershipDetails = await _membershipRepository.GetAsync(customer.MembershipDetailsFK);
 
-                await _customerRepository.UpdateAsync(customerToUpdate);
+                await _customerRepository.UpdateAsync(customer);
                 return true;
             }
             catch (Exception)

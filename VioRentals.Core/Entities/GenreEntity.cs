@@ -9,8 +9,8 @@ namespace VioRentals.Core.Entities
 {
 	public class GenreEntity : BaseEntity
 	{
-		[Key]
-		public new int Id { get; set; }
+		//[Key]
+		//public override int Id { get; set; }
 		public string Name { get; set; }
 
 		// Relationships

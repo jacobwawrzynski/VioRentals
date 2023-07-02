@@ -55,31 +55,37 @@ namespace VioRentals.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAsync([Bind("Forename,Surname,MembershipType,DateOfBirth,IsSubscribingToNewsletter")] CustomerEntity customer)
+        public async Task<ActionResult> EditAsync(
+            int id, 
+            [Bind("Id,Forename,Surname,MembershipType,DateOfBirth,IsSubscribingToNewsletter")] CustomerEntity customer)
         {
-            if (ModelState.IsValid)
+            if (id != customer.Id)
             {
+                return NotFound();
+            }
+
+                //var customer = _mapper.Map<CustomerEntity>(customerDto);
                 //customer.MembershipDetailsFK = (int)customer.MembershipType;
                 await _customerService.UpdateCustomerAsync(customer);
                 return RedirectToAction("Index");
-            }
-            return BadRequest();
+            
+            //return BadRequest();
             //return RedirectToAction("GetEditAsync", customer.Id);
         }
 
-        [HttpGet]
-        public async Task<ActionResult> GetDetailsAsync(int id)
-        {
-            var customer = await _customerService.FindByIdAsync(id);
+        //[HttpGet]
+        //public async Task<ActionResult> GetDetailsAsync(int id)
+        //{
+        //    var customer = await _customerService.FindByIdAsync(id);
 
-            if (customer is not null)
-            {
-                return View(customer);
-            }
+        //    if (customer is not null)
+        //    {
+        //        return View(customer);
+        //    }
 
-            return NotFound();
+        //    return NotFound();
 
-        }
+        //}
 
         [HttpGet]
         public async Task<JsonResult> SearchAsync(string searchTerm)

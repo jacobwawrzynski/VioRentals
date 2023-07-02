@@ -56,7 +56,8 @@ namespace VioRentals.Infrastructure.Repositories
             {
                 throw new ArgumentNullException(nameof(entity));
             }
-            //_entities.Update(entity);
+            //_context.Update(entity);
+            _entities.Update(entity);
             await _context.SaveChangesAsync();
         }
 

@@ -10,8 +10,8 @@ namespace VioRentals.Core.Entities
 {
 	public class MovieEntity : BaseEntity
 	{
-		[Key]
-		public new int Id { get; set; }
+		//[Key]
+		//public override int Id { get; set; }
 
 		[StringLength(255)]
 		public string Name { get; set; }
