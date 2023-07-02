@@ -53,16 +53,18 @@ namespace VioRentals.Web.Controllers
             return RedirectToAction("GetCreateAsync", customerDto);
         }
 
-        public async Task<ActionResult> EditAsync([FromForm] CustomerEntity customer)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditAsync([Bind("Forename,Surname,MembershipType,DateOfBirth,IsSubscribingToNewsletter")] CustomerEntity customer)
         {
             if (ModelState.IsValid)
             {
-                customer.MembershipDetailsFK = (int)customer.MembershipType;
+                //customer.MembershipDetailsFK = (int)customer.MembershipType;
                 await _customerService.UpdateCustomerAsync(customer);
                 return RedirectToAction("Index");
             }
-
-            return RedirectToAction("GetEditAsync", customer.Id);
+            return BadRequest();
+            //return RedirectToAction("GetEditAsync", customer.Id);
         }
 
         [HttpGet]
