@@ -50,7 +50,7 @@ namespace VioRentals.Infrastructure.Migrations
 
                     b.HasIndex("MembershipDetailsFK");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("VioRentals.Core.Entities.GenreEntity", b =>
@@ -65,7 +65,7 @@ namespace VioRentals.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
                 });
 
             modelBuilder.Entity("VioRentals.Core.Entities.MembershipDetailsEntity", b =>
@@ -89,7 +89,7 @@ namespace VioRentals.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MembershipTypes");
+                    b.ToTable("MembershipTypes", (string)null);
 
                     b.HasData(
                         new
@@ -156,7 +156,7 @@ namespace VioRentals.Infrastructure.Migrations
 
                     b.HasIndex("GenreFK");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("VioRentals.Core.Entities.RentalEntity", b =>
@@ -186,7 +186,7 @@ namespace VioRentals.Infrastructure.Migrations
 
                     b.HasIndex("MovieFK");
 
-                    b.ToTable("Rentals");
+                    b.ToTable("Rentals", (string)null);
                 });
 
             modelBuilder.Entity("VioRentals.Core.Entities.UserEntity", b =>
@@ -217,7 +217,7 @@ namespace VioRentals.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("VioRentals.Core.Entities.CustomerEntity", b =>
