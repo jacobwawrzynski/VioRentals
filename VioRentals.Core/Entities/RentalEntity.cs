@@ -9,8 +9,6 @@ namespace VioRentals.Core.Entities
 {
 	public class RentalEntity : BaseEntity
 	{
-		//[Key]
-		//public override int Id { get; set; }
 		public DateTime DateRented { get; set; }
 		public DateTime? DateReturned { get; set; }
 		public bool IsReturned { get; set; }
