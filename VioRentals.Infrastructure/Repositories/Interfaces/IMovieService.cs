@@ -14,5 +14,7 @@ namespace VioRentals.Infrastructure.Repositories.Interfaces
         public Task<bool> SaveMovieAsync(MovieEntity movie);
         public Task<IEnumerable<MovieEntity>> FindAllAsync();
         public Task<bool> UpdateMovieAsync(MovieEntity movie);
+        public Task<bool> DeleteMovieAsync(MovieEntity movie);
+        public Task<int> CountMoviesAsync();
     }
 }

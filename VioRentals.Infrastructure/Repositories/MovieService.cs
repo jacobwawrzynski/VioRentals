@@ -63,5 +63,23 @@ namespace VioRentals.Infrastructure.Repositories
                 return false;
             }
         }
+
+        public async Task<bool> DeleteMovieAsync(MovieEntity movie)
+        {
+            try
+            {
+                await _movieRepository.DeleteAsync(movie);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<int> CountMoviesAsync()
+        {
+            return await _movieRepository.CountAsync();
+        }
     }
 }

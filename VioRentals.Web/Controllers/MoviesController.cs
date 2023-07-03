@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using VioRentals.Core.Entities;
 using VioRentals.Infrastructure.Repositories.Interfaces;
 using VioRentals.Web.DTOs;
@@ -9,11 +11,13 @@ namespace VioRentals.Web.Controllers
     public class MoviesController : Controller
     {
         private readonly IMovieService _movieService;
+        private readonly IGenreService _genreService;
         private readonly IMapper _mapper;
 
-        public MoviesController(IMovieService movieService, IMapper mapper)
+        public MoviesController(IMovieService movieService, IGenreService genreService, IMapper mapper)
         {
             _movieService = movieService;
+            _genreService = genreService;
             _mapper = mapper;
         }
 
@@ -30,7 +34,20 @@ namespace VioRentals.Web.Controllers
 
             if (movie is not null)
             {
-                return View("Edit", movie);
+                var movieDto = _mapper.Map<MovieDto>(movie);
+                return View("Edit", movieDto);
+            }
+            return NotFound();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetDetailsAsync(int id)
+        {
+            var movie = await _movieService.FindByIdAsync(id);
+
+            if (movie is not null)
+            {
+                return View("Details", movie);
             }
             return NotFound();
         }
@@ -63,17 +80,12 @@ namespace VioRentals.Web.Controllers
             return RedirectToAction("GetEditAsync", movieDto);
         }
 
-        [HttpGet]
-        public async Task<ActionResult> GetDetailsAsync(int id)
+        [HttpPost]
+        public async Task<ActionResult> DeleteAsync(int id)
         {
             var movie = await _movieService.FindByIdAsync(id);
-
-            if (movie is not null)
-            {
-                return View(movie);
-            }
-
-            return NotFound();
+            await _movieService.DeleteMovieAsync(movie);
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -97,9 +109,49 @@ namespace VioRentals.Web.Controllers
         // ValidationReleaseDate
 
         [HttpGet]
-        public async Task<ActionResult> Index()
+        public async Task<ViewResult> Index(int page = 1, int pageSize = 10)
         {
-            return View(nameof(Index));
+            var totalPages = (int)Math.Ceiling((double)await _movieService.CountMoviesAsync() / pageSize);
+            //check if user enters value higher than totalpages and set the value to the hightes pagenumber availabe
+            if (page > totalPages)
+            {
+                page = totalPages;
+                Response.Redirect("/Movies/Index?page=" + page + "&pageSize=" + pageSize);
+            }
+            else if (page < 1)
+            {
+                page = 1;
+                Response.Redirect("/Movies/Index?page=" + page + "&pageSize=" + pageSize);
+            }
+
+            if (pageSize < 1)
+            {
+                pageSize = 10;
+                page = 1;
+                Response.Redirect("/Movies/Index?page=" + page + "&pageSize=" + pageSize);
+            }
+            else if (pageSize > 100)
+            {
+                pageSize = 100;
+                Response.Redirect("/Movies/Index?page=" + page + "&pageSize=" + pageSize);
+            }
+
+            // FIND BETTER SOLUTION (THIS WORKS BUT UGLY)
+            var movies = await _movieService.FindAllAsync();
+            var genres = await _genreService.FindAllAsync();
+
+            foreach (var mov in movies)
+            {
+                mov._Genre = genres
+                    .Where(g => g.Id == mov.GenreFK)
+                    .First();
+            }
+            //pass to view
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+            ViewBag.PageSize = pageSize;
+
+            return View(movies);
         }
     }
 }
