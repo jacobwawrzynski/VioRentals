@@ -69,6 +69,20 @@ namespace VioRentals.Infrastructure.Repositories
                 .ToList();
         }
 
+        public async Task<bool> DeleteCustomerAsync(CustomerEntity customer)
+        {
+            try
+            {
+                await _customerRepository.DeleteAsync(customer);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            
+        }
+
         public async Task<int> CountCustomersAsync()
         {
             return await _customerRepository.CountAsync();

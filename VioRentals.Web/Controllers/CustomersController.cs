@@ -27,7 +27,7 @@ namespace VioRentals.Web.Controllers
             return View("Create");
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<ActionResult> GetEditAsync(int id)
         {
             var customer = await _customerService.FindByIdAsync(id);
@@ -36,6 +36,18 @@ namespace VioRentals.Web.Controllers
             {
                 var customerDto = _mapper.Map<CustomerDto>(customer);
                 return View("Edit", customerDto);
+            }
+            return NotFound();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetDetailsAsync(int id)
+        {
+            var customer = await _customerService.FindByIdAsync(id);
+
+            if (customer is not null)
+            {
+                return View("Details", customer);
             }
             return NotFound();
         }
@@ -68,19 +80,13 @@ namespace VioRentals.Web.Controllers
             return RedirectToAction("GetEditAsync", id);
         }
 
-        //[HttpGet]
-        //public async Task<ActionResult> GetDetailsAsync(int id)
-        //{
-        //    var customer = await _customerService.FindByIdAsync(id);
-
-        //    if (customer is not null)
-        //    {
-        //        return View(customer);
-        //    }
-
-        //    return NotFound();
-
-        //}
+        [HttpPost]
+        public async Task<ActionResult> DeleteAsync(int id)
+        {
+            var customer = await _customerService.FindByIdAsync(id);
+            await _customerService.DeleteCustomerAsync(customer);
+            return RedirectToAction("Index");
+        }
 
         [HttpGet]
         public async Task<JsonResult> SearchAsync(string searchTerm)

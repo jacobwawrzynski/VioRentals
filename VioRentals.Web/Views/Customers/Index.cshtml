@@ -25,14 +25,15 @@
                     @Html.ActionLink(customer.Forename + " " + customer.Surname, "GetEdit", "Customers", new { id = customer.Id }, null)
                 </td>
                 <td>
-                    @*Does not work*@
                     @customer._MembershipDetails.DiscountRate
                 </td>
                 <td>
                     @customer.MembershipType.ToString()
                 </td>
                 <td>
-                    <button class="btn btn-warning" onclick="deleteCustomer(@customer.Id)">Delete</button>
+                    <button>
+                        @Html.ActionLink("Details/Delete", "GetDetails", "Customers", new { id = customer.Id }, null)
+                    </button>
                 </td>
             </tr>
         }
