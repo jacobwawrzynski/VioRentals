@@ -66,7 +66,7 @@ namespace VioRentals.Web.Controllers
             return RedirectToAction("GetCreateAsync", movieDto);
         }
 
-        [HttpPatch]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditAsync([FromForm] MovieDto movieDto)
         {

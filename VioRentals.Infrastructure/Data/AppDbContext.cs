@@ -108,106 +108,26 @@ namespace VioRentals.Infrastructure.Data
             // Genres
             modelBuilder.Entity<GenreEntity>()
                 .HasData(
-                    new GenreEntity
-                    {
-                        Id = 1,
-                        Name = "Action"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 2,
-                        Name = "Comedy"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 3,
-                        Name = "Family"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 4,
-                        Name = "Romance"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 5,
-                        Name = "Thriller"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 6,
-                        Name = "Horror"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 7,
-                        Name = "Drama"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 8,
-                        Name = "Sci-Fi"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 9,
-                        Name = "Fantasy"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 10,
-                        Name = "Mystery"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 11,
-                        Name = "Western"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 12,
-                        Name = "Animation"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 13,
-                        Name = "Adventure"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 14,
-                        Name = "Crime"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 15,
-                        Name = "Documentary"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 16,
-                        Name = "History"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 17,
-                        Name = "Music"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 18,
-                        Name = "War"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 19,
-                        Name = "Biography"
-                    },
-                    new GenreEntity
-                    {
-                        Id = 20,
-                        Name = "Musical"
-                    }
+                    new GenreEntity { Id = 1, Name = "Action" },
+                    new GenreEntity { Id = 2, Name = "Comedy" },
+                    new GenreEntity { Id = 3, Name = "Family" },
+                    new GenreEntity { Id = 4, Name = "Romance" },
+                    new GenreEntity { Id = 5, Name = "Thriller" },
+                    new GenreEntity { Id = 6, Name = "Horror" },
+                    new GenreEntity { Id = 7, Name = "Drama" },
+                    new GenreEntity { Id = 8, Name = "Sci-Fi" },
+                    new GenreEntity { Id = 9, Name = "Fantasy" },
+                    new GenreEntity { Id = 10, Name = "Mystery" },
+                    new GenreEntity { Id = 11, Name = "Western" },
+                    new GenreEntity { Id = 12, Name = "Animation" },
+                    new GenreEntity { Id = 13, Name = "Adventure" },
+                    new GenreEntity { Id = 14, Name = "Crime" },
+                    new GenreEntity { Id = 15, Name = "Documentary" },
+                    new GenreEntity { Id = 16, Name = "History" },
+                    new GenreEntity { Id = 17, Name = "Music" },
+                    new GenreEntity { Id = 18, Name = "War" },
+                    new GenreEntity { Id = 19, Name = "Biography" },
+                    new GenreEntity { Id = 20, Name = "Musical" }
                 );
 
 			// Movies
