@@ -67,6 +67,8 @@ namespace VioRentals.Infrastructure.Data
 				.HasForeignKey(c => c.MembershipDetailsFK)
 				.OnDelete(DeleteBehavior.ClientSetNull);
 
+			// DATA FEEDING
+			// Membership
 			modelBuilder.Entity<MembershipDetailsEntity>()
 				.HasData(
 					new MembershipDetailsEntity
@@ -101,6 +103,10 @@ namespace VioRentals.Infrastructure.Data
 						DurationInMonths = 12,
 						DiscountRate = 20
 					});
+
+			// Movies
+			//modelBuilder.Entity<MovieEntity>()
+			//	.HasData
         }
     }
 }

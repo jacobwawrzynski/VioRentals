@@ -115,25 +115,20 @@ namespace VioRentals.Web.Controllers
             //check if user enters value higher than totalpages and set the value to the hightes pagenumber availabe
             if (page > totalPages)
             {
-                page = totalPages;
-                Response.Redirect("/Movies/Index?page=" + page + "&pageSize=" + pageSize);
+                RedirectToAction("Index", new { page = totalPages, pageSize });
             }
             else if (page < 1)
             {
-                page = 1;
-                Response.Redirect("/Movies/Index?page=" + page + "&pageSize=" + pageSize);
+                RedirectToAction("Index", new { page = 1, pageSize });
             }
 
             if (pageSize < 1)
             {
-                pageSize = 10;
-                page = 1;
-                Response.Redirect("/Movies/Index?page=" + page + "&pageSize=" + pageSize);
+                RedirectToAction("Index", new { page = 1, pageSize = 10 });
             }
             else if (pageSize > 100)
             {
-                pageSize = 100;
-                Response.Redirect("/Movies/Index?page=" + page + "&pageSize=" + pageSize);
+                RedirectToAction("Index", new { page, pageSize = 100 });
             }
 
             // FIND BETTER SOLUTION (THIS WORKS BUT UGLY)
