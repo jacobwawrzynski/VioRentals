@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Unicode;
 using VioRentals.Core.Entities;
 using VioRentals.Infrastructure.Repositories.Interfaces;
 using VioRentals.Web.DTOs;
@@ -15,13 +19,15 @@ namespace VioRentals.Web.Controllers.API
 	{
 		public static UserDto _userDto = new UserDto();
 		private readonly IMapper _mapper;
-		private readonly IUserService _userService;
+        private readonly IConfiguration _configuration;
+        private readonly IUserService _userService;
 
-		public AuthController(IUserService userService, IMapper mapper)
+		public AuthController(IUserService userService, IMapper mapper, IConfiguration configuration)
 		{
             _userService = userService;
             _mapper = mapper;
-		}
+            _configuration = configuration;
+        }
 
 		[HttpPost("login")]
 		public async Task<ActionResult<string>> Login([FromForm] LoginDto login)
@@ -34,7 +40,8 @@ namespace VioRentals.Web.Controllers.API
 				{
 					if (VerifyPasswordHash(login.Password, user.PasswordHash, user.PasswordSalt))
 					{
-						return Ok(user);
+						string token = CreateToken(user);
+						return Ok(token);
 					}
 				}
 			}
@@ -62,6 +69,28 @@ namespace VioRentals.Web.Controllers.API
 			}
 
 			return BadRequest(ModelState);
+		}
+
+		private string CreateToken(UserEntity user)
+		{
+			List<Claim> claims = new List<Claim>
+			{
+				new Claim(ClaimTypes.Name, user.Email)
+			};
+
+			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+				_configuration.GetSection("AppSettings:Token").Value));
+
+			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+
+			var token = new JwtSecurityToken(
+				claims: claims,
+				expires: DateTime.Now.AddDays(1),
+				signingCredentials: creds);
+
+			var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+			return jwt
 		}
 
 		private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
