@@ -61,13 +61,14 @@ fn save_movies_to_vec(conn: &Connection) -> Result<Vec<Movie>, Box<dyn Error>> {
 /// 
 #[get("/recommend_movie")]
 async fn recommend_movie() -> Json<Movie> {
-    let conn = Connection::open("./VioRentalsData.db").unwrap();
+    let conn = Connection::open("../../VioRentalsData.db").unwrap();
     let movies_tab = save_movies_to_vec(&conn).unwrap();
     let url = format!("http://127.0.0.1:8000/random_number/{}/{}", 0, movies_tab.len());
     let body = reqwest::get(url).await.unwrap()
     .text()
     .await.unwrap();
 
+    println!("{}", body);
     let body = body.parse::<usize>().unwrap();
 
     Json(movies_tab[body].clone())

@@ -46,7 +46,7 @@ fn save_users_to_vec(conn: &Connection) -> Result<Vec<User>, Box<dyn Error>> {
 /// 
 #[get("/lucky_user")]
 async fn lucky_user() -> Json<User> {
-    let conn = Connection::open("VioRentalsData.db").unwrap();
+    let conn = Connection::open("../../VioRentalsData.db").unwrap();
     let users_tab = save_users_to_vec(&conn).unwrap();
     let url = format!("http://127.0.0.1:8000/random_number/{}/{}", 0, users_tab.len());
     let body = reqwest::get(url).await.unwrap()
