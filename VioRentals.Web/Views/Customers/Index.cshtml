@@ -1,51 +1,45 @@
 ﻿@using VioRentals.Core.Entities
 @model IEnumerable<CustomerEntity>
 
-@if (!User.Identity.IsAuthenticated)
-{
-    <h1>Works properly</h1>
-}
-else
-{
-    <h2>Customers</h2>
+<h2>Customers</h2>
 
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Enter customers data to search..." id="search-input" aria-describedby="button-addon2">
-        <button class="btn btn-primary" type="button" id="search-btn">Search</button>
-    </div>
+<div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Enter customers data to search..." id="search-input" aria-describedby="button-addon2">
+    <button class="btn btn-primary" type="button" id="search-btn">Search</button>
+</div>
 
-    <table id="customers" class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Customer</th>
-                <th>Discount Rate</th>
-                <th>Membership Type</th>
-                <th>Delete</th>
+<table id="customers" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Discount Rate</th>
+            <th>Membership Type</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr class="table-dark">
+                <td>
+                    @Html.ActionLink(customer.Forename + " " + customer.Surname, "GetEdit", "Customers", new { id = customer.Id }, null)
+                </td>
+                <td>
+                    @customer._MembershipDetails.DiscountRate
+                </td>
+                <td>
+                    @customer.MembershipType.ToString()
+                </td>
+                <td>
+                    <button>
+                        @Html.ActionLink("Details/Delete", "GetDetails", "Customers", new { id = customer.Id }, null)
+                    </button>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var customer in Model)
-            {
-                <tr class="table-dark">
-                    <td>
-                        @Html.ActionLink(customer.Forename + " " + customer.Surname, "GetEdit", "Customers", new { id = customer.Id }, null)
-                    </td>
-                    <td>
-                        @customer._MembershipDetails.DiscountRate
-                    </td>
-                    <td>
-                        @customer.MembershipType.ToString()
-                    </td>
-                    <td>
-                        <button>
-                            @Html.ActionLink("Details/Delete", "GetDetails", "Customers", new { id = customer.Id }, null)
-                        </button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+        }
+    </tbody>
+</table>
+
 
 
 

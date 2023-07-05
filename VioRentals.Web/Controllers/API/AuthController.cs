@@ -30,7 +30,7 @@ namespace VioRentals.Web.Controllers.API
         }
 
 		[HttpPost("login")]
-		public async Task<ActionResult<string>> Login([FromForm] LoginDto login)
+		public async Task<ActionResult> Login([FromForm] LoginDto login)
 		{
 			if (ModelState.IsValid)
 			{	
@@ -41,8 +41,8 @@ namespace VioRentals.Web.Controllers.API
 					if (VerifyPasswordHash(login.Password, user.PasswordHash, user.PasswordSalt))
 					{
 						string token = CreateToken(user);
-						//HttpContext.Session.SetString(token, user.Id.ToString());
-						return Ok(token);
+						HttpContext.Session.SetString(token, user.Id.ToString());
+						return RedirectToAction("Index", "Customers");
 					}
 				}
 			}
@@ -68,12 +68,12 @@ namespace VioRentals.Web.Controllers.API
 
 				return Ok("User created successfully");
 			}
-
+			
 			return BadRequest(ModelState);
 		}
 
 		/// <summary>
-		/// Creates JWT (with HMACSHA512 signature) and adds user to HttpContext
+		/// Creates JWT with HMACSHA512 signature
 		/// </summary>
 		/// <param name="user">User model</param>
 		/// <returns>JSON Web Token</returns>
@@ -95,11 +95,10 @@ namespace VioRentals.Web.Controllers.API
 				expires: DateTime.Now.AddDays(1),
 				signingCredentials: creds);
 
-            var identity = new ClaimsIdentity(claims, "Custom");
-            HttpContext.User = new ClaimsPrincipal(identity);
+            //var identity = new ClaimsIdentity(claims, "Custom");
+            //HttpContext.User = new ClaimsPrincipal(identity);
 
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-			return jwt;
+            return new JwtSecurityTokenHandler().WriteToken(token);
 		}
 
 		private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

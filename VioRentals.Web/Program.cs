@@ -45,12 +45,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         //{
         //    OnChallenge = context =>
         //    {
-        //        context.Response.Redirect("/Home/Login");
-        //        context.HandleResponse();
+        //        if ((bool)!context.HttpContext.User.Identity?.IsAuthenticated)
+        //        {
+        //            context.Response.Redirect("/Home/Login");
+        //            context.HandleResponse();
+        //            return Task.CompletedTask;
+        //        }
+        //        context.Response.Redirect("/Customer/Index");
         //        return Task.CompletedTask;
         //    }
         //};
     });
+
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -68,6 +75,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 
+app.UseSession();
 //app.Use(async (context, next) =>
 //{
 //    if ((bool)!context.User.Identity?.IsAuthenticated)
