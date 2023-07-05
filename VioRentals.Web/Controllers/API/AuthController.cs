@@ -33,7 +33,7 @@ namespace VioRentals.Web.Controllers.API
 		public async Task<ActionResult<string>> Login([FromForm] LoginDto login)
 		{
 			if (ModelState.IsValid)
-			{
+			{	
                 var user = await _userService.FindByEmailAsync(login.Email);
 				
 				if (user is not null)
@@ -61,7 +61,7 @@ namespace VioRentals.Web.Controllers.API
 				_userDto.PasswordSalt = passwordSalt;
 				_userDto.Forename = register.Forename;
 				_userDto.Lastname = register.Lastname;
-
+				 
 				var mappedUser = _mapper.Map<UserEntity>(_userDto);
 				await _userService.SaveUserAsync(mappedUser);
 
@@ -90,7 +90,7 @@ namespace VioRentals.Web.Controllers.API
 
 			var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-			return jwt
+			return jwt;
 		}
 
 		private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
