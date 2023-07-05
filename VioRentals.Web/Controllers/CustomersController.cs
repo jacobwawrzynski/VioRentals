@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace VioRentals.Web.Controllers
 {
+    [Authorize]
     public class CustomersController : Controller
     {
         private readonly ICustomerService _customerService;

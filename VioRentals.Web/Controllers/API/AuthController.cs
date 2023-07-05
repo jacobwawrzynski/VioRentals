@@ -98,8 +98,11 @@ namespace VioRentals.Web.Controllers.API
             var identity = new ClaimsIdentity(claims, "Custom");
             HttpContext.User = new ClaimsPrincipal(identity);
 
+<<<<<<< HEAD
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
+=======
+>>>>>>> 6bac3fa6e6b36c37b7f86f748dd74502de49b24b
 			return jwt;
 		}
 
