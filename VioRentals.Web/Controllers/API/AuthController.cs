@@ -33,7 +33,7 @@ namespace VioRentals.Web.Controllers.API
 		public async Task<ActionResult<string>> Login([FromForm] LoginDto login)
 		{
 			if (ModelState.IsValid)
-			{
+			{	
                 var user = await _userService.FindByEmailAsync(login.Email);
 				
 				if (user is not null)
@@ -41,6 +41,7 @@ namespace VioRentals.Web.Controllers.API
 					if (VerifyPasswordHash(login.Password, user.PasswordHash, user.PasswordSalt))
 					{
 						string token = CreateToken(user);
+						HttpContext.Session.SetString(token, user.Id.ToString());
 						return Ok(token);
 					}
 				}
@@ -61,7 +62,7 @@ namespace VioRentals.Web.Controllers.API
 				_userDto.PasswordSalt = passwordSalt;
 				_userDto.Forename = register.Forename;
 				_userDto.Lastname = register.Lastname;
-
+				 
 				var mappedUser = _mapper.Map<UserEntity>(_userDto);
 				await _userService.SaveUserAsync(mappedUser);
 
@@ -71,26 +72,35 @@ namespace VioRentals.Web.Controllers.API
 			return BadRequest(ModelState);
 		}
 
+		/// <summary>
+		/// Creates JWT (with HMACSHA512 signature) and adds user to HttpContext
+		/// </summary>
+		/// <param name="user">User model</param>
+		/// <returns>JSON Web Token</returns>
 		private string CreateToken(UserEntity user)
 		{
 			List<Claim> claims = new List<Claim>
 			{
-				new Claim(ClaimTypes.Name, user.Email)
-			};
+				new Claim(ClaimTypes.Name, user.Email),
+				new Claim("UserId", $"{user.Id}", ClaimValueTypes.Integer32)
+			};	
 
 			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
 				_configuration.GetSection("AppSettings:Token").Value));
 
-			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
 			var token = new JwtSecurityToken(
 				claims: claims,
 				expires: DateTime.Now.AddDays(1),
 				signingCredentials: creds);
 
-			var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            var identity = new ClaimsIdentity(claims, "Custom");
+            HttpContext.User = new ClaimsPrincipal(identity);
 
-			return jwt
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+			return jwt;
 		}
 
 		private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
