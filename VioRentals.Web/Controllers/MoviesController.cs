@@ -131,15 +131,19 @@ namespace VioRentals.Web.Controllers
                 RedirectToAction("Index", new { page, pageSize = 100 });
             }
 
-            // FIND BETTER SOLUTION (THIS WORKS BUT UGLY)
+            // TRY TO FIND BETTER SOLUTION (THIS WORKS BUT IT'S UGLY)
             var movies = await _movieService.FindAllAsync();
-            var genres = await _genreService.FindAllAsync();
 
             foreach (var mov in movies)
             {
-                mov._Genre = genres
-                    .Where(g => g.Id == mov.GenreFK)
-                    .First();
+                if (mov.GenreFK is not null)
+                {
+                    mov._Genre = await _genreService.FindByIdAsync((int)mov.GenreFK);
+                }
+                else
+                {
+                    mov._Genre = new GenreEntity { Name  = "Unknown" };
+                }
             }
             //pass to view
             ViewBag.TotalPages = totalPages;

@@ -28,5 +28,18 @@ namespace VioRentals.Infrastructure.Repositories
         {
             return await _rentalRepository.GetAsync(id);
         }
+
+        public async Task<bool> UpdateRentalAsync(RentalEntity rental)
+        {
+            try
+            {
+                await _rentalRepository.UpdateAsync(rental);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

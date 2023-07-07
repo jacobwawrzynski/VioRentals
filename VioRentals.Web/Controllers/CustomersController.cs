@@ -129,15 +129,12 @@ namespace VioRentals.Web.Controllers
                 RedirectToAction("Index", new { page, pageSize = 100 });
             }
 
-            // FIND BETTER SOLUTION (THIS WORKS BUT UGLY)
+            // TRY TO FIND BETTER SOLUTION (THIS WORKS BUT IT'S UGLY)
             var customers = await _customerService.FindAllAsync();
-            var memberships = await _membershipService.FindAllAsync();
 
             foreach (var cus in customers)
             {
-                cus._MembershipDetails = memberships
-                    .Where(m => m.Id == cus.MembershipDetailsFK)
-                    .First();
+                cus._MembershipDetails = await _membershipService.FindByIdAsync(cus.MembershipDetailsFK);
             }
             //pass to view
             ViewBag.TotalPages = totalPages;
