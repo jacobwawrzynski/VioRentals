@@ -41,5 +41,32 @@ namespace VioRentals.Infrastructure.Repositories
                 return false;
             }
         }
+
+        public async Task<bool> SaveRentalAsync(RentalEntity rental)
+        {
+            try
+            {
+                await _rentalRepository.CreateAsync(rental);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+
+        public async Task<bool> DeleteRentalAsync(RentalEntity rental)
+        {
+            try
+            {
+                await _rentalRepository.DeleteAsync(rental);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

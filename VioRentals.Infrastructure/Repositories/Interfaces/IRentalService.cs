@@ -11,6 +11,8 @@ namespace VioRentals.Infrastructure.Repositories.Interfaces
     {
         public Task<IEnumerable<RentalEntity>> FindAllAsync();
         public Task<RentalEntity?> FindByIdAsync(int id);
+        public Task<bool> SaveRentalAsync(RentalEntity rental);
         public Task<bool> UpdateRentalAsync(RentalEntity rental);
+        public Task<bool> DeleteRentalAsync(RentalEntity rental);
     }
 }
