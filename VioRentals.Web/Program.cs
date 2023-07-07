@@ -26,36 +26,37 @@ builder.Services.AddTransient<IGenreService, GenreService>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = 
-            new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("01234567890ABCDEF0123456789ABCDEF01234567890ABCDEF0123456789ABCDEF")
-                )
-        };
+builder.Services.AddAuthentication();
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer(options =>
+//    {
+//        options.TokenValidationParameters = new TokenValidationParameters
+//        {
+//            ValidateIssuer = false,
+//            ValidateAudience = false,
+//            ValidateLifetime = true,
+//            ValidateIssuerSigningKey = true,
+//            IssuerSigningKey = 
+//            new SymmetricSecurityKey(
+//                Encoding.UTF8.GetBytes("01234567890ABCDEF0123456789ABCDEF01234567890ABCDEF0123456789ABCDEF")
+//                )
+//        };
 
-        //options.Events = new JwtBearerEvents
-        //{
-        //    OnChallenge = context =>
-        //    {
-        //        if ((bool)!context.HttpContext.User.Identity?.IsAuthenticated)
-        //        {
-        //            context.Response.Redirect("/Home/Login");
-        //            context.HandleResponse();
-        //            return Task.CompletedTask;
-        //        }
-        //        context.Response.Redirect("/Customer/Index");
-        //        return Task.CompletedTask;
-        //    }
-        //};
-    });
+//        //options.Events = new JwtBearerEvents
+//        //{
+//        //    OnChallenge = context =>
+//        //    {
+//        //        if ((bool)!context.HttpContext.User.Identity?.IsAuthenticated)
+//        //        {
+//        //            context.Response.Redirect("/Home/Login");
+//        //            context.HandleResponse();
+//        //            return Task.CompletedTask;
+//        //        }
+//        //        context.Response.Redirect("/Customer/Index");
+//        //        return Task.CompletedTask;
+//        //    }
+//        //};
+//    });
 
 builder.Services.AddSession();
 

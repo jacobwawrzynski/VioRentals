@@ -40,8 +40,8 @@ namespace VioRentals.Web.Controllers.API
 				{
 					if (VerifyPasswordHash(login.Password, user.PasswordHash, user.PasswordSalt))
 					{
-						string token = CreateToken(user);
-						HttpContext.Session.SetString(token, user.Id.ToString());
+						//string token = CreateToken(user);
+						//HttpContext.Session.SetString(token, user.Id.ToString());
 						return RedirectToAction("Index", "Customers");
 					}
 				}
@@ -50,7 +50,36 @@ namespace VioRentals.Web.Controllers.API
 			return BadRequest();
 		}
 
-		[HttpPost("register")]
+        /// <summary>
+        /// Creates JWT with HMACSHA512 signature
+        /// </summary>
+        /// <param name="user">User model</param>
+        /// <returns>JSON Web Token</returns>
+        //private string CreateToken(UserEntity user)
+        //{
+        //    List<Claim> claims = new List<Claim>
+        //    {
+        //        new Claim(ClaimTypes.Name, user.Email),
+        //        new Claim("UserId", $"{user.Id}", ClaimValueTypes.Integer32)
+        //    };
+
+        //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+        //        _configuration.GetSection("AppSettings:Token").Value));
+
+        //    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+        //    var token = new JwtSecurityToken(
+        //        claims: claims,
+        //        expires: DateTime.Now.AddDays(1),
+        //        signingCredentials: creds);
+
+        //    //var identity = new ClaimsIdentity(claims, "Custom");
+        //    //HttpContext.User = new ClaimsPrincipal(identity);
+
+        //    return new JwtSecurityTokenHandler().WriteToken(token);
+        //}
+
+        [HttpPost("register")]
 		public async Task<ActionResult<UserDto>> Register([FromForm] RegisterDto register)
 		{
 			if (ModelState.IsValid)
@@ -70,35 +99,6 @@ namespace VioRentals.Web.Controllers.API
 			}
 			
 			return BadRequest(ModelState);
-		}
-
-		/// <summary>
-		/// Creates JWT with HMACSHA512 signature
-		/// </summary>
-		/// <param name="user">User model</param>
-		/// <returns>JSON Web Token</returns>
-		private string CreateToken(UserEntity user)
-		{
-			List<Claim> claims = new List<Claim>
-			{
-				new Claim(ClaimTypes.Name, user.Email),
-				new Claim("UserId", $"{user.Id}", ClaimValueTypes.Integer32)
-			};	
-
-			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-				_configuration.GetSection("AppSettings:Token").Value));
-
-			var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-			var token = new JwtSecurityToken(
-				claims: claims,
-				expires: DateTime.Now.AddDays(1),
-				signingCredentials: creds);
-
-            //var identity = new ClaimsIdentity(claims, "Custom");
-            //HttpContext.User = new ClaimsPrincipal(identity);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
 		}
 
 		private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
