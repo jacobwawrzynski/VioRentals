@@ -364,3 +364,9 @@ FodyWeavers.xsd
 
 # executing projects
 *.exe
+
+# Ds_Store files
+.DS_Store
+
+# .history folder
+.history/
