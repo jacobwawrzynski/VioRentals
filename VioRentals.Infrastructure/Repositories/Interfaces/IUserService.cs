@@ -13,8 +13,11 @@ namespace VioRentals.Infrastructure.Repositories.Interfaces
         // Login
         public Task<AuthenticateUserDto> AuthenticateAsync(LoginDto loginDto);
         public Task<IEnumerable<UserEntity>> FindAllAsync();
-        
-        // Register/Add
+
+        // Register (Add)
+        public Task<bool> RegisterAsync(RegisterDto registerDto);
+
+        // Add
         public Task<bool> SaveUserAsync(UserEntity user); 
         public Task<UserEntity?> FindByIdAsync(int id);
         public Task<UserEntity?> FindByEmailAsync(string email);
