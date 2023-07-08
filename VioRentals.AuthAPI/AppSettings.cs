@@ -1,4 +1,4 @@
-﻿namespace VioRentals.Web.Controllers.API
+﻿namespace VioRentals.AuthAPI
 {
     public class AppSettings
     {
