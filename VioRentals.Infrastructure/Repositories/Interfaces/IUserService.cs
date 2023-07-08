@@ -11,11 +11,11 @@ namespace VioRentals.Infrastructure.Repositories.Interfaces
     public interface IUserService
     {
         // Login
-        public Task<AuthenticateUserDto> AuthenticateAsync(LoginDto loginDto);
+        //public Task<AuthenticateUserDto> AuthenticateAsync(LoginDto loginDto);
         public Task<IEnumerable<UserEntity>> FindAllAsync();
 
         // Register (Add)
-        public Task<bool> RegisterAsync(RegisterDto registerDto);
+        //public Task<bool> RegisterAsync(RegisterDto registerDto);
 
         // Add
         public Task<bool> SaveUserAsync(UserEntity user); 
