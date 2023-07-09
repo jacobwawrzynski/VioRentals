@@ -18,7 +18,7 @@
             <tr class="table-dark">
 
                 <td>
-                    @Html.ActionLink(movie.Name, "Edit", "Movies", new { id = movie.Id }, null)
+                    @Html.ActionLink(movie.Name, "GetEdit", "Movies", new { id = movie.Id }, null)
                 </td>
                 <td>
                     @movie._Genre.Name
@@ -29,12 +29,10 @@
                 <td>
                     Available: <span class="badge bg-primary rounded-pill">@movie.NumberAvailable</span>
                 </td>
-                    <td>
-                        <button class="btn btn-warning" onclick="deleteMovie(@movie.Id)">Delete</button>
-                    </td>
-                
                 <td>
-                    <button class="btn btn-success" onclick="location.href='@Url.Action("Details", "Movies", new { id = movie.Id })'">Details</button>
+                    <button>
+                        @Html.ActionLink("Details/Delete", "GetDetails", "Movies", new { id = movie.Id }, null)
+                    </button>
                 </td>
             </tr>
         }

@@ -1,8 +1,11 @@
 ﻿@using VioRentals.Web.DTOs
 @model MovieDto
 
-@using (Html.BeginForm("Create", "Movies"))
+@using (Html.BeginForm("Edit", "Movies"))
 {
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="DateAdded" />
+    <input type="hidden" asp-for="GenreFK" />
     <div class="form-group">
         @Html.LabelFor(m => m.Name)
         @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
@@ -13,14 +16,8 @@
         @Html.TextBoxFor(m => m.NumberInStock, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.NumberInStock)
     </div>
-
+    
     @*Do Genre Enum*@
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.GenreFK)
-        @Html.TextBoxFor(m => m.GenreFK, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.GenreFK)
-    </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.ReleaseDate)
@@ -29,5 +26,5 @@
     </div>
 
     @Html.AntiForgeryToken()
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">Save edition</button>
 }
