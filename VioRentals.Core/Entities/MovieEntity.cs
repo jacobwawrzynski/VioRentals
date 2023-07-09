@@ -10,9 +10,6 @@ namespace VioRentals.Core.Entities
 {
 	public class MovieEntity : BaseEntity
 	{
-		//[Key]
-		//public override int Id { get; set; }
-
 		[StringLength(255)]
 		public string Name { get; set; }
 		public DateTime DateAdded { get; set; } = DateTime.Now;
@@ -23,6 +20,8 @@ namespace VioRentals.Core.Entities
 		[Range(1, 20)]
 		public byte NumberInStock { get; set; }
 		public byte NumberAvailable { get; set; }
+
+		// ADD GENRE ENUM
 
 		// Relationships
 		public ICollection<RentalEntity> _Rentals { get; set; }

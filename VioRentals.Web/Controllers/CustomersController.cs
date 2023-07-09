@@ -3,9 +3,11 @@ using VioRentals.Infrastructure.Repositories.Interfaces;
 using VioRentals.Core.Entities;
 using AutoMapper;
 using VioRentals.Web.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VioRentals.Web.Controllers
 {
+    //[Authorize]
     public class CustomersController : Controller
     {
         private readonly ICustomerService _customerService;
