@@ -35,8 +35,10 @@ namespace VioRentals.AuthAPI
         public int? ValidateToken(string token)
         {
             if (token == null)
+            {
                 return null;
-
+            }
+                
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
 
