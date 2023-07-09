@@ -33,8 +33,8 @@ namespace VioRentals.AuthAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate(LoginDto loginDto)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDto loginDto)
         {
             //var response = await _userService.AuthenticateAsync(model);
             var user = await _userService.FindByEmailAsync(loginDto.Email);

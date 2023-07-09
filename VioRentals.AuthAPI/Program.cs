@@ -1,3 +1,4 @@
+using AutoMapper;
 using VioRentals.AuthAPI;
 using VioRentals.Infrastructure.Repositories.Interfaces;
 using VioRentals.Infrastructure.Repositories;
@@ -23,6 +24,8 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 builder.Services.AddScoped<IJwtUtils, JwtUtils>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddAutoMapper(typeof(AutoMappingProfile));
 
 var app = builder.Build();
 

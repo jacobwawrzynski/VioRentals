@@ -2,11 +2,11 @@
 using VioRentals.Core.DTOs;
 using VioRentals.Core.Entities;
 
-namespace VioRentals.Core.Mappers
+namespace VioRentals.AuthAPI
 {
-    public class AutoMapperProfile : Profile
+    public class AutoMappingProfile : Profile
     {
-        public AutoMapperProfile()
+        public AutoMappingProfile()
         {
             // User -> AuthenticateResponse
             CreateMap<UserEntity, AuthenticateUserDto>();
