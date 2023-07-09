@@ -1,27 +1,25 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using VioRentals.Core.Entities;
 
-namespace VioRentals.Web.Controllers.API
+namespace VioRentals.AuthAPI
 {
     public class JwtUtils : IJwtUtils
     {
-        private readonly IConfiguration _configuration;
+        private readonly AppSettings _appSettings;
 
-        public JwtUtils(IConfiguration configuration)
+        public JwtUtils(IOptions<AppSettings> appSettings)
         {
-            _configuration = configuration;
+            _appSettings = appSettings.Value;
         }
 
         public string GenerateToken(UserEntity user)
         {
-            // generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(
-                _configuration.GetSection("AppSettings:Token").Value);
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -37,11 +35,13 @@ namespace VioRentals.Web.Controllers.API
         public int? ValidateToken(string token)
         {
             if (token == null)
+            {
                 return null;
-
+            }
+                
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(
-                _configuration.GetSection("AppSettings:Token").Value);
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+
             try
             {
                 tokenHandler.ValidateToken(token, new TokenValidationParameters

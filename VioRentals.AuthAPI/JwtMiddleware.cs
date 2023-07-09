@@ -1,6 +1,6 @@
 ﻿using VioRentals.Infrastructure.Repositories.Interfaces;
 
-namespace VioRentals.Web.Controllers.API
+namespace VioRentals.AuthAPI
 {
     public class JwtMiddleware
     {

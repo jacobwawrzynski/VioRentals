@@ -19,6 +19,19 @@ namespace VioRentals.Infrastructure.Repositories
             _rentalRepository = rentalRepository;
         }
 
+        public async Task<bool> DeleteRentalAsync(RentalEntity rental)
+        {
+            try
+            {
+                await _rentalRepository.DeleteAsync(rental);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public async Task<IEnumerable<RentalEntity>> FindAllAsync()
         {
             return await _rentalRepository.GetAllAsync();
@@ -27,19 +40,6 @@ namespace VioRentals.Infrastructure.Repositories
         public async Task<RentalEntity?> FindByIdAsync(int id)
         {
             return await _rentalRepository.GetAsync(id);
-        }
-
-        public async Task<bool> UpdateRentalAsync(RentalEntity rental)
-        {
-            try
-            {
-                await _rentalRepository.UpdateAsync(rental);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
 
         public async Task<bool> SaveRentalAsync(RentalEntity rental)
@@ -55,12 +55,11 @@ namespace VioRentals.Infrastructure.Repositories
             }
         }
 
-
-        public async Task<bool> DeleteRentalAsync(RentalEntity rental)
+        public async Task<bool> UpdateRentalAsync(RentalEntity rental)
         {
             try
             {
-                await _rentalRepository.DeleteAsync(rental);
+                await _rentalRepository.UpdateAsync(rental);
                 return true;
             }
             catch (Exception)

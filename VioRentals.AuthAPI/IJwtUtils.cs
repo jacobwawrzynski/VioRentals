@@ -1,6 +1,6 @@
 ﻿using VioRentals.Core.Entities;
 
-namespace VioRentals.Web.Controllers.API
+namespace VioRentals.AuthAPI
 {
     public interface IJwtUtils
     {
