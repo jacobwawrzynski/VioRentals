@@ -17,8 +17,6 @@ builder.Services.AddCors();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=../VioRentalsData.db"));
 
-//builder.Services.AddAutoMapper(typeof(Program));
-
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 builder.Services.AddScoped<IJwtUtils, JwtUtils>();
@@ -26,6 +24,8 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddAutoMapper(typeof(AutoMappingProfile));
+
+builder.Services.AddAuthentication();
 
 var app = builder.Build();
 
@@ -36,20 +36,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// global cors policy
 app.UseCors(x => x
     .AllowAnyOrigin()
     .AllowAnyMethod()
     .AllowAnyHeader());
 
-// global error handler
-//app.UseMiddleware<ErrorHandlerMiddleware>();
-
-// custom jwt auth middleware
 app.UseMiddleware<JwtMiddleware>();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -75,6 +75,7 @@ namespace VioRentals.AuthAPI.Controllers
             return Ok(new { message = "Registration successful" });
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
