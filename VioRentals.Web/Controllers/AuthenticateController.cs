@@ -54,5 +54,16 @@ namespace VioRentals.Web.Controllers
             }
             return BadRequest(ModelState);
         }
+
+        public async Task<ActionResult> GetAll()
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7071");
+                HttpResponseMessage response = await client.GetAsync("https://localhost:7071/api/Users/all");
+            }
+            return RedirectToAction("Index");
+
+        }
     }
 }

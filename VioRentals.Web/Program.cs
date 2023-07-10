@@ -26,7 +26,7 @@ builder.Services.AddTransient<IGenreService, GenreService>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-builder.Services.AddAuthentication();
+//builder.Services.AddAuthentication();
 //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //    .AddJwtBearer(options =>
 //    {
@@ -58,7 +58,7 @@ builder.Services.AddAuthentication();
 //        //};
 //    });
 
-builder.Services.AddSession();
+//builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -74,9 +74,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthorization();
+//app.UseAuthorization();
 
-app.UseSession();
+//app.UseSession();
 //app.Use(async (context, next) =>
 //{
 //    if ((bool)!context.User.Identity?.IsAuthenticated)

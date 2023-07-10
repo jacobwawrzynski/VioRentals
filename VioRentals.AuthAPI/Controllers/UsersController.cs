@@ -76,7 +76,7 @@ namespace VioRentals.AuthAPI.Controllers
         }
 
         [Authorize]
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
             var users = await _userService.FindAllAsync();
