@@ -28,31 +28,6 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddAutoMapper(typeof(AutoMappingProfile));
 
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(options =>
-//    {
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuer = false,
-//            ValidateAudience = false,
-//            ValidateLifetime = true,
-//            ValidateIssuerSigningKey = true,
-//            IssuerSigningKey =
-//            new SymmetricSecurityKey(
-//                Encoding.UTF8.GetBytes("0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"))
-//        };
-//    });
-
-builder.Services.AddAuthentication("Bearer")
-    .AddJwtBearer("Bearer", options =>
-    {
-        options.Authority = "https://localhost:7071";
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateAudience = false,
-            ValidateIssuer = false
-        };
-    });
 
 var app = builder.Build();
 
@@ -63,17 +38,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseCors(x => x
-    .AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader());
+.AllowAnyOrigin()
+.AllowAnyMethod()
+.AllowAnyHeader());
 
 //app.UseHttpsRedirection();
-app.UseMiddleware<JwtMiddleware>();
 //app.UseAuthentication();
-app.UseAuthorization();
+app.UseMiddleware<JwtMiddleware>();
+//app.UseAuthorization();
+
 
 
 app.MapControllers();
+
+
 
 app.Run();
