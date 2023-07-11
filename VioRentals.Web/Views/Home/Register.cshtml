@@ -1,6 +1,6 @@
 ﻿@model VioRentals.Web.DTOs.RegisterDto
 
-@using (Html.BeginForm("Register", "Auth", FormMethod.Post))
+@using (Html.BeginForm("Register", "Authenticate", FormMethod.Post))
 {
     @Html.LabelFor(model => model.Email)
     @Html.TextBoxFor(model => model.Email)
