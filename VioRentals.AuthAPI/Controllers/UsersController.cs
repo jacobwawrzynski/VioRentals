@@ -9,6 +9,7 @@ using VioRentals.Core.DTOs;
 using VioRentals.Core.Entities;
 using VioRentals.Infrastructure.Repositories;
 using VioRentals.Infrastructure.Repositories.Interfaces;
+using System.Net.Http.Headers;
 
 namespace VioRentals.AuthAPI.Controllers
 {
@@ -35,16 +36,18 @@ namespace VioRentals.AuthAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto loginDto)
         {
-            //var response = await _userService.AuthenticateAsync(model);
             var user = await _userService.FindByEmailAsync(loginDto.Email);
             if (user is null || !VerifyPasswordHash(loginDto.Password, user.PasswordHash, user.PasswordSalt))
             {
-                throw new Exception("Username or password incorrect");
+                return BadRequest("Incorrect Email or Password");
             }
 
-            // authentication successful
             var response = _mapper.Map<AuthenticateUserDto>(user);
             response.Token = _jwtUtils.GenerateToken(user);
+
+            //var client = new HttpClient();
+            //client.DefaultRequestHeaders.Authorization =
+            //    new AuthenticationHeaderValue("Bearer", response.Token);
 
             return Ok(response);
         }
@@ -53,7 +56,6 @@ namespace VioRentals.AuthAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto registerDto)
         {
-            //await _userService.RegisterAsync(model);
             var users = await _userService.FindAllAsync();
             if (users.Any(x => x.Email == registerDto.Email))
             {

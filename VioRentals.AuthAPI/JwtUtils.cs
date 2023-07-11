@@ -11,6 +11,7 @@ namespace VioRentals.AuthAPI
     public class JwtUtils : IJwtUtils
     {
         private readonly AppSettings _appSettings;
+        private static string _tokenDto;
         public JwtUtils(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
@@ -24,12 +25,17 @@ namespace VioRentals.AuthAPI
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            return _tokenDto = tokenHandler.WriteToken(token);
+        }
+
+        public string GetTokenDto()
+        {
+            return _tokenDto;
         }
 
         public int? ValidateToken(string token)
