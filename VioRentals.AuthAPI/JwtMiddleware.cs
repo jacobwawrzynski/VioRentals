@@ -17,14 +17,10 @@ namespace VioRentals.AuthAPI
             var userId = jwtUtils.ValidateToken(jwtUtils.GetTokenDto());
             if (userId != null)
             {
-                // attach user to context on successful jwt validation
                 context.Items["User"] = userService.FindByIdAsync(userId.Value);
             }
 
             await _next(context);
         }
-
-
-
     }
 }
