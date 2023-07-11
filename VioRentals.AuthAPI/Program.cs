@@ -28,7 +28,6 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddAutoMapper(typeof(AutoMappingProfile));
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,21 +37,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.UseCors(x => x
 .AllowAnyOrigin()
 .AllowAnyMethod()
 .AllowAnyHeader());
 
-//app.UseHttpsRedirection();
-//app.UseAuthentication();
+app.UseHttpsRedirection();
+
 app.UseMiddleware<JwtMiddleware>();
-//app.UseAuthorization();
-
-
 
 app.MapControllers();
-
-
 
 app.Run();

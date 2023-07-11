@@ -7,28 +7,27 @@ using System.Security.Cryptography;
 using System.Text;
 using VioRentals.Core.DTOs;
 using VioRentals.Core.Entities;
+using VioRentals.Infrastructure.Repositories;
 using VioRentals.Infrastructure.Repositories.Interfaces;
 
 namespace VioRentals.AuthAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        private readonly AppSettings _appSettings;
         private IJwtUtils _jwtUtils;
 
         public UsersController(
             IUserService userService,
             IMapper mapper,
-            IOptions<AppSettings> appSettings,
             IJwtUtils jwtUtils)
         {
             _userService = userService;
             _mapper = mapper;
-            _appSettings = appSettings.Value;
             _jwtUtils = jwtUtils;
         }
 
@@ -46,6 +45,7 @@ namespace VioRentals.AuthAPI.Controllers
             // authentication successful
             var response = _mapper.Map<AuthenticateUserDto>(user);
             response.Token = _jwtUtils.GenerateToken(user);
+
             return Ok(response);
         }
 
@@ -75,7 +75,7 @@ namespace VioRentals.AuthAPI.Controllers
             return Ok(new { message = "Registration successful" });
         }
 
-        [Authorize]
+        //[VioRentals.AuthAPI.Attributes.Authorize]
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {

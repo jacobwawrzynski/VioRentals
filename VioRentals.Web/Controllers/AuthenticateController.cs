@@ -7,18 +7,6 @@ namespace VioRentals.Web.Controllers
 {
     public class AuthenticateController : Controller
     {
-        //public static UserDto _userDto = new UserDto();
-        //private readonly IMapper _mapper;
-        //private readonly IConfiguration _configuration;
-        //private readonly IUserService _userService;
-
-        //public AuthenticateController(IUserService userService, IMapper mapper, IConfiguration configuration)
-        //{
-        //    _userService = userService;
-        //    _mapper = mapper;
-        //    _configuration = configuration;
-        //}
-
         // TESTING PURPOSES
         public ActionResult Index()
         {
