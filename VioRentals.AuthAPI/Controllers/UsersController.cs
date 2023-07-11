@@ -45,10 +45,6 @@ namespace VioRentals.AuthAPI.Controllers
             var response = _mapper.Map<AuthenticateUserDto>(user);
             response.Token = _jwtUtils.GenerateToken(user);
 
-            //var client = new HttpClient();
-            //client.DefaultRequestHeaders.Authorization =
-            //    new AuthenticationHeaderValue("Bearer", response.Token);
-
             return Ok(response);
         }
 
