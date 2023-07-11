@@ -13,8 +13,8 @@ namespace VioRentals.AuthAPI
 
         public async Task Invoke(HttpContext context, IUserService userService, IJwtUtils jwtUtils)
         {
-            //var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            var userId = jwtUtils.ValidateToken();
+            var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var userId = jwtUtils.ValidateToken(token);
             if (userId != null)
             {
                 // attach user to context on successful jwt validation

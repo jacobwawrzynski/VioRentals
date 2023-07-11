@@ -12,7 +12,7 @@ using VioRentals.Infrastructure.Repositories.Interfaces;
 
 namespace VioRentals.AuthAPI.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -75,7 +75,7 @@ namespace VioRentals.AuthAPI.Controllers
             return Ok(new { message = "Registration successful" });
         }
 
-        //[VioRentals.AuthAPI.Attributes.Authorize]
+        [VioRentals.AuthAPI.Attributes.Authorize]
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {

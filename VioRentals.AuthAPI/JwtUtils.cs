@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Text;
 using VioRentals.Core.Entities;
@@ -10,7 +11,6 @@ namespace VioRentals.AuthAPI
     public class JwtUtils : IJwtUtils
     {
         private readonly AppSettings _appSettings;
-
         public JwtUtils(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
