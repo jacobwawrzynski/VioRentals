@@ -6,5 +6,6 @@ namespace VioRentals.AuthAPI
     {
         public string GenerateToken(UserEntity user);
         public int? ValidateToken(string token);
+        public string GetTokenDto();
     }
 }

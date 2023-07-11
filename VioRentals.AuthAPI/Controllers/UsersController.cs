@@ -7,28 +7,28 @@ using System.Security.Cryptography;
 using System.Text;
 using VioRentals.Core.DTOs;
 using VioRentals.Core.Entities;
+using VioRentals.Infrastructure.Repositories;
 using VioRentals.Infrastructure.Repositories.Interfaces;
+using System.Net.Http.Headers;
 
 namespace VioRentals.AuthAPI.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        private readonly AppSettings _appSettings;
         private IJwtUtils _jwtUtils;
 
         public UsersController(
             IUserService userService,
             IMapper mapper,
-            IOptions<AppSettings> appSettings,
             IJwtUtils jwtUtils)
         {
             _userService = userService;
             _mapper = mapper;
-            _appSettings = appSettings.Value;
             _jwtUtils = jwtUtils;
         }
 
@@ -36,16 +36,15 @@ namespace VioRentals.AuthAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto loginDto)
         {
-            //var response = await _userService.AuthenticateAsync(model);
             var user = await _userService.FindByEmailAsync(loginDto.Email);
             if (user is null || !VerifyPasswordHash(loginDto.Password, user.PasswordHash, user.PasswordSalt))
             {
-                throw new Exception("Username or password incorrect");
+                return BadRequest("Incorrect Email or Password");
             }
 
-            // authentication successful
             var response = _mapper.Map<AuthenticateUserDto>(user);
             response.Token = _jwtUtils.GenerateToken(user);
+
             return Ok(response);
         }
 
@@ -53,7 +52,6 @@ namespace VioRentals.AuthAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto registerDto)
         {
-            //await _userService.RegisterAsync(model);
             var users = await _userService.FindAllAsync();
             if (users.Any(x => x.Email == registerDto.Email))
             {
@@ -75,7 +73,8 @@ namespace VioRentals.AuthAPI.Controllers
             return Ok(new { message = "Registration successful" });
         }
 
-        [HttpGet]
+        [VioRentals.AuthAPI.Attributes.Authorize]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
             var users = await _userService.FindAllAsync();

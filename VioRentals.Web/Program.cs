@@ -26,22 +26,6 @@ builder.Services.AddTransient<IGenreService, GenreService>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-builder.Services.AddAuthentication();
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(options =>
-//    {
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuer = false,
-//            ValidateAudience = false,
-//            ValidateLifetime = true,
-//            ValidateIssuerSigningKey = true,
-//            IssuerSigningKey = 
-//            new SymmetricSecurityKey(
-//                Encoding.UTF8.GetBytes("01234567890ABCDEF0123456789ABCDEF01234567890ABCDEF0123456789ABCDEF")
-//                )
-//        };
-
 //        //options.Events = new JwtBearerEvents
 //        //{
 //        //    OnChallenge = context =>
@@ -58,7 +42,7 @@ builder.Services.AddAuthentication();
 //        //};
 //    });
 
-builder.Services.AddSession();
+//builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -74,21 +58,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthorization();
-
-app.UseSession();
-//app.Use(async (context, next) =>
-//{
-//    if ((bool)!context.User.Identity?.IsAuthenticated)
-//    {
-//        context.Response.Redirect("/Home/Login");
-//        return;
-//    }
-
-//    context.Response.Redirect("Customer/Index");
-//    return;
-//    await next.Invoke();
-//});
 
 app.UseEndpoints(endpoints =>
 {
