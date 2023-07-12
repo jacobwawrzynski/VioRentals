@@ -27,11 +27,11 @@
             </div>
             <div id="navbar-collapse-with-animation" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block">
                 <div class="flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:pl-7">
-                    <a class="font-medium text-blue-600 sm:py-6 dark:text-blue-500" href="/" aria-current="page">Home page</a>
+                    <a class="font-medium text-gray-500 hover:text-gray-400 sm:py-6 dark:text-gray-400 dark:hover:text-gray-500" href="/">Home page</a>
                     <a class="font-medium text-gray-500 hover:text-gray-400 sm:py-6 dark:text-gray-400 dark:hover:text-gray-500" asp-controller="Customers" asp-action="Index">All Customers</a>
+                    <a class="font-medium text-gray-500 hover:text-gray-400 sm:py-6 dark:text-gray-400 dark:hover:text-gray-500" asp-controller="Movies" asp-action="Index">All Movies</a>
                     <a class="font-medium text-gray-500 hover:text-gray-400 sm:py-6 dark:text-gray-400 dark:hover:text-gray-500" asp-controller="Customers" asp-action="GetCreate">Create Customer</a>
                     <a class="font-medium text-gray-500 hover:text-gray-400 sm:py-6 dark:text-gray-400 dark:hover:text-gray-500" asp-controller="Movies" asp-action="GetCreate">Create Movie</a>
-                    <a class="font-medium text-gray-500 hover:text-gray-400 sm:py-6 dark:text-gray-400 dark:hover:text-gray-500" asp-controller="Movies" asp-action="Index">All Movies</a>
 
                     <a class="flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 sm:border-l sm:border-gray-300 sm:my-6 sm:pl-6 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500" asp-controller="Home" asp-action="Login">
                         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -88,7 +88,8 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="./node_modules/preline/dist/preline.js"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+<script src="./node_modules/preline/dist/preline.js"></script>
+<script src="./Scripts/current-page.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
