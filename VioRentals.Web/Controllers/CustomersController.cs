@@ -36,6 +36,10 @@ namespace VioRentals.Web.Controllers
             {
                 client.BaseAddress = new Uri("https://localhost:7071/api/");
                 var response = await client.GetAsync("Customers/edit/{id}");
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
                 if (response.IsSuccessStatusCode)
                 {
                     return View("Edit", response.Content);
@@ -63,12 +67,16 @@ namespace VioRentals.Web.Controllers
                 client.BaseAddress = new Uri("https://localhost:7071/api/");
                 var content = JsonContent.Create(customerDto);
                 var response = await client.PostAsync("Customers/create", content);
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
                 if (response.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");
                 }
             }
-            return BadRequest("Something went wrong");
+            return BadRequest();
         }
 
         [ValidateAntiForgeryToken]
@@ -79,12 +87,16 @@ namespace VioRentals.Web.Controllers
                 client.BaseAddress = new Uri("https://localhost:7071/api/");
                 var content = JsonContent.Create(customerDto);
                 var response = await client.PatchAsync("Customers/edit", content);
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
                 if (response.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");
                 }
             }
-            return BadRequest("Something went wrong");
+            return BadRequest();
         }
 
         public async Task<ActionResult> DeleteAsync(int id)
@@ -93,12 +105,16 @@ namespace VioRentals.Web.Controllers
             {
                 client.BaseAddress = new Uri("https://localhost:7071/api/");
                 var response = await client.DeleteAsync("Customers/delete/{id}");
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
                 if (response.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");
                 }
             }
-            return BadRequest("Something went wrong");
+            return BadRequest();
         }
 
         public async Task<JsonResult> SearchAsync(string searchTerm)
@@ -148,6 +164,10 @@ namespace VioRentals.Web.Controllers
             {
                 client.BaseAddress = new Uri("https://localhost:7071/api/");
                 var response = await client.GetAsync("Customers/all");
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
                 if (response.IsSuccessStatusCode)
                 {
                     var responseContent = await response.Content.ReadAsStringAsync();
@@ -155,7 +175,7 @@ namespace VioRentals.Web.Controllers
                     return View(customers);
                 }
             }
-            return RedirectToAction("Login", "Home");
+            return BadRequest();
         }
     }
 }

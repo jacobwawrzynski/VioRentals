@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using VioRentals.Core.DTOs;
 using VioRentals.Core.Entities;
 using VioRentals.Infrastructure.Repositories.Interfaces;
-using VioRentals.Web.DTOs;
 
 namespace VioRentals.Web.Controllers
 {
@@ -21,26 +22,25 @@ namespace VioRentals.Web.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
         public ViewResult GetCreate() 
         {
             return View("Create");
         }
 
-        [HttpGet]
         public async Task<ActionResult> GetEditAsync(int id)
         {
-            var movie = await _movieService.FindByIdAsync(id);
-
-            if (movie is not null)
+            using (var client = new HttpClient())
             {
-                var movieDto = _mapper.Map<MovieDto>(movie);
-                return View("Edit", movieDto);
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var response = await client.GetAsync("Movies/edit/{id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return View("Edit", response.Content);
+                }
             }
             return NotFound();
         }
 
-        [HttpGet]
         public async Task<ActionResult> GetDetailsAsync(int id)
         {
             var movie = await _movieService.FindByIdAsync(id);
@@ -52,40 +52,63 @@ namespace VioRentals.Web.Controllers
             return NotFound();
         }
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAsync([FromForm] MovieDto movieDto)
         {
-            if (ModelState.IsValid)
+            using (var client = new HttpClient())
             {
-                var movie = _mapper.Map<MovieEntity>(movieDto);
-                await _movieService.SaveMovieAsync(movie);
-                return RedirectToAction("Index");
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var content = JsonContent.Create(movieDto);
+                var response = await client.PostAsync("Movies/create", content);
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
             }
-
-            return RedirectToAction("GetCreateAsync", movieDto);
+            return BadRequest();
         }
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditAsync([FromForm] MovieDto movieDto)
         {
-            if (ModelState.IsValid)
+            using (var client = new HttpClient())
             {
-                var movie = _mapper.Map<MovieEntity>(movieDto);
-                await _movieService.UpdateMovieAsync(movie);
-                return RedirectToAction("Index");
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var content = JsonContent.Create(movieDto);
+                var response = await client.PatchAsync("Movies/edit", content);
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
             }
-
-            return RedirectToAction("GetEditAsync", movieDto);
+            return BadRequest();
         }
 
         [HttpPost]
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            var movie = await _movieService.FindByIdAsync(id);
-            await _movieService.DeleteMovieAsync(movie);
-            return RedirectToAction("Index");
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var response = await client.DeleteAsync("Customers/delete/{id}");
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            return BadRequest();
         }
 
         [HttpGet]
@@ -109,7 +132,7 @@ namespace VioRentals.Web.Controllers
         // ValidationReleaseDate
 
         [HttpGet]
-        public async Task<ViewResult> Index(int page = 1, int pageSize = 10)
+        public async Task<ActionResult> Index(int page = 1, int pageSize = 10)
         {
             var totalPages = (int)Math.Ceiling((double)await _movieService.CountMoviesAsync() / pageSize);
             //check if user enters value higher than totalpages and set the value to the hightes pagenumber availabe
@@ -131,22 +154,27 @@ namespace VioRentals.Web.Controllers
                 RedirectToAction("Index", new { page, pageSize = 100 });
             }
 
-            // FIND BETTER SOLUTION (THIS WORKS BUT UGLY)
-            var movies = await _movieService.FindAllAsync();
-            var genres = await _genreService.FindAllAsync();
-
-            foreach (var mov in movies)
-            {
-                mov._Genre = genres
-                    .Where(g => g.Id == mov.GenreFK)
-                    .First();
-            }
             //pass to view
             ViewBag.TotalPages = totalPages;
             ViewBag.CurrentPage = page;
             ViewBag.PageSize = pageSize;
 
-            return View(movies);
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var response = await client.GetAsync("Movies/all");
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var movies = JsonConvert.DeserializeObject<IEnumerable<MovieEntity>>(responseContent);
+                    return View(movies);
+                }
+            }
+            return BadRequest();
         }
     }
 }
