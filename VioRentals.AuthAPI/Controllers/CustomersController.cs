@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VioRentals.Core.DTOs;
+using VioRentals.Core.Entities;
 using VioRentals.Infrastructure.Repositories;
 using VioRentals.Infrastructure.Repositories.Interfaces;
 
@@ -24,7 +25,21 @@ namespace VioRentals.AuthAPI.Controllers
             _membershipService = membershipService;
         }
 
+        [HttpPost("create")]
+        [VioRentals.AuthAPI.Attributes.Authorize]
+        public async Task<IActionResult> Create(CustomerDto customerDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var customer = _mapper.Map<CustomerEntity>(customerDto);
+                await _customerService.SaveCustomerAsync(customer);
+                return Ok();   
+            }
+            return BadRequest();
+        }
+
         [HttpGet("edit/{id}")]
+        [VioRentals.AuthAPI.Attributes.Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             var customer = await _customerService.FindByIdAsync(id);
@@ -35,6 +50,19 @@ namespace VioRentals.AuthAPI.Controllers
                 return Ok(customerDto);
             }
             return NotFound();
+        }
+
+        [HttpPatch("edit")]
+        [VioRentals.AuthAPI.Attributes.Authorize]
+        public async Task<IActionResult> Edit(CustomerDto customerDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var customer = _mapper.Map<CustomerEntity>(customerDto);
+                await _customerService.UpdateCustomerAsync(customer);
+                return Ok();
+            }
+            return BadRequest();
         }
 
         [HttpGet("all")]
@@ -53,6 +81,19 @@ namespace VioRentals.AuthAPI.Controllers
             }
 
             return Ok(customers);
+        }
+
+        [HttpDelete("delete/{id}")]
+        [VioRentals.AuthAPI.Attributes.Authorize]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var customer = await _customerService.FindByIdAsync(id);
+            if (customer is not null)
+            {
+                await _customerService.DeleteCustomerAsync(customer);
+                return Ok();
+            }
+            return NotFound();
         }
     }
 }

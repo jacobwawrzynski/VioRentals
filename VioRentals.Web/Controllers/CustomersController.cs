@@ -42,17 +42,8 @@ namespace VioRentals.Web.Controllers
                 }
             }
             return NotFound();
-            //var customer = await _customerService.FindByIdAsync(id);
-
-            //if (customer is not null)
-            //{
-            //    var customerDto = _mapper.Map<CustomerDto>(customer);
-            //    return View("Edit", customerDto);
-            //}
-            //return NotFound();
         }
 
-        [HttpGet]
         public async Task<ActionResult> GetDetailsAsync(int id)
         {
             var customer = await _customerService.FindByIdAsync(id);
@@ -64,43 +55,52 @@ namespace VioRentals.Web.Controllers
             return NotFound();
         }
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAsync([FromForm] CustomerDto customerDto)
         {
-            if (ModelState.IsValid)
+            using (var client = new HttpClient())
             {
-                var customer = _mapper.Map<CustomerEntity>(customerDto);
-                await _customerService.SaveCustomerAsync(customer);
-                return RedirectToAction("Index");
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var content = JsonContent.Create(customerDto);
+                var response = await client.PostAsync("Customers/create", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
             }
-
-            return RedirectToAction("GetCreateAsync", customerDto);
+            return BadRequest("Something went wrong");
         }
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditAsync(int id, CustomerDto customerDto)
         {
-            if (ModelState.IsValid)
+            using (var client = new HttpClient())
             {
-                var customer = _mapper.Map<CustomerEntity>(customerDto);
-                await _customerService.UpdateCustomerAsync(customer);
-                return RedirectToAction("Index");
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var content = JsonContent.Create(customerDto);
+                var response = await client.PatchAsync("Customers/edit", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
             }
-                
-            return RedirectToAction("GetEditAsync", id);
+            return BadRequest("Something went wrong");
         }
 
-        [HttpPost]
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            var customer = await _customerService.FindByIdAsync(id);
-            await _customerService.DeleteCustomerAsync(customer);
-            return RedirectToAction("Index");
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var response = await client.DeleteAsync("Customers/delete/{id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            return BadRequest("Something went wrong");
         }
 
-        [HttpGet]
         public async Task<JsonResult> SearchAsync(string searchTerm)
         {
             var customers = await _customerService.FindByTermAsync(searchTerm);
@@ -116,7 +116,7 @@ namespace VioRentals.Web.Controllers
             return Json(result);
         }
 
-        public async Task<ViewResult> Index(int page = 1, int pageSize = 10)
+        public async Task<ActionResult> Index(int page = 1, int pageSize = 10)
         {
             
             var totalPages = (int)Math.Ceiling((double)await _customerService.CountCustomersAsync() / pageSize);
@@ -139,16 +139,6 @@ namespace VioRentals.Web.Controllers
                 RedirectToAction("Index", new { page, pageSize = 100 });
             }
 
-            // FIND BETTER SOLUTION (THIS WORKS BUT UGLY)
-            //var customers = await _customerService.FindAllAsync();
-            //var memberships = await _membershipService.FindAllAsync();
-
-            //foreach (var cus in customers)
-            //{
-            //    cus._MembershipDetails = memberships
-            //        .Where(m => m.Id == cus.MembershipDetailsFK)
-            //        .First();
-            //}
             //pass to view
             ViewBag.TotalPages = totalPages;
             ViewBag.CurrentPage = page;
@@ -158,10 +148,14 @@ namespace VioRentals.Web.Controllers
             {
                 client.BaseAddress = new Uri("https://localhost:7071/api/");
                 var response = await client.GetAsync("Customers/all");
-                var responseContent = await response.Content.ReadAsStringAsync();
-                var customers = JsonConvert.DeserializeObject<IEnumerable<CustomerEntity>>(responseContent);
-                return View(customers);
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var customers = JsonConvert.DeserializeObject<IEnumerable<CustomerEntity>>(responseContent);
+                    return View(customers);
+                }
             }
+            return RedirectToAction("Login", "Home");
         }
     }
 }
