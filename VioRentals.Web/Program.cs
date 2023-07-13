@@ -26,24 +26,6 @@ builder.Services.AddTransient<IGenreService, GenreService>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-//        //options.Events = new JwtBearerEvents
-//        //{
-//        //    OnChallenge = context =>
-//        //    {
-//        //        if ((bool)!context.HttpContext.User.Identity?.IsAuthenticated)
-//        //        {
-//        //            context.Response.Redirect("/Home/Login");
-//        //            context.HandleResponse();
-//        //            return Task.CompletedTask;
-//        //        }
-//        //        context.Response.Redirect("/Customer/Index");
-//        //        return Task.CompletedTask;
-//        //    }
-//        //};
-//    });
-
-//builder.Services.AddSession();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

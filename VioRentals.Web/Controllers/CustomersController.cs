@@ -2,8 +2,10 @@
 using VioRentals.Infrastructure.Repositories.Interfaces;
 using VioRentals.Core.Entities;
 using AutoMapper;
-using VioRentals.Web.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using VioRentals.Core.DTOs;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace VioRentals.Web.Controllers
 {
@@ -23,23 +25,31 @@ namespace VioRentals.Web.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
         public ViewResult GetCreate()
         {
             return View("Create");
         }
 
-        [HttpGet]
         public async Task<ActionResult> GetEditAsync(int id)
         {
-            var customer = await _customerService.FindByIdAsync(id);
-
-            if (customer is not null)
+            using (var client = new HttpClient())
             {
-                var customerDto = _mapper.Map<CustomerDto>(customer);
-                return View("Edit", customerDto);
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var response = await client.GetAsync("Customers/edit/{id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return View("Edit", response.Content);
+                }
             }
             return NotFound();
+            //var customer = await _customerService.FindByIdAsync(id);
+
+            //if (customer is not null)
+            //{
+            //    var customerDto = _mapper.Map<CustomerDto>(customer);
+            //    return View("Edit", customerDto);
+            //}
+            //return NotFound();
         }
 
         [HttpGet]
@@ -106,10 +116,9 @@ namespace VioRentals.Web.Controllers
             return Json(result);
         }
 
-        [HttpGet]
-        //[VioRentals.AuthAPI.Attributes.Authorize]
         public async Task<ViewResult> Index(int page = 1, int pageSize = 10)
         {
+            
             var totalPages = (int)Math.Ceiling((double)await _customerService.CountCustomersAsync() / pageSize);
             //check if user enters value higher than totalpages and set the value to the hightes pagenumber availabe
             if (page > totalPages)
@@ -131,21 +140,28 @@ namespace VioRentals.Web.Controllers
             }
 
             // FIND BETTER SOLUTION (THIS WORKS BUT UGLY)
-            var customers = await _customerService.FindAllAsync();
-            var memberships = await _membershipService.FindAllAsync();
+            //var customers = await _customerService.FindAllAsync();
+            //var memberships = await _membershipService.FindAllAsync();
 
-            foreach (var cus in customers)
-            {
-                cus._MembershipDetails = memberships
-                    .Where(m => m.Id == cus.MembershipDetailsFK)
-                    .First();
-            }
+            //foreach (var cus in customers)
+            //{
+            //    cus._MembershipDetails = memberships
+            //        .Where(m => m.Id == cus.MembershipDetailsFK)
+            //        .First();
+            //}
             //pass to view
             ViewBag.TotalPages = totalPages;
             ViewBag.CurrentPage = page;
             ViewBag.PageSize = pageSize;
 
-            return View(customers);
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var response = await client.GetAsync("Customers/all");
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var customers = JsonConvert.DeserializeObject<IEnumerable<CustomerEntity>>(responseContent);
+                return View(customers);
+            }
         }
     }
 }
