@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VioRentals.AuthAPI\VioRentals.AuthAPI.csproj" />
     <ProjectReference Include="..\VioRentals.Core\VioRentals.Core.csproj" />
     <ProjectReference Include="..\VioRentals.Infrastructure\VioRentals.Infrastructure.csproj" />
   </ItemGroup>

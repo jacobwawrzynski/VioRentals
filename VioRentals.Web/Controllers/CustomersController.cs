@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace VioRentals.Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class CustomersController : Controller
     {
         private readonly ICustomerService _customerService;
@@ -107,6 +107,7 @@ namespace VioRentals.Web.Controllers
         }
 
         [HttpGet]
+        //[VioRentals.AuthAPI.Attributes.Authorize]
         public async Task<ViewResult> Index(int page = 1, int pageSize = 10)
         {
             var totalPages = (int)Math.Ceiling((double)await _customerService.CountCustomersAsync() / pageSize);
