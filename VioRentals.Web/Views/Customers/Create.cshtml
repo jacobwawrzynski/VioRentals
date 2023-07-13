@@ -1,64 +1,87 @@
 ﻿@using VioRentals.Web.DTOs
 @model CustomerDto
 
-@using (Html.BeginForm("Create", "Customers"))
-{
-    <div class="form-group">
-        @Html.LabelFor(m => m.Forename)
-        @Html.TextBoxFor(m => m.Forename, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Forename)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Surname)
-        @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Surname)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.MembershipType)
-        <select class="form-control" asp-for="MembershipType" id="membershipType" name="MembershipType">
-            <option value="1">PayAsYouGo</option>
-            <option value="2">Monthly</option>
-            <option value="3">Quarterly</option>
-            <option value="4">Annualy</option>
-        </select>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.DateOfBirth)
-        @Html.TextBoxFor(m => m.DateOfBirth, "{0:d MMM yyyy}", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.DateOfBirth)
-    </div>
-    <div class="checkbox">
-        <label>
-            @Html.CheckBoxFor(m => m.IsSubscribingToNewsletter) Subscribed to Newsletter?
-        </label>
+<div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+    <div class="max-w-xl mx-auto">
+        <div class="text-center">
+            <h1 class="text-3xl font-bold text-gray-800 sm:text-4xl dark:text-white">
+                Create a new customer
+            </h1>
+            <p class="mt-1 text-gray-600 dark:text-gray-400">
+                Just do it :)
+            </p>
+        </div>
     </div>
 
-    @Html.AntiForgeryToken()
-    <button type="submit" class="btn btn-primary">Create</button>
+    <div class="mt-12 max-w-lg mx-auto">
+        <!-- Card -->
+        <div class="flex flex-col border rounded-xl p-4 sm:p-6 lg:p-8 dark:border-gray-700">
+            <h2 class="mb-8 text-xl font-semibold text-gray-800 dark:text-gray-200">
+                Fill in the form
+            </h2>
+
+            @using (Html.BeginForm("Create", "Customers"))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-xs text-red-600 mt-2" })
+
+                <div class="grid gap-4 lg:gap-6">
+                    <!-- Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Forename, new { @class = "block text-sm text-gray-700 font-medium dark:text-white" })
+                            @Html.TextBoxFor(m => m.Forename, new { @class = "py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" })
+                            @Html.ValidationMessageFor(m => m.Forename, "", new { @class = "text-xs text-red-600 mt-2" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Surname, new { @class = "block text-sm text-gray-700 font-medium dark:text-white" })
+                            @Html.TextBoxFor(m => m.Surname, new { @class = "py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" })
+                            @Html.ValidationMessageFor(m => m.Surname, "", new { @class = "text-xs text-red-600 mt-2" })
+                        </div>
+                    </div>
+                    <!-- End Grid -->
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.DateOfBirth, new { @class = "block text-sm text-gray-700 font-medium dark:text-white" })
+                            @Html.TextBoxFor(m => m.DateOfBirth, "{0:d MMM yyyy}", new { @class = "py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" })
+                            @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-xs text-red-600 mt-2" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.MembershipType, new { @class = "block text-sm text-gray-700 font-medium dark:text-white" })
+                            @Html.DropDownListFor(m => m.MembershipType, new SelectList(new[]
+                        {
+                        new SelectListItem { Value = "1", Text = "PayAsYouGo" },
+                        new SelectListItem { Value = "2", Text = "Monthly" },
+                        new SelectListItem { Value = "3", Text = "Quarterly" },
+                        new SelectListItem { Value = "4", Text = "Annually" },
+                        }, "Value", "Text"), "Select membership type", new { @class = "form-control py-3 px-4 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" })
+                            @Html.ValidationMessageFor(m => m.MembershipType, "", new { @class = "text-xs text-red-600 mt-2" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(m => m.IsSubscribingToNewsletter) Subscribed to Newsletter?
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 grid">
+                        <button type="submit" class="inline-flex justify-center items-center gap-x-3 text-center bg-blue-600 hover:bg-blue-700 border border-transparent text-sm lg:text-base text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition py-3 px-4 dark:focus:ring-offset-gray-800">Create</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
-
-
-
-@*<form asp-action="Create" method="post">
-    <label asp-for="Forename">Forename:</label>
-    <input asp-for="Forename" type="text" id="forename" name="Forename" required>
-
-    <label asp-for="Surname">Surname:</label>
-    <input asp-for="Surname" type="text" id="surname" name="Surname" required>
-
-    <label asp-for="MembershipType">Membership Type:</label>
-    <select asp-for="MembershipType" id="membershipType" name="MembershipType">
-        <option value="1">PayAsYouGo</option>
-        <option value="2">Monthly</option>
-        <option value="3">Quarterly</option>
-        <option value="4">Annualy</option>
-    </select>
-
-    <label asp-for="DateOfBirth">Date of Birth:</label>
-    <input asp-for="DateOfBirth" type="date" id="dateOfBirth" name="DateOfBirth" required>
-
-    <label asp-for="IsSubscibingToNewsletter">Subscribing:</label>
-    <input asp-for="IsSubscibingToNewsletter" type="checkbox" id="isSubscribing" name="IsSubscribing">
-
-    <input type="submit" value="Create Customer">
-</form>*@
