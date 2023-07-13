@@ -370,3 +370,7 @@ FodyWeavers.xsd
 
 # .history folder
 .history/
+
+Microservices/lucky_user_service/target
+Microservices/random_number_service/target
+Microservices/recmended_movie_service/target
