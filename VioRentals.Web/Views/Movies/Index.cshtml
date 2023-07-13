@@ -1,127 +1,157 @@
 ﻿@using VioRentals.Core.Entities
 @model IEnumerable<MovieEntity>
 
-<div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-    <!-- Card -->
-    <div class="flex flex-col">
-        <div class="-m-1.5 overflow-x-auto">
-            <div class="p-1.5 inline-block align-middle">
-                <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
-                    <!-- Table -->
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead class="bg-gray-50 dark:bg-slate-800">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 text-left">
-                                    <div class="flex items-center gap-x-2">
-                                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                            Movie
-                                        </span>
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-3 text-left">
-                                    <div class="flex items-center gap-x-2">
-                                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                            Genre
-                                        </span>
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-3 text-left">
-                                    <div class="flex items-center gap-x-2">
-                                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                            Release Date
-                                        </span>
-                                    </div>
-                                </th>
+<div class="relative overflow-hidden">
+    <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-24">
+        <div class="text-center">
+            <h1 class="text-4xl sm:text-6xl font-bold text-gray-800 dark:text-gray-200">
+                Movies
+            </h1>
+            <div class="mt-7 sm:mt-12 mx-auto max-w-xl relative">
+                <!-- Form -->
+                <form>
+                    <div class="relative z-10 flex space-x-3 p-3 bg-white border rounded-lg shadow-lg shadow-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:shadow-gray-900/[.2]">
+                        <div class="flex-[1_0_0%]">
+                            <label for="hs-search-article-1" class="block text-sm text-gray-700 font-medium dark:text-white"><span class="sr-only">Search article</span></label>
+                            <input type="email" name="hs-search-article-1" id="hs-search-article-1" class="p-3 block w-full border-transparent rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-400" placeholder="Search for a movie ...">
+                        </div>
+                        <div class="flex-[0_0_auto]">
+                            <a class="p-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+                <!-- End Form -->
 
-                                <th scope="col" class="px-6 py-3 text-left">
-                                    <div class="flex items-center gap-x-2">
-                                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                            Availability
-                                        </span>
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-3 text-left">
-                                    <div class="flex items-center gap-x-2">
-                                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                            Details
-                                        </span>
-                                    </div>
-                                </th>
-                            </tr>
-                        </thead>
+            </div>
 
-                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                            @foreach (var movie in Model)
-                            {
-                                <tr>
-                                    <td class="h-px w-72 whitespace-nowrap">
-                                        <div class="px-6 py-3">
-                                            @Html.ActionLink(movie.Name, "GetEdit", "Movies", new { id = movie.Id }, null)
-                                        </div>
-                                    </td>
-                                    <td class="h-px w-px whitespace-nowrap">
-                                        <div class="px-6 py-3">
-                                            <div class="flex items-center gap-x-3">
-                                                @movie._Genre.Name
+            <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+                <!-- Card -->
+                <div class="flex flex-col">
+                    <div class="-m-1.5 overflow-x-auto">
+                        <div class="p-1.5 inline-block align-middle">
+                            <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
+                                <!-- Table -->
+                                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                    <thead class="bg-gray-50 dark:bg-slate-800">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left">
+                                            <div class="flex items-center gap-x-2">
+                                                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                                                    Movie
+                                                </span>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="h-px w-px whitespace-nowrap">
-                                        <div class="px-6 py-3">
-                                            <div class="flex items-center gap-x-3">
-                                                @movie.ReleaseDate.Value.ToShortDateString()
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left">
+                                            <div class="flex items-center gap-x-2">
+                                                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                                                    Genre
+                                                </span>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="h-px w-px whitespace-nowrap">
-                                        <div class="px-6 py-3">
-                                            Available: <span class="badge bg-primary rounded-pill">@movie.NumberAvailable</span>
-                                        </div>
-                                    </td>
-                                    <td class="h-px w-px whitespace-nowrap">
-                                        <div class="px-6 py-1.5">
-                                            <button type="button" class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                                @Html.ActionLink("Details/Delete", "GetDetails", "Movies", new { id = movie.Id }, null)
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left">
+                                            <div class="flex items-center gap-x-2">
+                                                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                                                    Release Date
+                                                </span>
+                                            </div>
+                                        </th>
+
+                                        <th scope="col" class="px-6 py-3 text-left">
+                                            <div class="flex items-center gap-x-2">
+                                                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                                                    Availability
+                                                </span>
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left">
+                                            <div class="flex items-center gap-x-2">
+                                                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                                                    Details
+                                                </span>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                    @foreach (var movie in Model)
+                                    {
+                                        <tr>
+                                            <td class="h-px w-72 whitespace-nowrap">
+                                                <div class="px-6 py-3">
+                                                    @Html.ActionLink(movie.Name, "GetEdit", "Movies", new { id = movie.Id }, null)
+                                                </div>
+                                            </td>
+                                            <td class="h-px w-px whitespace-nowrap">
+                                                <div class="px-6 py-3">
+                                                    <div class="flex items-center gap-x-3">
+                                                        @movie._Genre.Name
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="h-px w-px whitespace-nowrap">
+                                                <div class="px-6 py-3">
+                                                    <div class="flex items-center gap-x-3">
+                                                        @movie.ReleaseDate.Value.ToShortDateString()
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="h-px w-px whitespace-nowrap">
+                                                <div class="px-6 py-3">
+                                                    Available: <span class="badge bg-primary rounded-pill">@movie.NumberAvailable</span>
+                                                </div>
+                                            </td>
+                                            <td class="h-px w-px whitespace-nowrap">
+                                                <div class="px-6 py-1.5">
+                                                    <button type="button" class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                                        @Html.ActionLink("Details", "GetDetails", "Movies", new { id = movie.Id }, null)
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                    </tbody>
+                                </table>
+                                <!-- End Table -->
+                                <!-- Footer -->
+                                <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
+                                    <div>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                                            <span class="font-semibold text-gray-800 dark:text-gray-200">
+                                                @Model.Count()
+                                            </span> results
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <div class="inline-flex gap-x-2">
+                                            <button type="button" class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                                                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                                                </svg>
+                                                Prev
+                                            </button>
+
+                                            <button type="button" class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                                                Next
+                                                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                                                </svg>
                                             </button>
                                         </div>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                    <!-- End Table -->
-                    <!-- Footer -->
-                    <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
-                        <div>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">
-                                <span class="font-semibold text-gray-800 dark:text-gray-200">
-                                    @Model.Count()
-                                </span> results
-                            </p>
-                        </div>
-
-                        <div>
-                            <div class="inline-flex gap-x-2">
-                                <button type="button" class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
-                                    <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
-                                    </svg>
-                                    Prev
-                                </button>
-
-                                <button type="button" class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
-                                    Next
-                                    <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-                                    </svg>
-                                </button>
+                                    </div>
+                                </div>
+                                <!-- End Footer -->
                             </div>
                         </div>
                     </div>
-                    <!-- End Footer -->
                 </div>
+                <!-- End Card -->
             </div>
         </div>
     </div>
-    <!-- End Card -->
 </div>
