@@ -35,17 +35,20 @@ namespace VioRentals.Web.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:7071/api/");
-                var response = await client.GetAsync("Customers/edit/{id}");
+                var response = await client.GetAsync($"Customers/edit/{id}");
                 if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
                     return RedirectToAction("Login", "Home");
                 }
                 if (response.IsSuccessStatusCode)
                 {
-                    return View("Edit", response.Content);
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var customer = JsonConvert.DeserializeObject<CustomerDto>(responseContent);
+                    return View("Edit", customer);
                 }
+
+                return BadRequest(response);
             }
-            return NotFound();
         }
 
         public async Task<ActionResult> GetDetailsAsync(int id)
@@ -104,7 +107,7 @@ namespace VioRentals.Web.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:7071/api/");
-                var response = await client.DeleteAsync("Customers/delete/{id}");
+                var response = await client.DeleteAsync($"Customers/delete/{id}");
                 if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
                     return RedirectToAction("Login", "Home");
