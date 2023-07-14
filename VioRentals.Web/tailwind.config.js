@@ -4,6 +4,7 @@ module.exports = {
         './Views/**/*.{cshtml,js}',
         'node_modules/preline/dist/*.js',
     ],
+    darkMode: 'class',
     theme: {
         extend: {},
     },
