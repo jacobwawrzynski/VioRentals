@@ -92,7 +92,6 @@ namespace VioRentals.Web.Controllers
             return BadRequest();
         }
 
-        [HttpPost]
         public async Task<ActionResult> DeleteAsync(int id)
         {
             using (var client = new HttpClient())
@@ -111,7 +110,6 @@ namespace VioRentals.Web.Controllers
             return BadRequest();
         }
 
-        [HttpGet]
         public async Task<JsonResult> SearchAsync(string searchTerm)
         {
             var movie = await _movieService.FindByTermAsync(searchTerm);
@@ -131,7 +129,6 @@ namespace VioRentals.Web.Controllers
         // Random
         // ValidationReleaseDate
 
-        [HttpGet]
         public async Task<ActionResult> Index(int page = 1, int pageSize = 10)
         {
             var totalPages = (int)Math.Ceiling((double)await _movieService.CountMoviesAsync() / pageSize);
