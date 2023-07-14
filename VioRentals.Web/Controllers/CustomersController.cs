@@ -2,12 +2,14 @@
 using VioRentals.Infrastructure.Repositories.Interfaces;
 using VioRentals.Core.Entities;
 using AutoMapper;
-using VioRentals.Web.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using VioRentals.Core.DTOs;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace VioRentals.Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class CustomersController : Controller
     {
         private readonly ICustomerService _customerService;
@@ -23,26 +25,29 @@ namespace VioRentals.Web.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
         public ViewResult GetCreate()
         {
             return View("Create");
         }
 
-        [HttpGet]
         public async Task<ActionResult> GetEditAsync(int id)
         {
-            var customer = await _customerService.FindByIdAsync(id);
-
-            if (customer is not null)
+            using (var client = new HttpClient())
             {
-                var customerDto = _mapper.Map<CustomerDto>(customer);
-                return View("Edit", customerDto);
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var response = await client.GetAsync("Customers/edit/{id}");
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    return View("Edit", response.Content);
+                }
             }
             return NotFound();
         }
 
-        [HttpGet]
         public async Task<ActionResult> GetDetailsAsync(int id)
         {
             var customer = await _customerService.FindByIdAsync(id);
@@ -54,43 +59,64 @@ namespace VioRentals.Web.Controllers
             return NotFound();
         }
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAsync([FromForm] CustomerDto customerDto)
         {
-            if (ModelState.IsValid)
+            using (var client = new HttpClient())
             {
-                var customer = _mapper.Map<CustomerEntity>(customerDto);
-                await _customerService.SaveCustomerAsync(customer);
-                return RedirectToAction("Index");
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var content = JsonContent.Create(customerDto);
+                var response = await client.PostAsync("Customers/create", content);
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
             }
-
-            return RedirectToAction("GetCreateAsync", customerDto);
+            return BadRequest();
         }
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditAsync(int id, CustomerDto customerDto)
         {
-            if (ModelState.IsValid)
+            using (var client = new HttpClient())
             {
-                var customer = _mapper.Map<CustomerEntity>(customerDto);
-                await _customerService.UpdateCustomerAsync(customer);
-                return RedirectToAction("Index");
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var content = JsonContent.Create(customerDto);
+                var response = await client.PatchAsync("Customers/edit", content);
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
             }
-                
-            return RedirectToAction("GetEditAsync", id);
+            return BadRequest();
         }
 
-        [HttpPost]
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            var customer = await _customerService.FindByIdAsync(id);
-            await _customerService.DeleteCustomerAsync(customer);
-            return RedirectToAction("Index");
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var response = await client.DeleteAsync("Customers/delete/{id}");
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            return BadRequest();
         }
 
-        [HttpGet]
         public async Task<JsonResult> SearchAsync(string searchTerm)
         {
             var customers = await _customerService.FindByTermAsync(searchTerm);
@@ -106,9 +132,9 @@ namespace VioRentals.Web.Controllers
             return Json(result);
         }
 
-        [HttpGet]
-        public async Task<ViewResult> Index(int page = 1, int pageSize = 10)
+        public async Task<ActionResult> Index(int page = 1, int pageSize = 10)
         {
+            
             var totalPages = (int)Math.Ceiling((double)await _customerService.CountCustomersAsync() / pageSize);
             //check if user enters value higher than totalpages and set the value to the hightes pagenumber availabe
             if (page > totalPages)
@@ -129,22 +155,27 @@ namespace VioRentals.Web.Controllers
                 RedirectToAction("Index", new { page, pageSize = 100 });
             }
 
-            // FIND BETTER SOLUTION (THIS WORKS BUT UGLY)
-            var customers = await _customerService.FindAllAsync();
-            var memberships = await _membershipService.FindAllAsync();
-
-            foreach (var cus in customers)
-            {
-                cus._MembershipDetails = memberships
-                    .Where(m => m.Id == cus.MembershipDetailsFK)
-                    .First();
-            }
             //pass to view
             ViewBag.TotalPages = totalPages;
             ViewBag.CurrentPage = page;
             ViewBag.PageSize = pageSize;
 
-            return View(customers);
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var response = await client.GetAsync("Customers/all");
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var customers = JsonConvert.DeserializeObject<IEnumerable<CustomerEntity>>(responseContent);
+                    return View(customers);
+                }
+            }
+            return BadRequest();
         }
     }
 }

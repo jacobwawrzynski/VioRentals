@@ -7,6 +7,7 @@ using VioRentals.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,8 +26,17 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 builder.Services.AddScoped<IJwtUtils, JwtUtils>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddTransient<IMovieService, MovieService>();
+builder.Services.AddTransient<ICustomerService, CustomerService>();
+builder.Services.AddTransient<IRentalService, RentalService>();
+builder.Services.AddTransient<IMembershipService, MembershipService>();
+builder.Services.AddTransient<IGenreService, GenreService>();
 
 builder.Services.AddAutoMapper(typeof(AutoMappingProfile));
+
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 
 var app = builder.Build();
 

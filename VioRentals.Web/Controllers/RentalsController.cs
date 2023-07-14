@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using VioRentals.Core.Entities;
 using VioRentals.Infrastructure.Repositories.Interfaces;
 
 namespace VioRentals.Web.Controllers
@@ -20,18 +22,34 @@ namespace VioRentals.Web.Controllers
             _customerService = customerService;
         }
 
-        [HttpGet]
-        public async Task<ViewResult> RentalList()
+        public async Task<ActionResult> RentalList()
         {
-            var rentals = await _rentalService.FindAllAsync();
-
-            foreach (var ren in rentals)
+            using (var client = new HttpClient())
             {
-                ren._Customer = await _customerService.FindByIdAsync(ren.CustomerFK);
-                ren._Movie = await _movieService.FindByIdAsync(ren.MovieFK);
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var response = await client.GetAsync("Rentals/all");
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var rentals = JsonConvert.DeserializeObject<IEnumerable<RentalEntity>>(responseContent);
+                    return View(rentals);
+                }
             }
+            return BadRequest();
 
-            return View(rentals);
+            //var rentals = await _rentalService.FindAllAsync();
+
+            //foreach (var ren in rentals)
+            //{
+            //    ren._Customer = await _customerService.FindByIdAsync(ren.CustomerFK);
+            //    ren._Movie = await _movieService.FindByIdAsync(ren.MovieFK);
+            //}
+
+            //return View(rentals);
         }
 
         [HttpGet]
@@ -40,30 +58,46 @@ namespace VioRentals.Web.Controllers
             return View();
         }
 
-        [HttpPost]
         public async Task<IActionResult> ReturnRentalAsync(int id)
         {
-            var rental = await _rentalService.FindByIdAsync(id);
-            if (rental is null)
+            using (var client = new HttpClient())
             {
-                return NotFound();
+                var rental = await _rentalService.FindByIdAsync(id);
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var content = JsonContent.Create(rental);
+                var response = await client.PatchAsync("Rentals/return", content);
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("RentalList", "Rentals");
+                }
             }
+            return BadRequest();
 
-            if (rental.IsReturned)
-            {
-                return BadRequest("Rental already returned");
-            }
+            //var rental = await _rentalService.FindByIdAsync(id);
+            //if (rental is null)
+            //{
+            //    return NotFound();
+            //}
 
-            rental.IsReturned = true;
-            rental.DateReturned = DateTime.Now;
+            //if (rental.IsReturned)
+            //{
+            //    return BadRequest("Rental already returned");
+            //}
 
-            var movie = await _movieService.FindByIdAsync(rental.MovieFK);
-            movie.NumberAvailable++;
+            //rental.IsReturned = true;
+            //rental.DateReturned = DateTime.Now;
 
-            await _rentalService.UpdateRentalAsync(rental);
-            await _movieService.UpdateMovieAsync(movie);
+            //var movie = await _movieService.FindByIdAsync(rental.MovieFK);
+            //movie.NumberAvailable++;
 
-            return Ok();
+            //await _rentalService.UpdateRentalAsync(rental);
+            //await _movieService.UpdateMovieAsync(movie);
+
+            //return Ok();
         }
 
         [HttpGet]

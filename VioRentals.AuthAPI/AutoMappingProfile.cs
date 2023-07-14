@@ -26,6 +26,15 @@ namespace VioRentals.AuthAPI
                         return true;
                     }
                 ));
+
+            // MOVE MAPPING PROFILES AND DTOS TO CORE
+            CreateMap<CustomerDto, CustomerEntity>();
+
+            CreateMap<CustomerEntity, CustomerDto>();
+
+            CreateMap<MovieDto, MovieEntity>();
+
+            CreateMap<MovieEntity, MovieDto>();
         }
     }
 }

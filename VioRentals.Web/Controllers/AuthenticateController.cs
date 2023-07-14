@@ -1,29 +1,24 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using VioRentals.Core.DTOs;
 using VioRentals.Infrastructure.Repositories.Interfaces;
-using VioRentals.Web.DTOs;
 
 namespace VioRentals.Web.Controllers
 {
     public class AuthenticateController : Controller
     {
-        // TESTING PURPOSES
-        public ActionResult Index()
-        {
-            return Ok("API call works");
-        }
-
         public async Task<ActionResult> Login([FromForm] LoginDto loginDto)
         {
             if (ModelState.IsValid)
             {
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("https://localhost:7071");
+                    client.BaseAddress = new Uri("https://localhost:7071/api/");
                     JsonContent content = JsonContent.Create(loginDto);
-                    await client.PostAsync("https://localhost:7071/api/Users/login", content);
+                    await client.PostAsync("Users/login", content);
                 }
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Index", "Customers");
             }
             return BadRequest(ModelState);
         }
@@ -34,10 +29,11 @@ namespace VioRentals.Web.Controllers
             {
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("https://localhost:7071");
+                    client.BaseAddress = new Uri("https://localhost:7071/api/");
                     JsonContent content = JsonContent.Create(registerDto);
-                    await client.PostAsync("https://localhost:7071/api/Users/register", content);
+                    await client.PostAsync("Users/register", content);
                 }
+
                 return RedirectToAction("Index");
             }
             return BadRequest(ModelState);
@@ -47,9 +43,10 @@ namespace VioRentals.Web.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7071");
-                HttpResponseMessage response = await client.GetAsync("https://localhost:7071/api/Users/all");
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                HttpResponseMessage response = await client.GetAsync("Users/all");
             }
+
             return RedirectToAction("Index");
 
         }
