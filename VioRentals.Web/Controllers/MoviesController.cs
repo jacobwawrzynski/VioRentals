@@ -32,10 +32,16 @@ namespace VioRentals.Web.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:7071/api/");
-                var response = await client.GetAsync("Movies/edit/{id}");
+                var response = await client.GetAsync($"Movies/edit/{id}");
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
                 if (response.IsSuccessStatusCode)
                 {
-                    return View("Edit", response.Content);
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var movie = JsonConvert.DeserializeObject<MovieDto>(responseContent);
+                    return View("Edit", movie);
                 }
             }
             return NotFound();

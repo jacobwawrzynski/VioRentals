@@ -47,7 +47,7 @@ namespace VioRentals.AuthAPI.Controllers
             if (movie is not null)
             {
                 var movieDto = _mapper.Map<MovieDto>(movie);
-                return Ok();
+                return Ok(movieDto);
             }
             return NotFound();
         }
@@ -66,7 +66,7 @@ namespace VioRentals.AuthAPI.Controllers
         }
 
         [HttpGet("all")]
-        //[VioRentals.AuthAPI.Attributes.Authorize]
+        [VioRentals.AuthAPI.Attributes.Authorize]
         public async Task<IActionResult> GetAll()
         {
             var movies = await _movieService.FindAllAsync();

@@ -83,7 +83,7 @@ namespace VioRentals.Web.Controllers
         }
 
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAsync(int id, CustomerDto customerDto)
+        public async Task<ActionResult> EditAsync([FromForm] CustomerDto customerDto)
         {
             using (var client = new HttpClient())
             {
