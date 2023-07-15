@@ -699,6 +699,10 @@ video {
   height: 1px;
 }
 
+.h-full {
+  height: 100%;
+}
+
 .min-h-\[15rem\] {
   min-height: 15rem;
 }
@@ -944,6 +948,10 @@ video {
   border-radius: 0.75rem;
 }
 
+.rounded-sm {
+  border-radius: 0.125rem;
+}
+
 .rounded-b-lg {
   border-bottom-right-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
@@ -1150,6 +1158,10 @@ video {
   line-height: 1rem;
 }
 
+.text-\[\.25rem\] {
+  font-size: .25rem;
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -1208,6 +1220,11 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-gray-200 {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity));
 }
 
 .decoration-2 {
@@ -1724,6 +1741,10 @@ body {
   .sm\:text-6xl {
     font-size: 3.75rem;
     line-height: 1;
+  }
+
+  .sm\:text-\[\.5rem\] {
+    font-size: .5rem;
   }
 }
 
