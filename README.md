@@ -17,7 +17,7 @@
 
 ## Description
 
-Vio Rentals is the application based on [VioRentals - FilmsPlatform](https://github.com/KrzysztofJaronczyk/VioRentals-FilmsPlatform), designed to help manage your data such as customers, movies and more, including user authentication, CRUD operations and mocroservices.
+Vio Rentals is the application based on [VioRentals - FilmsPlatform](https://github.com/KrzysztofJaronczyk/VioRentals-FilmsPlatform), designed to help manage your data such as customers, movies and more, including user authentication, CRUD operations and microservices.
 
 <a name="features"></a>
 
@@ -32,7 +32,7 @@ Vio Rentals is the application based on [VioRentals - FilmsPlatform](https://git
 
 ## Build with
 
-The project is designed with ASP.NET Clean Architecture devided into several parts
+The project was designed in ASP.NET Clean Architecture divided into several parts
 
 * **Infrastructure** is responsible for database context and repositories that allows operations on entities
 
@@ -60,3 +60,15 @@ The major frameworks/libraries used in the project:
 ```bash
 git clone https://github.com/jacobwawrzynski/VioRentals.git
 ```
+2. Install rust
+[Rust installer](https://www.rust-lang.org/tools/install)
+
+3. Install .NET 5
+[.NET 5 installer](https://dotnet.microsoft.com/download/dotnet/5.0)
+
+
+## Run the application
+
+1. Run Microservices using start.bat file
+2. Open Web project using VioRentals.sln file
+3. Run the application using Visual Studio
