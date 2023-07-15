@@ -75,21 +75,21 @@
                                         {
                                             <tr>
                                                 <td class="h-px w-72 whitespace-nowrap">
-                                                    <div class="px-6 py-3">
+                                                    <div class="px-6 py-3 tracking-wide text-gray-800 dark:text-gray-200">
                                                         @Html.ActionLink(customer.Forename + " " + customer.Surname, "GetEdit", "Customers", new { id = customer.Id }, null)
                                                     </div>
                                                 </td>
                                                 @*PROBLEM WITH CIRCLE REFERNCE IN API*@
                                                 <td class="h-px w-px whitespace-nowrap">
                                                     <div class="px-6 py-3">
-                                                        <div class="flex items-center gap-x-3">
+                                                        <div class="flex items-center gap-x-3 tracking-wide text-gray-800 dark:text-gray-200">
                                                             @customer._MembershipDetails.DiscountRate
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td class="h-px w-px whitespace-nowrap">
                                                     <div class="px-6 py-3">
-                                                        <div class="flex items-center gap-x-3">
+                                                        <div class="flex items-center gap-x-3 tracking-wide text-gray-800 dark:text-gray-200">
                                                             @customer.MembershipType.ToString()
                                                         </div>
                                                     </div>
