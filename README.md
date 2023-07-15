@@ -7,11 +7,13 @@
 ##### 🔽  TABLE OF CONTENTS  🔽
 [1. Description](#desc)
 
-[2. Features](#features)
+[2. General features](#general-features)
 
 [3. Build with](#build)
 
 [4. Installation](#installation)
+
+[5. Microservices](#microservices)
 
 <a name="desc"></a>
 
@@ -21,12 +23,12 @@ Vio Rentals is the application based on [VioRentals - FilmsPlatform](https://git
 
 <a name="features"></a>
 
-## Features 
+## General features 
 
 - User registration and login via Authentication API
-- Search bar for movies and customers
-- CRUD operations via dependency injection
-- ...
+- Search bar for movies and customers (in development)
+- CRUD operations using API and dependency injection
+- Graphical user interface
 
 <a name="build"></a>
 
@@ -63,15 +65,20 @@ git clone https://github.com/jacobwawrzynski/VioRentals.git
 2. Install rust
 [Rust installer](https://www.rust-lang.org/tools/install)
 
-3. Install .NET 5
-[.NET 5 installer](https://dotnet.microsoft.com/download/dotnet/5.0)
+3. Install .NET 6
+[.NET 6 installer](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 
 
 ## Run the application
 
 1. Run Microservices using start.bat file
-2. Open Web project using VioRentals.sln file
-3. Run the application using Visual Studio
+2. Open the solution in Visual Studio using VioRentals.sln file
+3. Run Auth.API if you want to test just functionality of the appliction
+4. To run the whole application - right click solution file in solution explorer (VioRentals.sln) and choose Configure Startup Project
+5. Choose Multiple Startup Projects and <ins>**make sure to set Auth.API as first and Web as second like this**</ins>:
+   
+   ![image](https://github.com/jacobwawrzynski/VioRentals/assets/52464719/cce0ecd8-e867-4630-a689-9b948652f05c)
+
 
 ## Microservices
 
@@ -81,9 +88,9 @@ Microservices are written in Rust and are responsible for the following tasks:
 
 * **Random Number Service** - returns a random number from range put in the request get parameters
 
-* **Lucky User Service** - returns a random user from the database ( use random number service to get a random number and then get a user)
+* **Lucky User Service** - returns a random user from the database (use random number service to get a random number and then get a user)
 
-* **Recommended Movie Service** - returns a recommended movie from the database ( use random number service to get a random number and then get a movie and send movie as "recommended" )
+* **Recommended Movie Service** - returns a recommended movie from the database (use random number service to get a random number and then get a movie and send movie as "recommended")
 
 ### Endpoints
 
