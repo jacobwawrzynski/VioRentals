@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="~/VioRentals.Web.styles.css" asp-append-version="true" />
     <link href="/css/output.css" rel="stylesheet">
 </head>
-<body>
-<header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white border-b border-gray-200 text-sm py-3 sm:py-0 dark:bg-gray-800 dark:border-gray-700">
+<body style="margin-bottom: 0;">
+    <header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white border-b border-gray-200 text-sm py-3 sm:py-0 dark:bg-gray-800 dark:border-gray-700">
     <nav class="relative max-w-7xl w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8" aria-label="Global">
         <div class="flex items-center justify-between">
             <a class="flex-none text-xl font-semibold dark:text-white" href="/" aria-label="Brand">VioRentals</a>
@@ -96,13 +96,13 @@
         <!-- End Grid -->
     </footer>
 </div>
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="../node_modules/preline/dist/preline.js"></script>
-    <script src="../Scripts/current-page.js"></script>
-<script src="../Scripts/darkMode.js"></script>
+    <script src="../../node_modules/preline/dist/preline.js"></script>
+    <script src="../../scripts/current-page.js"></script>
+    <script src="../../scripts/darkMode.js"></script>
+
 
 @await RenderSectionAsync("Scripts", required: false)
 </body>

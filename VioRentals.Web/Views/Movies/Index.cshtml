@@ -82,31 +82,31 @@
                                     {
                                         <tr>
                                             <td class="h-px w-72 whitespace-nowrap">
-                                                <div class="px-6 py-3">
+                                                    <div class="px-6 py-3 tracking-wide text-gray-800 dark:text-gray-200">
                                                     @Html.ActionLink(movie.Name, "GetEdit", "Movies", new { id = movie.Id }, null)
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="px-6 py-3">
-                                                    <div class="flex items-center gap-x-3">
+                                                        <div class="flex items-center gap-x-3 tracking-wide text-gray-800 dark:text-gray-200">
                                                         @movie._Genre.Name
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
                                                 <div class="px-6 py-3">
-                                                    <div class="flex items-center gap-x-3">
+                                                        <div class="flex items-center gap-x-3 tracking-wide text-gray-800 dark:text-gray-200">
                                                         @movie.ReleaseDate.Value.ToShortDateString()
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
-                                                <div class="px-6 py-3">
+                                                    <div class="px-6 py-3 tracking-wide text-gray-800 dark:text-gray-200">
                                                     Available: <span class="badge bg-primary rounded-pill">@movie.NumberAvailable</span>
                                                 </div>
                                             </td>
                                             <td class="h-px w-px whitespace-nowrap">
-                                                <div class="px-6 py-1.5">
+                                                    <div class="px-6 py-1.5 tracking-wide text-gray-800 dark:text-gray-200">
                                                     <button type="button" class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                                                         @Html.ActionLink("Details", "GetDetails", "Movies", new { id = movie.Id }, null)
                                                     </button>
