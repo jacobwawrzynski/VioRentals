@@ -1,6 +1,6 @@
 use rusqlite::{params, Connection, Result};
 use rocket::{get, build, routes};
-use rocket::serde::json::Json; // Now Rocket uses this for JSON
+use rocket::serde::json::Json;
 use serde::Serialize;
 use std::error::Error;
 
@@ -15,6 +15,16 @@ struct User {
     lastname: String,
 }
 
+/// This function will save all the users from the database into a vector
+/// 
+/// # Arguments
+/// 
+/// * `conn` - A connection to the database
+/// 
+/// # Returns
+/// 
+/// * `Result<Vec<User>, Box<dyn Error>>` - A vector of users
+/// 
 fn save_users_to_vec(conn: &Connection) -> Result<Vec<User>, Box<dyn Error>> {
     let mut stmt = conn.prepare("SELECT * FROM Users")?;
     
