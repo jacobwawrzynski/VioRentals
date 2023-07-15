@@ -699,6 +699,10 @@ video {
   height: 1px;
 }
 
+.min-h-\[15rem\] {
+  min-height: 15rem;
+}
+
 .w-10 {
   width: 2.5rem;
 }
@@ -1512,6 +1516,11 @@ body {
 
 :is(.dark .dark\:shadow-gray-900\/\[\.2\]) {
   --tw-shadow-color: rgb(17 24 39 / .2);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+:is(.dark .dark\:shadow-slate-700\/\[\.7\]) {
+  --tw-shadow-color: rgb(51 65 85 / .7);
   --tw-shadow: var(--tw-shadow-colored);
 }
 
