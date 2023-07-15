@@ -72,3 +72,31 @@ git clone https://github.com/jacobwawrzynski/VioRentals.git
 1. Run Microservices using start.bat file
 2. Open Web project using VioRentals.sln file
 3. Run the application using Visual Studio
+
+## Microservices
+
+### Description
+
+Microservices are written in Rust and are responsible for the following tasks:
+
+* **Random Number Service** - returns a random number from range put in the request get parameters
+
+* **Lucky User Service** - returns a random user from the database ( use random number service to get a random number and then get a user)
+
+* **Recommended Movie Service** - returns a recommended movie from the database ( use random number service to get a random number and then get a movie and send movie as "recommended" )
+
+### Endpoints
+
+* **Random Number Service** - http://localhost:8000/random_number/from/to - where "from" and "to" are integers
+
+* **Recommended Movie Service** - http://localhost:8001/recommend_movie
+
+* **Lucky User Service** - http://localhost:8002/lucky_user
+
+### Docs
+
+Run docs.bat to generate docs for microservices
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
