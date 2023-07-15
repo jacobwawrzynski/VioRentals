@@ -118,17 +118,31 @@ namespace VioRentals.Web.Controllers
 
         public async Task<JsonResult> SearchAsync(string searchTerm)
         {
-            var movie = await _movieService.FindByTermAsync(searchTerm);
-            var result = movie.Select(m => new
-            {
-                m.Id,
-                m.Name,
-                m.ReleaseDate,
-                m.DateAdded,
-                m.NumberInStock,
-                m.NumberAvailable
-            }).ToList();
+            var movies = await _movieService.FindAllAsync();
+            var result = movies.Where(m => m.Name.Contains(searchTerm) || m._Genre.Name.Contains(searchTerm))
+                .Select(m => new
+                {
+                    m.Id,
+                    m.Name,
+                    m.ReleaseDate,
+                    m.DateAdded,
+                    m.NumberInStock,
+                    m.NumberAvailable
+                }).ToList();
             return Json(result);
+
+            // USING SERVICE
+            //var movie = await _movieService.FindByTermAsync(searchTerm);
+            //var result = movie.Select(m => new
+            //{
+            //    m.Id,
+            //    m.Name,
+            //    m.ReleaseDate,
+            //    m.DateAdded,
+            //    m.NumberInStock,
+            //    m.NumberAvailable
+            //}).ToList();
+            //return Json(result);
         }
 
         // TO CONSIDER

@@ -122,17 +122,31 @@ namespace VioRentals.Web.Controllers
 
         public async Task<JsonResult> SearchAsync(string searchTerm)
         {
-            var customers = await _customerService.FindByTermAsync(searchTerm);
-            var result = customers.Select(c => new
-            {
-                c.Id,
-                c.Forename,
-                c.Surname,
-                c.DateOfBirth,
-                c.MembershipType,
-                c.IsSubscribingToNewsletter
-            });
+            var customers = await _customerService.FindAllAsync();
+            var result = customers.Where(c => c.Forename.Contains(searchTerm) || c.Surname.Contains(searchTerm))
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Forename,
+                    c.Surname,
+                    c.DateOfBirth,
+                    c.MembershipType,
+                    c.IsSubscribingToNewsletter
+                }).ToList();
             return Json(result);
+
+            // USING SERVICE
+            //var customers = await _customerService.FindByTermAsync(searchTerm);
+            //var result = customers.Select(c => new
+            //{
+            //    c.Id,
+            //    c.Forename,
+            //    c.Surname,
+            //    c.DateOfBirth,
+            //    c.MembershipType,
+            //    c.IsSubscribingToNewsletter
+            //});
+            //return Json(result);
         }
 
         public async Task<ActionResult> Index(int page = 1, int pageSize = 10)
