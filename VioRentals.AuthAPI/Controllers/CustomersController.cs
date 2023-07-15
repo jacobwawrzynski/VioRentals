@@ -25,6 +25,13 @@ namespace VioRentals.AuthAPI.Controllers
             _membershipService = membershipService;
         }
 
+        [HttpGet("create")]
+        [VioRentals.AuthAPI.Attributes.Authorize]
+        public async Task<IActionResult> Create()
+        {
+            return Ok();
+        }
+
         [HttpPost("create")]
         [VioRentals.AuthAPI.Attributes.Authorize]
         public async Task<IActionResult> Create(CustomerDto customerDto)

@@ -25,9 +25,18 @@ namespace VioRentals.Web.Controllers
             _mapper = mapper;
         }
 
-        public ViewResult GetCreate()
+        public async Task<ActionResult> GetCreate()
         {
-            return View("Create");
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7071/api/");
+                var response = await client.GetAsync("Customers/create");
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                return View("Create");
+            }
         }
 
         public async Task<ActionResult> GetEditAsync(int id)
