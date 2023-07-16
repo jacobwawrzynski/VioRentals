@@ -29,6 +29,7 @@ Vio Rentals is the application based on [VioRentals - FilmsPlatform](https://git
 - Search bar for movies and customers (in development)
 - CRUD operations using API and dependency injection
 - Graphical user interface
+- Microservices like: "Lucky user" or "Recommended movie" made in Rust
 
 <a name="build"></a>
 
@@ -65,9 +66,12 @@ git clone https://github.com/jacobwawrzynski/VioRentals.git
 2. Install rust
 [Rust installer](https://www.rust-lang.org/tools/install)
 
-3. Install .NET 6
-[.NET 6 installer](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+3. Install Visual Studio with .NET 6
+[Visual Studio Installer](https://visualstudio.microsoft.com/downloads/)
 
+4. Make sure to also install C++ compiler, you can do this using Visual Studio Installer:
+
+   ![image](https://github.com/jacobwawrzynski/VioRentals/blob/master/readme-images/cpp.png)
 
 ## Run the application
 
@@ -77,7 +81,7 @@ git clone https://github.com/jacobwawrzynski/VioRentals.git
 4. To run the whole application - right click solution file in solution explorer (VioRentals.sln) and choose Configure Startup Project
 5. Choose Multiple Startup Projects and <ins>**make sure to set Auth.API as first and Web as second like this**</ins>:
    
-   ![image](https://github.com/jacobwawrzynski/VioRentals/assets/52464719/cce0ecd8-e867-4630-a689-9b948652f05c)
+   ![image](https://github.com/jacobwawrzynski/VioRentals/blob/master/readme-images/startup.png)
 
 
 ## Microservices
