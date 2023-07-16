@@ -34,7 +34,7 @@ namespace VioRentals.Web.Controllers
                     await client.PostAsync("Users/register", content);
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Customers");
             }
             return BadRequest(ModelState);
         }
@@ -45,10 +45,8 @@ namespace VioRentals.Web.Controllers
             {
                 client.BaseAddress = new Uri("https://localhost:7071/api/");
                 HttpResponseMessage response = await client.GetAsync("Users/all");
+                return Ok(response.Content);
             }
-
-            return RedirectToAction("Index");
-
         }
     }
 }
